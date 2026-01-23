@@ -11,3 +11,31 @@ Write-Host ""
 Write-Host "To join the preview, contact: info@i-syst.com"
 Write-Host ""
 Write-Host "==========================================" -ForegroundColor Cyan
+
+# Run the main installer from the IOSonata Library
+Write-Host ">>> Launching Main Installer..." -ForegroundColor Cyan
+iwr -useb https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/master/Installer/install_iocdevtools_win.ps1 | iex
+
+# Install IOComposer AI manually
+$EclipseDropins = "$env:ProgramFiles\Eclipse Embedded CDT\dropins"
+$PluginName     = "com.iocomposer.embedcdt.ai"
+$PluginUrl      = "http://com.iocomposer.embedcdt.ai/"
+$OutputJar      = "$EclipseDropins\com.iocomposer.embedcdt.ai.jar"
+
+Write-Host "\n>>> Post-Install: Adding AI Plugin ($PluginName)..." -ForegroundColor Cyan
+
+# Check if the dropins directory is present, and then installs it there
+if (Test-Path $EclipseDropins) {
+    try {
+        Invoke-WebRequest -Uri $PluginUrl -OutFile $OutputJar -ErrorAction Stop
+        Write-Host "    [OK] AI Plugin installed successfully: "
+    } catch {
+        Write-Host "    [ERROR] Failed to download plugin with $PluginUrl" -ForegroundColor Red
+        Write-Host "    Error details: $_" -ForegroundColor Red
+    }
+}
+else {
+    Write-Host "    [ERROR] Eclipse 'dropins' folder not found. The main installation may have failed." -ForegroundColor Red
+}
+
+Write-Host ">>> Setup complete." -ForegroundColor Green
