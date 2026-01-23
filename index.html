@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOcomposer - AI-Powered IDE for Embedded Development</title>
+    <meta name="description" content="IOcomposer is an Eclipse-based IDE with AI assistance for embedded firmware development using the IOsonata framework.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        .beta-banner {
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+            text-align: center;
+            padding: 12px;
+            font-weight: 600;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 24px;
+            text-align: center;
+        }
+        .logo { font-size: 36px; font-weight: 700; margin-bottom: 16px; }
+        .logo span { color: #3b82f6; }
+        .tagline { font-size: 20px; color: #94a3b8; margin-bottom: 48px; }
+        h1 { font-size: 48px; margin-bottom: 24px; line-height: 1.2; }
+        h1 .highlight { color: #3b82f6; }
+        .description { font-size: 20px; color: #94a3b8; line-height: 1.6; margin-bottom: 48px; }
+        .screenshot-section {
+            margin: 48px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .screenshot {
+            width: 100%;
+            display: block;
+        }
+        .screenshot-caption {
+            background: rgba(255,255,255,0.05);
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #94a3b8;
+            text-align: center;
+            margin: 0;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 48px 0;
+            text-align: left;
+        }
+        .feature {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        .feature h3 { font-size: 18px; margin-bottom: 8px; color: #fff; }
+        .feature p { font-size: 14px; color: #94a3b8; line-height: 1.5; }
+        .nordic-feature { position: relative; }
+        .nordic-logo {
+            height: 28px;
+            width: auto;
+            margin-bottom: 12px;
+            background: rgba(255,255,255,0.95);
+            padding: 6px 10px;
+            border-radius: 4px;
+        }
+        .pricing {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 48px 0;
+        }
+        .pricing h2 { font-size: 24px; margin-bottom: 24px; }
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+        .plan {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: left;
+        }
+        .plan.pro { border: 2px solid #3b82f6; }
+        .plan h3 { font-size: 20px; margin-bottom: 8px; }
+        .plan .price { font-size: 32px; font-weight: 700; margin-bottom: 16px; }
+        .plan .price span { font-size: 14px; font-weight: 400; color: #94a3b8; }
+        .plan ul { list-style: none; }
+        .plan li { padding: 6px 0; color: #94a3b8; font-size: 14px; }
+        .plan li::before { content: "✓ "; color: #10b981; }
+        .cta { margin: 48px 0; }
+        .cta p { font-size: 18px; color: #94a3b8; margin-bottom: 16px; }
+        .download-note {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 16px 24px;
+            color: #93c5fd;
+        }
+        .download-note a { color: #3b82f6; text-decoration: none; }
+        .download-note a:hover { text-decoration: underline; }
+        footer {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #64748b;
+            font-size: 14px;
+        }
+        footer a { color: #94a3b8; text-decoration: none; margin: 0 8px; }
+        footer a:hover { color: #fff; }
+        .footer-links { margin-bottom: 16px; }
+        .install-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 48px 0;
+            text-align: left;
+        }
+        .install-section h2 { font-size: 24px; margin-bottom: 8px; text-align: center; }
+        .install-note { text-align: center; color: #64748b; font-size: 14px; margin-bottom: 24px; }
+        .install-option { margin-bottom: 16px; }
+        .install-option:last-child { margin-bottom: 0; }
+        .install-label { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #94a3b8; }
+        .install-hint { font-weight: 400; color: #64748b; }
+        .install-command {
+            display: flex;
+            align-items: center;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+        .install-command code {
+            flex: 1;
+            padding: 12px 16px;
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 13px;
+            color: #10b981;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+        .copy-btn:hover { background: rgba(255,255,255,0.2); }
+        .copy-btn.copied { background: rgba(16, 185, 129, 0.3); }
+        @media (max-width: 600px) {
+            h1 { font-size: 32px; }
+            .logo { font-size: 28px; }
+            .tagline { font-size: 16px; }
+            .description { font-size: 16px; }
+            .container { padding: 40px 20px; }
+            .screenshot-section { margin: 32px 0; border-radius: 8px; }
+            .install-section { padding: 24px 16px; }
+            .install-command code { font-size: 11px; padding: 10px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="beta-banner">🚀 Preview Access — Free Pro features for all users during preview</div>
+    
+    <div class="container">
+        <div class="logo">IO<span>composer</span></div>
+        <p class="tagline">The MCU Firmware Orchestra!</p>
+        
+        <h1>AI-Powered IDE for <span class="highlight">Embedded Development</span></h1>
+        
+        <p class="description">
+            Professional embedded firmware development with AI assistance. 
+            Built on Eclipse Embedded CDT with the IOsonata framework.
+        </p>
+        
+        <div class="screenshot-section">
+            <img src="images/IOcomposer_AddSPI.png" alt="IOcomposer IDE showing AI-powered code validation" class="screenshot">
+            <p class="screenshot-caption">AI detects hidden SPI pin inversion error — a subtle bug compilers miss — and suggests the fix</p>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🤖 AI Assistant</h3>
+                <p>Claude-powered AI that understands embedded development, IOsonata, and your MCU.</p>
+            </div>
+            <div class="feature">
+                <h3>⚡ Quick Start</h3>
+                <p>From clean machine to full debug with breakpoint at main() in 1 hour. No 6-hour Eclipse setup.</p>
+            </div>
+            <div class="feature">
+                <h3>🎯 Multi-Vendor MCU Support</h3>
+                <p>ST, Renesas, NXP, Microchip, and Nordic. Board-agnostic — one MCU port works on all board variants. No scripting, no BSP.</p>
+            </div>
+            <div class="feature nordic-feature">
+                <img src="images/nordic-semiconductor-logo.png" alt="Nordic Semiconductor" class="nordic-logo">
+                <h3>📶 Nordic BLE Ready</h3>
+                <p>Full SoftDevice support for nRF52 and nRF54. BLE stack integration without the complexity.</p>
+            </div>
+            <div class="feature">
+                <h3>🔧 Professional Tools</h3>
+                <p>Debug, flash, serial monitor — everything you need in one IDE.</p>
+            </div>
+        </div>
+        
+        <div class="install-section">
+            <h2>Install</h2>
+            <p class="install-note">Copy and paste in your terminal:</p>
+            
+            <div class="install-option">
+                <div class="install-label">macOS</div>
+                <div class="install-command">
+                    <code id="cmd-macos">curl -sSL https://iocomposer.io/install_ioc_macos.sh | bash</code>
+                    <button class="copy-btn" onclick="copyCommand('cmd-macos')" title="Copy to clipboard">📋</button>
+                </div>
+            </div>
+            
+            <div class="install-option">
+                <div class="install-label">Linux</div>
+                <div class="install-command">
+                    <code id="cmd-linux">curl -sSL https://iocomposer.io/install_ioc_linux.sh | bash</code>
+                    <button class="copy-btn" onclick="copyCommand('cmd-linux')" title="Copy to clipboard">📋</button>
+                </div>
+            </div>
+            
+            <div class="install-option">
+                <div class="install-label">Windows <span class="install-hint">(PowerShell as Admin)</span></div>
+                <div class="install-command">
+                    <code id="cmd-windows">irm https://iocomposer.io/install_ioc_windows.ps1 | iex</code>
+                    <button class="copy-btn" onclick="copyCommand('cmd-windows')" title="Copy to clipboard">📋</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pricing">
+            <h2>Simple Pricing</h2>
+            <div class="plans">
+                <div class="plan">
+                    <h3>Free</h3>
+                    <div class="price">$0 <span>/month</span></div>
+                    <ul>
+                        <li>30 AI queries/month</li>
+                        <li>Full IDE features</li>
+                        <li>Debug & flash</li>
+                        <li>Community support</li>
+                    </ul>
+                </div>
+                <div class="plan pro">
+                    <h3>Pro</h3>
+                    <div class="price">$19.95 <span>/month</span></div>
+                    <ul>
+                        <li>500 AI queries/month</li>
+                        <li>Advanced models</li>
+                        <li>Priority support</li>
+                        <li>Early access to features</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta">
+            <p>IOcomposer is currently in preview.</p>
+            <div class="download-note">
+                Join the preview — Contact us at <a href="mailto:info@i-syst.com">info@i-syst.com</a>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="footer-links">
+                <a href="https://iosonata.io">IOsonata</a>
+                <a href="https://github.com/IOsonata">GitHub</a>
+                <a href="/terms">Terms</a>
+                <a href="/privacy">Privacy</a>
+                <a href="/legal">Legal</a>
+            </div>
+            <p>© 2025 I-SYST Inc. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+        function copyCommand(id) {
+            const code = document.getElementById(id).textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.querySelector('#' + id + ' + .copy-btn');
+                btn.textContent = '✓';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

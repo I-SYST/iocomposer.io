@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful - IOcomposer</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        .container { text-align: center; padding: 40px; max-width: 500px; }
+        .logo { font-size: 24px; font-weight: 700; margin-bottom: 32px; }
+        .logo span { color: #3b82f6; }
+        .icon {
+            width: 80px; height: 80px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 24px;
+        }
+        .icon svg { width: 40px; height: 40px; stroke: white; stroke-width: 3; fill: none; }
+        h1 { font-size: 28px; margin-bottom: 16px; }
+        p { font-size: 18px; color: #94a3b8; line-height: 1.6; margin-bottom: 24px; }
+        .highlight { color: #10b981; font-weight: 600; }
+        .features {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+            text-align: left;
+        }
+        .features h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin-bottom: 16px; }
+        .features ul { list-style: none; }
+        .features li { padding: 8px 0; color: #e2e8f0; display: flex; align-items: center; gap: 12px; }
+        .features li::before { content: "✓"; color: #10b981; font-weight: bold; }
+        .close-hint { font-size: 14px; color: #64748b; margin-top: 32px; }
+        @media (max-width: 600px) {
+            .container { padding: 24px; }
+            h1 { font-size: 24px; }
+            p { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">IO<span>composer</span></div>
+        <div class="icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h1>Welcome to Pro!</h1>
+        <p>Your payment was successful. Your account has been upgraded to <span class="highlight">IOcomposer Pro</span>.</p>
+        <div class="features">
+            <h3>You now have access to:</h3>
+            <ul>
+                <li>500 AI queries/month</li>
+                <li>Advanced Claude models</li>
+                <li>Priority support</li>
+            </ul>
+        </div>
+        <p class="close-hint">You can close this tab and return to IOcomposer.</p>
+    </div>
+</body>
+</html>
