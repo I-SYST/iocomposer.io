@@ -80,22 +80,43 @@
             padding: 32px;
             margin: 48px 0;
         }
-        .pricing h2 { font-size: 24px; margin-bottom: 24px; }
+        .pricing h2 { font-size: 24px; margin-bottom: 8px; text-align: center; }
+        .pricing-note { text-align: center; color: #64748b; font-size: 13px; margin-bottom: 24px; }
         .plans {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 24px;
         }
+        .plans.three-tier { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
         .plan {
             background: rgba(0,0,0,0.2);
             border-radius: 12px;
             padding: 24px;
             text-align: left;
+            position: relative;
         }
-        .plan.pro { border: 2px solid #3b82f6; }
+        .plan.pro {
+            border: 2px solid #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .plan-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3b82f6;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
         .plan h3 { font-size: 20px; margin-bottom: 8px; }
-        .plan .price { font-size: 32px; font-weight: 700; margin-bottom: 16px; }
+        .plan .price { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
         .plan .price span { font-size: 14px; font-weight: 400; color: #94a3b8; }
+        .plan-desc { font-size: 13px; color: #64748b; margin-bottom: 16px; }
         .plan ul { list-style: none; }
         .plan li { padding: 6px 0; color: #94a3b8; font-size: 14px; }
         .plan li::before { content: "✓ "; color: #10b981; }
@@ -206,7 +227,7 @@
                 <p>ST, Renesas, NXP, Microchip, and Nordic. Board-agnostic — one MCU port works on all board variants. No scripting, no BSP.</p>
             </div>
             <div class="feature nordic-feature">
-                <img src="images/nordic-semiconductor-logo.png" alt="Nordic Semiconductor" class="nordic-logo">
+                <img src="images/nordic-logo.png" alt="Nordic Semiconductor" class="nordic-logo">
                 <h3>📶 Nordic BLE Ready</h3>
                 <p>Full SoftDevice support for nRF52 and nRF54. BLE stack integration without the complexity.</p>
             </div>
@@ -247,25 +268,42 @@
 
         <div class="pricing">
             <h2>Simple Pricing</h2>
-            <div class="plans">
+            <p class="pricing-note">Plans and pricing subject to change. We'll notify users of any updates.</p>
+            <div class="plans three-tier">
                 <div class="plan">
                     <h3>Free</h3>
                     <div class="price">$0 <span>/month</span></div>
+                    <p class="plan-desc">Test the waters</p>
                     <ul>
-                        <li>30 AI queries/month</li>
+                        <li>20 AI queries/month</li>
+                        <li>Fast models</li>
                         <li>Full IDE features</li>
                         <li>Debug & flash</li>
-                        <li>Community support</li>
                     </ul>
                 </div>
                 <div class="plan pro">
-                    <h3>Pro</h3>
+                    <div class="plan-badge">Most Popular</div>
+                    <h3>Advanced</h3>
                     <div class="price">$19.95 <span>/month</span></div>
+                    <p class="plan-desc">Daily development</p>
                     <ul>
-                        <li>500 AI queries/month</li>
-                        <li>Advanced models</li>
+                        <li>250 AI queries/month</li>
+                        <li>Adaptive Intelligence</li>
+                        <li>File uploads (5MB)</li>
+                        <li>Standard context memory</li>
                         <li>Priority support</li>
-                        <li>Early access to features</li>
+                    </ul>
+                </div>
+                <div class="plan">
+                    <h3>Pro</h3>
+                    <div class="price">$49.95 <span>/month</span></div>
+                    <p class="plan-desc">Heavy research & code</p>
+                    <ul>
+                        <li>1,000 AI queries/month</li>
+                        <li>Max Intelligence</li>
+                        <li>Large file uploads (50MB)</li>
+                        <li>Extended context memory</li>
+                        <li>Priority support</li>
                     </ul>
                 </div>
             </div>
