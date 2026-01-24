@@ -62,7 +62,11 @@ Update Supabase Auth settings:
 ```
 iocomposer.io/
 ├── index.html              # Landing page
-├── screenshot.png          # IDE screenshot
+├── images/
+│   ├── IOcomposer_AddSPI.png       # IDE screenshot
+│   └── nordic-logo.png             # Nordic Semiconductor logo
+├── video/
+│   └── IOcomposer_WizardBLEPeriph.mov  # Demo video (add .mp4 too)
 ├── install_ioc_macos.sh    # macOS install script
 ├── install_ioc_linux.sh    # Linux install script
 ├── install_ioc_windows.ps1 # Windows install script
