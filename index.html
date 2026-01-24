@@ -51,6 +51,29 @@
             text-align: center;
             margin: 0;
         }
+        .video-section {
+            margin: 48px 0;
+            text-align: center;
+        }
+        .video-section h2 {
+            font-size: 24px;
+            margin-bottom: 24px;
+        }
+        .video-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+        .video-caption {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -189,6 +212,9 @@
             .description { font-size: 16px; }
             .container { padding: 40px 20px; }
             .screenshot-section { margin: 32px 0; border-radius: 8px; }
+            .video-section { margin: 32px 0; }
+            .video-section h2 { font-size: 20px; }
+            .video-container { border-radius: 8px; }
             .install-section { padding: 24px 16px; }
             .install-command code { font-size: 11px; padding: 10px 12px; }
         }
@@ -211,6 +237,18 @@
         <div class="screenshot-section">
             <img src="images/IOcomposer_AddSPI.png" alt="IOcomposer IDE showing AI-powered code validation" class="screenshot">
             <p class="screenshot-caption">AI detects hidden SPI pin inversion error — a subtle bug compilers miss — and suggests the fix</p>
+        </div>
+        
+        <div class="video-section">
+            <h2>See It In Action</h2>
+            <div class="video-container">
+                <video controls playsinline poster="images/IOcomposer_AddSPI.png">
+                    <source src="video/IOcomposer_WizardBLEPeriph.mp4" type="video/mp4">
+                    <source src="video/IOcomposer_WizardBLEPeriph.mov" type="video/quicktime">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p class="video-caption">Creating a BLE Peripheral project with the IOcomposer wizard</p>
         </div>
         
         <div class="features">
