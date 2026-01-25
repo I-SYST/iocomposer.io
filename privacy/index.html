@@ -107,7 +107,7 @@
     <div class="header">
         <div class="logo"><a href="/">IO<span>composer</span></a></div>
         <h1>Privacy Policy</h1>
-        <p class="meta">Effective: January 22, 2026 · Version 1.0</p>
+        <p class="meta">Effective: January 22, 2026 · Version 1.1</p>
     </div>
     
     <div class="container">
@@ -179,12 +179,22 @@
             <li>Comply with legal obligations</li>
         </ul>
 
-        <h2>3) How AI Processing Works</h2>
-        <p>When you use AI features, the Desktop App sends a request to our AI gateway. We process that request transiently and forward required information to an AI model provider (currently <strong>Anthropic Claude</strong> and/or <strong>OpenAI models</strong>) to generate Output.</p>
-        <p>Prompts and snippets may be processed temporarily in memory to generate Output and are not persisted by us.</p>
-        <p>Third‑party AI model providers may process request content in accordance with their own terms and privacy policies. Our "no storage" commitment applies to I‑SYST systems; it does not control independent retention practices of third‑party providers.</p>
-        <p><strong>Design goal:</strong> Minimize what leaves your machine.</p>
-        <p><strong>Current policy:</strong> We do not store prompts, code, or outputs. We may store <strong>non-content usage metadata</strong> (token counts per request, timestamps, plan enforcement signals).</p>
+        <h2>3) How AI Processing & Routing Works</h2>
+        <p>When you use AI features, the Desktop App sends a request to our AI gateway.</p>
+
+        <h3>3.1 The Neural Router</h3>
+        <p>To provide the Service, we use an automated classification system ("Neural Router") that analyzes the metadata and complexity of your request (e.g., token count, presence of code, file attachments) to determine the most appropriate AI model.</p>
+
+        <h3>3.2 Model Providers</h3>
+        <p>Based on this classification, we forward the required information to an AI model provider (currently <strong>Anthropic</strong> or <strong>OpenAI</strong>) to generate Output.</p>
+        <ul>
+            <li><strong>Simple Queries:</strong> May be processed by smaller, faster models to ensure speed.</li>
+            <li><strong>Complex Queries:</strong> Are processed by high-reasoning models for better accuracy.</li>
+        </ul>
+        <p>We use the latest available models from each provider. Current model families in use are published at: <a href="/ai-models">https://iocomposer.io/ai-models</a></p>
+
+        <h3>3.3 No Storage of Content</h3>
+        <p>Consistent with our local-first promise, prompts and snippets are processed <strong>transiently</strong> in memory to perform this routing and generation. They are <strong>not persisted</strong> by I-SYST. We may store <strong>non-content usage metadata</strong> (e.g., "Request ID 123 was classified as 'Complex' and used 3 quota units") for billing and plan enforcement.</p>
 
         <h2>4) Disclosure to Service Providers (Subprocessors)</h2>
         <p>We disclose personal information to third parties only as needed to operate IOcomposer:</p>
