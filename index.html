@@ -254,7 +254,7 @@
             position: relative;
             width: 96vw;
             max-width: 96vw;
-            max-height: 92vh;
+            height: 92vh;
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -264,16 +264,18 @@
             background: rgba(0,0,0,0.35);
             border: 1px solid rgba(255,255,255,0.12);
             border-radius: 12px;
-            overflow: hidden;
+            overflow: auto; /* enables scroll in "Actual size" mode */
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
             display: flex;
             align-items: center;
             justify-content: center;
-            max-height: 80vh;
+            flex: 1 1 auto;
+            min-height: 0; /* critical for flex children to size correctly */
         }
 
-        .lightbox-media img,
-        .lightbox-media video {
+        /* Default: Fit-to-window (no cropping) */
+        .lightbox.mode-fit .lightbox-media img,
+        .lightbox.mode-fit .lightbox-media video {
             display: block;
             max-width: 100%;
             max-height: 100%;
@@ -283,11 +285,35 @@
             background: #000;
         }
 
+        /* Actual size: show 1:1 pixels; scroll if needed */
+        .lightbox.mode-actual .lightbox-media {
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+        .lightbox.mode-actual .lightbox-media img,
+        .lightbox.mode-actual .lightbox-media video {
+            display: block;
+            max-width: none;
+            max-height: none;
+            width: auto;
+            height: auto;
+            object-fit: initial;
+            background: #000;
+        }
+
         .lightbox-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 12px;
+            flex: 0 0 auto;
+        }
+
+        .lightbox-left-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .lightbox-link {
@@ -296,6 +322,22 @@
             font-size: 13px;
         }
         .lightbox-link:hover { text-decoration: underline; }
+
+        .lightbox-mode-btn {
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(0,0,0,0.45);
+            color: #fff;
+            border-radius: 10px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            user-select: none;
+        }
+        .lightbox-mode-btn:hover { background: rgba(0,0,0,0.6); }
+        .lightbox-mode-btn.is-active {
+            border-color: rgba(59,130,246,0.9);
+            background: rgba(59,130,246,0.25);
+        }
 
         .lightbox-close {
             position: absolute;
@@ -312,7 +354,7 @@
             line-height: 38px;
         }
 
-        @media (max-width: 600px) {
+@media (max-width: 600px) {
             h1 { font-size: 32px; }
             .logo { font-size: 28px; }
             .tagline { font-size: 16px; }
@@ -487,7 +529,7 @@
     </div>
 
     <!-- Lightbox overlay (image + video full size) -->
-    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Media viewer">
+    <div id="lightbox" class="lightbox mode-fit" aria-hidden="true" role="dialog" aria-label="Media viewer">
         <div class="lightbox-inner" role="document">
             <button class="lightbox-close" type="button" id="lightbox-close" aria-label="Close">×</button>
 
@@ -521,11 +563,36 @@
             const btnClose = document.getElementById('lightbox-close');
             const linkOriginal = document.getElementById('lightbox-open-original');
 
+            const btnModeFit = document.getElementById('lightbox-mode-fit');
+            const btnModeActual = document.getElementById('lightbox-mode-actual');
+
+            function setMode(mode) {
+                // mode: 'fit' | 'actual'
+                lightbox.classList.remove('mode-fit', 'mode-actual');
+                lightbox.classList.add(mode === 'actual' ? 'mode-actual' : 'mode-fit');
+
+                if (btnModeFit && btnModeActual) {
+                    btnModeFit.classList.toggle('is-active', mode !== 'actual');
+                    btnModeActual.classList.toggle('is-active', mode === 'actual');
+                }
+            }
+
+
             function openLightboxWithNode(node, originalHref) {
                 mediaHost.innerHTML = '';
                 mediaHost.appendChild(node);
 
+                // Double-click toggles between Fit and Actual size
+                node.addEventListener('dblclick', (ev) => {
+                    ev.preventDefault();
+                    const isActual = lightbox.classList.contains('mode-actual');
+                    setMode(isActual ? 'fit' : 'actual');
+                });
+
                 linkOriginal.href = originalHref || '#';
+
+                // Default to fit-to-window each time the lightbox opens
+                setMode('fit');
 
                 lightbox.classList.add('is-open');
                 lightbox.setAttribute('aria-hidden', 'false');
@@ -545,6 +612,9 @@
 
             // Close interactions
             btnClose.addEventListener('click', closeLightbox);
+            if (btnModeFit) btnModeFit.addEventListener('click', () => setMode('fit'));
+            if (btnModeActual) btnModeActual.addEventListener('click', () => setMode('actual'));
+
             lightbox.addEventListener('click', (e) => {
                 if (e.target === lightbox) closeLightbox();
             });
