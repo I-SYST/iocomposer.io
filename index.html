@@ -39,6 +39,7 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255,255,255,0.1);
         }
+        .screenshot-section a { display: block; }
         .screenshot {
             width: 100%;
             display: block;
@@ -50,6 +51,29 @@
             color: #94a3b8;
             text-align: center;
             margin: 0;
+        }
+        .video-section {
+            margin: 48px 0;
+            text-align: center;
+        }
+        .video-section h2 {
+            font-size: 24px;
+            margin-bottom: 24px;
+        }
+        .video-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+        .video-caption {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #94a3b8;
         }
         .features {
             display: grid;
@@ -66,6 +90,13 @@
         .feature h3 { font-size: 18px; margin-bottom: 8px; color: #fff; }
         .feature p { font-size: 14px; color: #94a3b8; line-height: 1.5; }
         .nordic-feature { position: relative; }
+        .ai-footnote {
+            font-size: 13px;
+            color: #64748b;
+            text-align: center;
+            margin: -24px 0 48px 0;
+            font-style: italic;
+        }
         .nordic-logo {
             height: 28px;
             width: auto;
@@ -80,22 +111,43 @@
             padding: 32px;
             margin: 48px 0;
         }
-        .pricing h2 { font-size: 24px; margin-bottom: 24px; }
+        .pricing h2 { font-size: 24px; margin-bottom: 8px; text-align: center; }
+        .pricing-note { text-align: center; color: #64748b; font-size: 13px; margin-bottom: 24px; }
         .plans {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 24px;
         }
+        .plans.three-tier { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
         .plan {
             background: rgba(0,0,0,0.2);
             border-radius: 12px;
             padding: 24px;
             text-align: left;
+            position: relative;
         }
-        .plan.pro { border: 2px solid #3b82f6; }
+        .plan.pro {
+            border: 2px solid #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .plan-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3b82f6;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
         .plan h3 { font-size: 20px; margin-bottom: 8px; }
-        .plan .price { font-size: 32px; font-weight: 700; margin-bottom: 16px; }
+        .plan .price { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
         .plan .price span { font-size: 14px; font-weight: 400; color: #94a3b8; }
+        .plan-desc { font-size: 13px; color: #64748b; margin-bottom: 16px; }
         .plan ul { list-style: none; }
         .plan li { padding: 6px 0; color: #94a3b8; font-size: 14px; }
         .plan li::before { content: "✓ "; color: #10b981; }
@@ -161,37 +213,196 @@
         }
         .copy-btn:hover { background: rgba(255,255,255,0.2); }
         .copy-btn.copied { background: rgba(16, 185, 129, 0.3); }
-        @media (max-width: 600px) {
+
+        /* ---- Full-size media viewer (lightbox) ---- */
+
+        /* Make screenshot feel clickable */
+        .screenshot { cursor: zoom-in; }
+
+        /* Optional: Full size button on video */
+        .video-container { position: relative; }
+        .video-full-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(0,0,0,0.45);
+            color: #fff;
+            border-radius: 10px;
+            padding: 8px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            user-select: none;
+            z-index: 2;
+        }
+        .video-full-btn:hover { background: rgba(0,0,0,0.6); }
+
+        /* Lightbox overlay */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 9999;
+        }
+        .lightbox.is-open { display: flex; }
+
+        .lightbox-inner {
+            position: relative;
+            width: 96vw;
+            max-width: 96vw;
+            height: 92vh;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .lightbox-media {
+            background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            overflow: auto; /* enables scroll in "Actual size" mode */
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1 1 auto;
+            min-height: 0; /* critical for flex children to size correctly */
+        }
+
+        /* Default: Fit-to-window (no cropping) */
+        .lightbox.mode-fit .lightbox-media img,
+        .lightbox.mode-fit .lightbox-media video {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            background: #000;
+        }
+
+        /* Actual size: show 1:1 pixels; scroll if needed */
+        .lightbox.mode-actual .lightbox-media {
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+        .lightbox.mode-actual .lightbox-media img,
+        .lightbox.mode-actual .lightbox-media video {
+            display: block;
+            max-width: none;
+            max-height: none;
+            width: auto;
+            height: auto;
+            object-fit: initial;
+            background: #000;
+        }
+
+        .lightbox-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex: 0 0 auto;
+        }
+
+        .lightbox-left-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .lightbox-link {
+            color: #93c5fd;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        .lightbox-link:hover { text-decoration: underline; }
+
+        .lightbox-mode-btn {
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(0,0,0,0.45);
+            color: #fff;
+            border-radius: 10px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            user-select: none;
+        }
+        .lightbox-mode-btn:hover { background: rgba(0,0,0,0.6); }
+        .lightbox-mode-btn.is-active {
+            border-color: rgba(59,130,246,0.9);
+            background: rgba(59,130,246,0.25);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 38px;
+        }
+
+@media (max-width: 600px) {
             h1 { font-size: 32px; }
             .logo { font-size: 28px; }
             .tagline { font-size: 16px; }
             .description { font-size: 16px; }
             .container { padding: 40px 20px; }
             .screenshot-section { margin: 32px 0; border-radius: 8px; }
+            .video-section { margin: 32px 0; }
+            .video-section h2 { font-size: 20px; }
+            .video-container { border-radius: 8px; }
             .install-section { padding: 24px 16px; }
             .install-command code { font-size: 11px; padding: 10px 12px; }
         }
     </style>
 </head>
 <body>
-    <div class="beta-banner">🚀 Preview Access — Free Pro features for all users during preview</div>
-    
+    <div class="beta-banner">🚀 Preview Access — Free Advanced features for all users during preview</div>
+
     <div class="container">
         <div class="logo">IO<span>composer</span></div>
         <p class="tagline">The MCU Firmware Orchestra!</p>
-        
+
         <h1>AI-Powered IDE for <span class="highlight">Embedded Development</span></h1>
-        
+
         <p class="description">
             Professional embedded firmware development with AI assistance. 
             Built on Eclipse Embedded CDT with the IOsonata framework.
         </p>
-        
+
         <div class="screenshot-section">
-            <img src="images/IOcomposer_AddSPI.png" alt="IOcomposer IDE showing AI-powered code validation" class="screenshot">
+            <a href="images/IOcomposer_AddSPI.png" class="js-open-image" aria-label="Open screenshot full size">
+                <img src="images/IOcomposer_AddSPI.png" alt="IOcomposer IDE showing AI-powered code validation" class="screenshot">
+            </a>
             <p class="screenshot-caption">AI detects hidden SPI pin inversion error — a subtle bug compilers miss — and suggests the fix</p>
         </div>
-        
+
+        <div class="video-section">
+            <h2>See It In Action</h2>
+            <div class="video-container">
+                <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
+                <video class="js-video" controls playsinline poster="images/IOcomposer_AddSPI.png">
+                    <source src="video/IOcomposer_WizardBLEPeriph.mp4" type="video/mp4">
+                    <source src="video/IOcomposer_WizardBLEPeriph.mov" type="video/quicktime">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p class="video-caption">Creating a BLE Peripheral project with the IOcomposer wizard</p>
+        </div>
+
         <div class="features">
             <div class="feature">
                 <h3>🤖 AI Assistant</h3>
@@ -206,7 +417,7 @@
                 <p>ST, Renesas, NXP, Microchip, and Nordic. Board-agnostic — one MCU port works on all board variants. No scripting, no BSP.</p>
             </div>
             <div class="feature nordic-feature">
-                <img src="images/nordic-semiconductor-logo.png" alt="Nordic Semiconductor" class="nordic-logo">
+                <img src="images/nordic-logo.png" alt="Nordic Semiconductor" class="nordic-logo">
                 <h3>📶 Nordic BLE Ready</h3>
                 <p>Full SoftDevice support for nRF52 and nRF54. BLE stack integration without the complexity.</p>
             </div>
@@ -215,11 +426,13 @@
                 <p>Debug, flash, serial monitor — everything you need in one IDE.</p>
             </div>
         </div>
-        
+
+        <p class="ai-footnote">* IOcomposer AI is purpose-built for embedded firmware development with IOsonata, vendor SDKs, and MCU programming — not a general-purpose chatbot.</p>
+
         <div class="install-section">
             <h2>Install</h2>
             <p class="install-note">Copy and paste in your terminal:</p>
-            
+
             <div class="install-option">
                 <div class="install-label">macOS</div>
                 <div class="install-command">
@@ -227,7 +440,7 @@
                     <button class="copy-btn" onclick="copyCommand('cmd-macos')" title="Copy to clipboard">📋</button>
                 </div>
             </div>
-            
+
             <div class="install-option">
                 <div class="install-label">Linux</div>
                 <div class="install-command">
@@ -235,7 +448,7 @@
                     <button class="copy-btn" onclick="copyCommand('cmd-linux')" title="Copy to clipboard">📋</button>
                 </div>
             </div>
-            
+
             <div class="install-option">
                 <div class="install-label">Windows <span class="install-hint">(PowerShell as Admin)</span></div>
                 <div class="install-command">
@@ -243,41 +456,66 @@
                     <button class="copy-btn" onclick="copyCommand('cmd-windows')" title="Copy to clipboard">📋</button>
                 </div>
             </div>
+            <p style="font-size: 12px; color: #64748b; margin-top: 24px; text-align: center; line-height: 1.5;">
+    By installing IOcomposer, you agree to the <a href="/terms" style="color: #3b82f6;">Terms of Service</a> and <a href="/privacy" style="color: #3b82f6;">Privacy Policy</a>.<br>
+    The installer may download third-party SDKs (e.g., Nordic) subject to their own <a href="/legal" style="color: #3b82f6;">license terms</a>.
+</p>
         </div>
 
         <div class="pricing">
             <h2>Simple Pricing</h2>
-            <div class="plans">
-                <div class="plan">
-                    <h3>Free</h3>
-                    <div class="price">$0 <span>/month</span></div>
-                    <ul>
-                        <li>30 AI queries/month</li>
-                        <li>Full IDE features</li>
-                        <li>Debug & flash</li>
-                        <li>Community support</li>
-                    </ul>
-                </div>
-                <div class="plan pro">
-                    <h3>Pro</h3>
-                    <div class="price">$19.95 <span>/month</span></div>
-                    <ul>
-                        <li>500 AI queries/month</li>
-                        <li>Advanced models</li>
-                        <li>Priority support</li>
-                        <li>Early access to features</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
+            <p class="pricing-note">Plans and pricing subject to change. We'll notify users of any updates.</p>
+
+
+<div class="plans three-tier">
+    <div class="plan">
+        <h3>Free</h3>
+        <div class="price">$0 <span>/month</span></div>
+        <p class="plan-desc">Test the waters</p>
+        <ul>
+            <li>20 AI queries/month</li>
+            <li>Fast models (Mini/Haiku)</li> <li>Full IDE features</li>
+            <li>Debug & flash</li>
+        </ul>
+    </div>
+    <div class="plan pro">
+        <div class="plan-badge">Most Popular</div>
+        <h3>Advanced</h3>
+        <div class="price">$19.95 <span>/month</span></div>
+        <p class="plan-desc">Daily development</p>
+        <ul>
+            <li>250 AI queries/month*</li> <li>Adaptive Intelligence (Router)</li>
+            <li>File uploads (Max 5MB)</li>
+            <li>Standard context memory</li>
+            <li>Priority support</li>
+        </ul>
+        <p style="font-size: 11px; color: #64748b; margin-top: 12px; font-style: italic;">
+            *Complex queries (e.g. large file analysis) may consume >1 query credit.
+        </p>
+    </div>
+    <div class="plan">
+        <h3>Pro</h3>
+        <div class="price">$49.95 <span>/month</span></div>
+        <p class="plan-desc">Heavy research & code</p>
+        <ul>
+            <li>1,000 AI queries/month*</li> <li>Max Intelligence</li>
+            <li>Large file uploads (Max 50MB)</li>
+            <li>Extended context memory</li>
+            <li>Priority support</li>
+        </ul>
+        <p style="font-size: 11px; color: #64748b; margin-top: 12px; font-style: italic;">
+            *Complex queries may consume >1 query credit.
+        </p>
+    </div>
+</div>
+
         <div class="cta">
             <p>IOcomposer is currently in preview.</p>
             <div class="download-note">
                 Join the preview — Contact us at <a href="mailto:info@i-syst.com">info@i-syst.com</a>
             </div>
         </div>
-        
+
         <footer>
             <div class="footer-links">
                 <a href="https://iosonata.io">IOsonata</a>
@@ -286,9 +524,24 @@
                 <a href="/privacy">Privacy</a>
                 <a href="/legal">Legal</a>
             </div>
-            <p>© 2025 I-SYST Inc. All rights reserved.</p>
+<p>© 2026 <a href="https://www.i-syst.com" target="_blank" style="color: #94a3b8; text-decoration: underline;">I-SYST Inc.</a> All rights reserved. Engineering in Boucherville, QC.</p>
         </footer>
     </div>
+
+    <!-- Lightbox overlay (image + video full size) -->
+    <div id="lightbox" class="lightbox mode-fit" aria-hidden="true" role="dialog" aria-label="Media viewer">
+        <div class="lightbox-inner" role="document">
+            <button class="lightbox-close" type="button" id="lightbox-close" aria-label="Close">×</button>
+
+            <div class="lightbox-media" id="lightbox-media"></div>
+
+            <div class="lightbox-actions">
+                <a class="lightbox-link" id="lightbox-open-original" href="#" target="_blank" rel="noopener">Open original</a>
+                <span style="font-size: 12px; color: #64748b;">Press Esc to close</span>
+            </div>
+        </div>
+    </div>
+
     <script>
         function copyCommand(id) {
             const code = document.getElementById(id).textContent;
@@ -302,6 +555,129 @@
                 }, 2000);
             });
         }
+
+        // --- Full-size media viewer (lightbox) ---
+        (function () {
+            const lightbox = document.getElementById('lightbox');
+            const mediaHost = document.getElementById('lightbox-media');
+            const btnClose = document.getElementById('lightbox-close');
+            const linkOriginal = document.getElementById('lightbox-open-original');
+
+            const btnModeFit = document.getElementById('lightbox-mode-fit');
+            const btnModeActual = document.getElementById('lightbox-mode-actual');
+
+            function setMode(mode) {
+                // mode: 'fit' | 'actual'
+                lightbox.classList.remove('mode-fit', 'mode-actual');
+                lightbox.classList.add(mode === 'actual' ? 'mode-actual' : 'mode-fit');
+
+                if (btnModeFit && btnModeActual) {
+                    btnModeFit.classList.toggle('is-active', mode !== 'actual');
+                    btnModeActual.classList.toggle('is-active', mode === 'actual');
+                }
+            }
+
+
+            function openLightboxWithNode(node, originalHref) {
+                mediaHost.innerHTML = '';
+                mediaHost.appendChild(node);
+
+                // Double-click toggles between Fit and Actual size
+                node.addEventListener('dblclick', (ev) => {
+                    ev.preventDefault();
+                    const isActual = lightbox.classList.contains('mode-actual');
+                    setMode(isActual ? 'fit' : 'actual');
+                });
+
+                linkOriginal.href = originalHref || '#';
+
+                // Default to fit-to-window each time the lightbox opens
+                setMode('fit');
+
+                lightbox.classList.add('is-open');
+                lightbox.setAttribute('aria-hidden', 'false');
+
+                btnClose.focus();
+            }
+
+            function closeLightbox() {
+                const vid = mediaHost.querySelector('video');
+                if (vid) {
+                    try { vid.pause(); } catch (_) {}
+                }
+                mediaHost.innerHTML = '';
+                lightbox.classList.remove('is-open');
+                lightbox.setAttribute('aria-hidden', 'true');
+            }
+
+            // Close interactions
+            btnClose.addEventListener('click', closeLightbox);
+            if (btnModeFit) btnModeFit.addEventListener('click', () => setMode('fit'));
+            if (btnModeActual) btnModeActual.addEventListener('click', () => setMode('actual'));
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+            });
+
+            // Image click -> lightbox
+            document.querySelectorAll('a.js-open-image').forEach(a => {
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const img = a.querySelector('img');
+                    if (!img) return;
+
+                    const fullSrc = a.getAttribute('href') || img.src;
+
+                    const fullImg = document.createElement('img');
+                    fullImg.src = fullSrc;
+                    fullImg.alt = img.alt || 'Image';
+
+                    openLightboxWithNode(fullImg, fullSrc);
+                });
+            });
+
+            // Video full-size -> lightbox
+            document.querySelectorAll('.js-open-video').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const video = document.querySelector('video.js-video');
+                    if (!video) return;
+
+                    // Build a new video element so we don’t steal the inline player
+                    const fullVid = document.createElement('video');
+                    fullVid.controls = true;
+                    fullVid.playsInline = true;
+                    fullVid.autoplay = true;
+
+                    const poster = video.getAttribute('poster');
+                    if (poster) fullVid.setAttribute('poster', poster);
+
+                    const sources = video.querySelectorAll('source');
+                    sources.forEach(s => {
+                        const ns = document.createElement('source');
+                        ns.src = s.getAttribute('src');
+                        ns.type = s.getAttribute('type');
+                        fullVid.appendChild(ns);
+                    });
+
+                    const mp4 = video.querySelector('source[type="video/mp4"]');
+                    const originalHref = mp4 ? mp4.getAttribute('src') : (sources[0] ? sources[0].getAttribute('src') : '#');
+
+                    openLightboxWithNode(fullVid, originalHref);
+                });
+            });
+
+            // Optional: double-click the inline video to open full size
+            const inlineVideo = document.querySelector('video.js-video');
+            if (inlineVideo) {
+                inlineVideo.addEventListener('dblclick', () => {
+                    const btn = document.querySelector('.js-open-video');
+                    if (btn) btn.click();
+                });
+            }
+        })();
     </script>
 </body>
 </html>
