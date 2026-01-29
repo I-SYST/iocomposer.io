@@ -19,7 +19,7 @@ iwr -useb https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/master/
 # Install IOComposer AI manually
 $EclipseDropins = "$env:ProgramFiles\Eclipse Embedded CDT\dropins"
 $PluginName     = "com.iocomposer.embedcdt.ai"
-$PluginUrl      = "http://com.iocomposer.embedcdt.ai/"
+$PluginUrl      = "https://github.com/I-SYST/iocomposer.io/raw/main/plugin/com.iocomposer.embedcdt.ai_0.0.22.jar"
 $OutputJar      = "$EclipseDropins\com.iocomposer.embedcdt.ai.jar"
 
 Write-Host "\n>>> Post-Install: Adding AI Plugin ($PluginName)..." -ForegroundColor Cyan

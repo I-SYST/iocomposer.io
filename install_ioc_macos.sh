@@ -21,7 +21,7 @@ echo "=========================================="
 ECLIPSE_APP="/Applications/Eclipse.app"
 DROPINS_DIR="$ECLIPSE_APP/Contents/Eclipse/dropins"
 PLUGIN_NAME="com.iocomposer.embedcdt.ai"
-PLUGIN_URL="http://com.iocomposer.embedcdt.ai/"
+PLUGIN_URL="https://github.com/I-SYST/iocomposer.io/raw/main/plugin/com.iocomposer.embedcdt.ai_0.0.22.jar"
 OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ai.jar"
 
 INSTALLER_URL="https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/master/Installer/install_iocdevtools_macos.sh"
