@@ -21,7 +21,7 @@ echo "=========================================="
 ECLIPSE_APP="/Applications/Eclipse.app"
 DROPINS_DIR="$ECLIPSE_APP/Contents/Eclipse/dropins"
 
-# AI plugin discovery (override supported via IOCOMPOSER_AI_PLUGIN_URL)
+# AI plugin discovery
 PLUGIN_NAME="com.iocomposer.embedcdt.ai"
 PLUGIN_REPO="I-SYST/iocomposer.io"
 PLUGIN_REPO_BRANCH="main"
