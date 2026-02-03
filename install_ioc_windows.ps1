@@ -154,4 +154,39 @@ if (Test-Path $EclipseDir) {
     exit 1
 }
 
+# ---------------------------------------------------------
+# POST-INSTALL: Build External SDK Index (RAG)
+# ---------------------------------------------------------
+Write-Host ""
+Write-Host ">>> Post-Install: Building external SDK index..." -ForegroundColor Cyan
+
+# Default SDK Root (matches main installer default)
+$SdkRoot = "$env:USERPROFILE\IOcomposer"
+$IndexScript = "$SdkRoot\IOsonata\Installer\build_external_index.py"
+$ExternalSdkPath = "$SdkRoot\external"
+
+if (Test-Path $IndexScript) {
+    # Check if python is available
+    if (Get-Command "python" -ErrorAction SilentlyContinue) {
+        Write-Host "  Running: python $IndexScript --sdk-root $ExternalSdkPath"
+        
+        # Execute Python script and check the exit code ($LASTEXITCODE)
+        & python "$IndexScript" --sdk-root "$ExternalSdkPath"
+        
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "  [OK] External SDK index built." -ForegroundColor Green
+        } else {
+            Write-Host "  [WARNING] External SDK index build failed." -ForegroundColor Yellow
+            Write-Host "     You can retry manually with:" -ForegroundColor Yellow
+            Write-Host "     python `"$IndexScript`" --sdk-root `"$ExternalSdkPath`"" -ForegroundColor Yellow
+        }
+    } else {
+        Write-Host "  [WARNING] 'python' command not found. Skipping external SDK index build." -ForegroundColor Yellow
+    }
+} else {
+    Write-Host "  [WARNING] Index script not found at: $IndexScript" -ForegroundColor Yellow
+    Write-Host "     Skipping external SDK index build." -ForegroundColor Yellow
+}
+
+Write-Host ""
 Write-Host ">>> Setup complete." -ForegroundColor Green

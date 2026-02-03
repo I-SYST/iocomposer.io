@@ -96,8 +96,6 @@ discover_latest_plugin_url() {
   echo "https://github.com/${PLUGIN_REPO}/raw/${PLUGIN_REPO_BRANCH}/${PLUGIN_DIR_PATH}/${best_file}"
 }
 
-
-
 # ---------------------------------------------------------
 # DOWNLOAD AND RUN MAIN INSTALLER
 # ---------------------------------------------------------
@@ -185,4 +183,30 @@ else
     exit 1
 fi
 
+# ---------------------------------------------------------
+# POST-INSTALL: Build External SDK Index (RAG)
+# ---------------------------------------------------------
+echo ""
+echo ">>> Post-Install: Building external SDK index..."
+INDEX_SCRIPT="$SDK_ROOT/IOsonata/Installer/build_external_index.py"
+
+if [ -f "$INDEX_SCRIPT" ]; then
+  if command -v python3 >/dev/null 2>&1; then
+    echo "  Running: python3 $INDEX_SCRIPT --sdk-root $SDK_ROOT/external"
+    if python3 "$INDEX_SCRIPT" --sdk-root "$SDK_ROOT/external"; then
+      echo "  [OK] External SDK index built."
+    else
+      echo "  [WARN] External SDK index build failed."
+      echo "         You can retry manually with:"
+      echo "         python3 $INDEX_SCRIPT --sdk-root $SDK_ROOT/external"
+    fi
+  else
+    echo "  [WARN] python3 not found. Skipping external SDK index build."
+  fi
+else
+  echo "  [WARN] Index script not found at: $INDEX_SCRIPT"
+  echo "         Skipping external SDK index build."
+fi
+
+echo ""
 echo ">>> Setup complete."
