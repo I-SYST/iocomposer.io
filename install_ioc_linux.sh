@@ -119,7 +119,17 @@ fi
 chmod +x "$TEMP_INSTALLER"
 
 echo ">>> Launching Main Installer..."
-bash "$TEMP_INSTALLER" "$@"
+
+if [ -t 0 ]; then
+  bash "$TEMP_INSTALLER" "$@"
+elif [ -r /dev/tty ]; then
+  bash "$TEMP_INSTALLER" "$@" </dev/tty
+else
+  echo "❌ No TTY available for interactive prompts."
+  echo "   Run instead:"
+  echo "   curl -fsSL https://iocomposer.io/install_ioc_linux.sh -o /tmp/install.sh && bash /tmp/install.sh"
+  exit 1
+fi
 
 # ---------------------------------------------------------
 # POST-INSTALL: AI PLUGIN
@@ -134,6 +144,20 @@ if [ -d "$ECLIPSE_DIR" ]; then
     if [ ! -d "$DROPINS_DIR" ]; then
         echo "  Creating dropins directory..."
         mkdir -p "$DROPINS_DIR"
+    fi
+
+    # Discover latest plugin URL if not overridden
+    if [ -z "$PLUGIN_URL" ]; then
+      echo "  Discovering latest AI plugin from GitHub..."
+      if ! PLUGIN_URL="$(discover_latest_plugin_url)"; then
+        echo "  ⚠️  Failed to discover latest plugin JAR for: $PLUGIN_ID"
+        echo "     You can override by setting IOCOMPOSER_AI_PLUGIN_URL to a direct JAR URL."
+        echo ">>> Setup complete (without AI plugin)."
+        exit 0
+      fi
+      echo "  Latest plugin URL: $PLUGIN_URL"
+    else
+      echo "  Using overridden plugin URL: $PLUGIN_URL"
     fi
 
     # Download to a temporary location first
