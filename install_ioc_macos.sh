@@ -21,7 +21,7 @@ echo "=========================================="
 ECLIPSE_APP="/Applications/Eclipse.app"
 DROPINS_DIR="$ECLIPSE_APP/Contents/Eclipse/dropins"
 
-# AI plugin discovery
+# AI plugin discovery (override supported via IOCOMPOSER_AI_PLUGIN_URL)
 PLUGIN_NAME="com.iocomposer.embedcdt.ai"
 PLUGIN_REPO="I-SYST/iocomposer.io"
 PLUGIN_REPO_BRANCH="main"
@@ -31,6 +31,19 @@ PLUGIN_URL="${IOCOMPOSER_AI_PLUGIN_URL:-}"
 OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ai.jar"
 
 INSTALLER_URL="https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/master/Installer/install_iocdevtools_macos.sh"
+
+# SDK root (where IOsonata/external live). Default matches the main installer.
+SDK_ROOT="$HOME/IOcomposer"
+
+# If caller passed --home <path>, respect it (without consuming $@)
+ARGS=("$@")
+for ((i=0; i<${#ARGS[@]}; i++)); do
+  if [[ "${ARGS[$i]}" == "--home" ]] && (( i+1 < ${#ARGS[@]} )); then
+    SDK_ROOT="${ARGS[$((i+1))]}"
+    break
+  fi
+done
+
 
 # ---------------------------------------------------------
 # Helpers
@@ -179,4 +192,33 @@ else
   exit 1
 fi
 
+# ---------------------------------------------------------
+# POST-INSTALL: Build External SDK Index (RAG)
+# ---------------------------------------------------------
+echo ""
+echo ">>> Post-Install: Building external SDK index..."
+INDEX_SCRIPT="$SDK_ROOT/IOsonata/Installer/build_external_index.py"
+
+if [ -f "$INDEX_SCRIPT" ]; then
+  if command -v python3 >/dev/null 2>&1; then
+    echo "  Running: python3 $INDEX_SCRIPT --sdk-root $SDK_ROOT/external"
+    if python3 "$INDEX_SCRIPT" --sdk-root "$SDK_ROOT/external"; then
+      echo "  [OK] External SDK index built."
+    else
+      echo "  [WARN] External SDK index build failed."
+      echo "         You can retry manually with:"
+      echo "         python3 "$INDEX_SCRIPT" --sdk-root "$SDK_ROOT/external""
+    fi
+  else
+    echo "  [WARN] python3 not found. Skipping external SDK index build."
+  fi
+else
+  echo "  [WARN] Index script not found at: $INDEX_SCRIPT"
+  echo "         Skipping external SDK index build."
+fi
+
 echo ">>> Setup complete."
+echo ""
+echo ">>> Launch Eclipse and register your free AI subscription <<<"
+echo ""
+
