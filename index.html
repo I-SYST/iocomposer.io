@@ -214,6 +214,33 @@
         .copy-btn:hover { background: rgba(255,255,255,0.2); }
         .copy-btn.copied { background: rgba(16, 185, 129, 0.3); }
 
+
+.enable-section {
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 32px;
+    margin: 48px 0;
+    text-align: left;
+}
+.enable-section h2 { font-size: 24px; margin-bottom: 8px; text-align: center; }
+.enable-note { text-align: center; color: #64748b; font-size: 14px; margin-bottom: 18px; }
+.enable-steps {
+    margin: 0 auto 14px auto;
+    padding-left: 20px;
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 640px;
+}
+.enable-steps li { margin: 8px 0; }
+.enable-footnote {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #64748b;
+    text-align: center;
+}
+
+
         /* ---- Full-size media viewer (lightbox) ---- */
 
         /* Make screenshot feel clickable */
@@ -370,11 +397,11 @@
     </style>
 </head>
 <body>
-    <div class="beta-banner">🚀 Preview Access — Free Advanced features for all users during preview</div>
+    <div class="beta-banner">🚀 Preview Access — Create a free account in the IDE to enable AI Chat (Advanced features enabled during preview)</div>
 
     <div class="container">
         <div class="logo">IO<span>composer</span></div>
-        <p class="tagline">The MCU Firmware Orchestra!</p>
+        <p class="tagline">Start like Arduino, grow like a pro — without switching tools.</p>
 
         <h1>AI-Powered IDE for <span class="highlight">Embedded Development</span></h1>
 
@@ -406,7 +433,7 @@
         <div class="features">
             <div class="feature">
                 <h3>🤖 AI Assistant</h3>
-                <p>Claude-powered AI that understands embedded development, IOsonata, and your MCU.</p>
+                <p>AI assistant tuned for embedded firmware, IOsonata, and vendor SDKs — built for prompt‑to‑flash workflows.</p>
             </div>
             <div class="feature">
                 <h3>⚡ Quick Start</h3>
@@ -431,12 +458,12 @@
 
         <div class="install-section">
             <h2>Install</h2>
-            <p class="install-note">Copy and paste in your terminal:</p>
+            <p class="install-note">Copy/paste in your terminal (download‑then‑run avoids interactive prompt issues):</p>
 
             <div class="install-option">
                 <div class="install-label">macOS</div>
                 <div class="install-command">
-                    <code id="cmd-macos">curl -sSL https://iocomposer.io/install_ioc_macos.sh | bash</code>
+                    <code id="cmd-macos">curl -fsSL https://iocomposer.io/install_ioc_macos.sh -o /tmp/install_ioc_macos.sh && bash /tmp/install_ioc_macos.sh</code>
                     <button class="copy-btn" onclick="copyCommand('cmd-macos')" title="Copy to clipboard">📋</button>
                 </div>
             </div>
@@ -444,7 +471,7 @@
             <div class="install-option">
                 <div class="install-label">Linux</div>
                 <div class="install-command">
-                    <code id="cmd-linux">curl -sSL https://iocomposer.io/install_ioc_linux.sh | bash</code>
+                    <code id="cmd-linux">curl -fsSL https://iocomposer.io/install_ioc_linux.sh -o /tmp/install_ioc_linux.sh && bash /tmp/install_ioc_linux.sh</code>
                     <button class="copy-btn" onclick="copyCommand('cmd-linux')" title="Copy to clipboard">📋</button>
                 </div>
             </div>
@@ -452,7 +479,7 @@
             <div class="install-option">
                 <div class="install-label">Windows <span class="install-hint">(PowerShell as Admin)</span></div>
                 <div class="install-command">
-                    <code id="cmd-windows">irm https://iocomposer.io/install_ioc_windows.ps1 | iex</code>
+                    <code id="cmd-windows">powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://iocomposer.io/install_ioc_windows.ps1 | iex"</code>
                     <button class="copy-btn" onclick="copyCommand('cmd-windows')" title="Copy to clipboard">📋</button>
                 </div>
             </div>
@@ -462,9 +489,22 @@
 </p>
         </div>
 
+<div class="enable-section">
+    <h2>Enable AI Chat</h2>
+    <p class="enable-note">A free account is required to unlock AI features (no payment needed for Free tier).</p>
+
+    <ol class="enable-steps">
+        <li>Install IOcomposer (above), then launch the IDE.</li>
+        <li>Open <strong>Preferences</strong> → <strong>IOcomposer</strong> → <strong>Account</strong>.</li>
+        <li>Click <strong>Create free account</strong> (or <strong>Sign in</strong>) to enable AI Chat.</li>
+    </ol>
+
+    <p class="enable-footnote">Tip: If AI Chat is disabled, the Chat panel will show a sign‑in prompt and a shortcut to the Preferences page.</p>
+</div>
+
         <div class="pricing">
             <h2>Simple Pricing</h2>
-            <p class="pricing-note">Plans and pricing subject to change. We'll notify users of any updates.</p>
+            <p class="pricing-note">During preview, Advanced features are enabled for all accounts. Pricing below reflects target launch plans and may change.</p>
 
 
 <div class="plans three-tier">
@@ -510,7 +550,7 @@
 </div>
 
         <div class="cta">
-            <p>IOcomposer is currently in preview.<br/>Launch Eclipse IDE to register your free preview period</p>
+            <p>IOcomposer is currently in preview.<br/>Enable AI Chat: Preferences → IOcomposer → Account → Create free account / Sign in</p>
             <div class="download-note">
                 Join the preview — Contact us at <a href="mailto:info@i-syst.com">info@i-syst.com</a>
             </div>
@@ -536,25 +576,60 @@
             <div class="lightbox-media" id="lightbox-media"></div>
 
             <div class="lightbox-actions">
-                <a class="lightbox-link" id="lightbox-open-original" href="#" target="_blank" rel="noopener">Open original</a>
-                <span style="font-size: 12px; color: #64748b;">Press Esc to close</span>
-            </div>
+    <div class="lightbox-left-actions">
+        <button class="lightbox-mode-btn is-active" type="button" id="lightbox-mode-fit" title="Fit to window">Fit</button>
+        <button class="lightbox-mode-btn" type="button" id="lightbox-mode-actual" title="Show at 1:1 pixels">Actual size</button>
+        <a class="lightbox-link" id="lightbox-open-original" href="#" target="_blank" rel="noopener">Open original</a>
+    </div>
+    <span style="font-size: 12px; color: #64748b;">Esc to close • Double‑click to toggle</span>
+</div>
         </div>
     </div>
 
     <script>
         function copyCommand(id) {
-            const code = document.getElementById(id).textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                const btn = document.querySelector('#' + id + ' + .copy-btn');
-                btn.textContent = '✓';
-                btn.classList.add('copied');
-                setTimeout(() => {
-                    btn.textContent = '📋';
-                    btn.classList.remove('copied');
-                }, 2000);
-            });
+    const codeEl = document.getElementById(id);
+    if (!codeEl) return;
+
+    const text = codeEl.textContent;
+    const container = codeEl.closest('.install-command') || codeEl.parentElement;
+    const btn = container ? container.querySelector('.copy-btn') : null;
+
+    const setCopied = () => {
+        if (!btn) return;
+        btn.textContent = '✓';
+        btn.classList.add('copied');
+        window.setTimeout(() => {
+            btn.textContent = '📋';
+            btn.classList.remove('copied');
+        }, 2000);
+    };
+
+    const fallbackCopy = () => {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.top = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+            document.execCommand('copy');
+            setCopied();
+        } catch (_) {
+            // ignore
+        } finally {
+            document.body.removeChild(ta);
         }
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(setCopied).catch(fallbackCopy);
+    } else {
+        fallbackCopy();
+    }
+}
+
 
         // --- Full-size media viewer (lightbox) ---
         (function () {
