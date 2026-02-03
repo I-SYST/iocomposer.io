@@ -47,7 +47,20 @@ fi
 chmod +x "$TEMP_INSTALLER"
 
 echo ">>> Launching Main Installer..."
-bash "$TEMP_INSTALLER" "$@"
+echo ">>> Launching Main Installer..."
+
+if [ -t 0 ]; then
+  # Normal run (stdin is already the terminal)
+  bash "$TEMP_INSTALLER" "$@"
+elif [ -r /dev/tty ]; then
+  # Running from a pipe: give the child script the controlling terminal for prompts
+  bash "$TEMP_INSTALLER" "$@" </dev/tty
+else
+  echo "❌ No TTY available for interactive prompts."
+  echo "   Run instead:"
+  echo "   curl -fsSL https://iocomposer.io/install_ioc_macos.sh -o /tmp/install.sh && bash /tmp/install.sh"
+  exit 1
+fi
 
 # ---------------------------------------------------------
 # POST-INSTALL: AI PLUGIN
