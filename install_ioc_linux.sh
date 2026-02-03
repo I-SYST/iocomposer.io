@@ -26,7 +26,7 @@ PLUGIN_NAME="com.iocomposer.embedcdt.ai"
 PLUGIN_REPO="I-SYST/iocomposer.io"
 PLUGIN_REPO_BRANCH="main"
 PLUGIN_DIR_PATH="plugin"
-PLUGIN_ID="plugin"
+PLUGIN_ID="com.iocomposer.embedcdt.ai"
 PLUGIN_URL="${IOCOMPOSER_AI_PLUGIN_URL:-}"
 OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ai.jar"
 
@@ -96,6 +96,8 @@ discover_latest_plugin_url() {
   echo "https://github.com/${PLUGIN_REPO}/raw/${PLUGIN_REPO_BRANCH}/${PLUGIN_DIR_PATH}/${best_file}"
 }
 
+
+
 # ---------------------------------------------------------
 # DOWNLOAD AND RUN MAIN INSTALLER
 # ---------------------------------------------------------
@@ -117,19 +119,7 @@ fi
 chmod +x "$TEMP_INSTALLER"
 
 echo ">>> Launching Main Installer..."
-
-if [ -t 0 ]; then
-  # Normal run (stdin is already the terminal)
-  bash "$TEMP_INSTALLER" "$@"
-elif [ -r /dev/tty ]; then
-  # Running from a pipe: give the child script the controlling terminal for prompts
-  bash "$TEMP_INSTALLER" "$@" </dev/tty
-else
-  echo "❌ No TTY available for interactive prompts."
-  echo "   Run instead:"
-  echo "   curl -fsSL https://iocomposer.io/install_ioc_linux.sh -o /tmp/install.sh && bash /tmp/install.sh"
-  exit 1
-fi
+bash "$TEMP_INSTALLER" "$@"
 
 # ---------------------------------------------------------
 # POST-INSTALL: AI PLUGIN
@@ -143,24 +133,7 @@ if [ -d "$ECLIPSE_DIR" ]; then
     # Make sure dropins folder exists
     if [ ! -d "$DROPINS_DIR" ]; then
         echo "  Creating dropins directory..."
-        sudo mkdir -p "$DROPINS_DIR"
-    fi
-
-    # Discover latest plugin URL if not overridden
-    if [ -z "$PLUGIN_URL" ]; then
-      echo "  Discovering latest AI plugin from GitHub..."
-      if ! PLUGIN_URL="$(discover_latest_plugin_url)"; then
-        echo "  ⚠️  Failed to discover latest plugin JAR for: $PLUGIN_ID"
-        echo "     You can override by setting IOCOMPOSER_AI_PLUGIN_URL to a direct JAR URL."
-        echo "     The plugin may not be available yet."
-        echo "     You can install it manually later."
-        # Don't exit with error - plugin is optional on Linux
-        echo ">>> Setup complete (without AI plugin)."
-        exit 0
-      fi
-      echo "  Latest plugin URL: $PLUGIN_URL"
-    else
-      echo "  Using overridden plugin URL: $PLUGIN_URL"
+        mkdir -p "$DROPINS_DIR"
     fi
 
     # Download to a temporary location first
