@@ -217,6 +217,7 @@ else
   echo "         Skipping external SDK index build."
 fi
 
+echo ""
 echo ">>> Setup complete."
 echo ""
 echo ">>> Launch Eclipse and register your free AI subscription <<<"
