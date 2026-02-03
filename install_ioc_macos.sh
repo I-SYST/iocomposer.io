@@ -20,11 +20,82 @@ echo "=========================================="
 # ---------------------------------------------------------
 ECLIPSE_APP="/Applications/Eclipse.app"
 DROPINS_DIR="$ECLIPSE_APP/Contents/Eclipse/dropins"
+
+# AI plugin discovery (override supported via IOCOMPOSER_AI_PLUGIN_URL)
 PLUGIN_NAME="com.iocomposer.embedcdt.ai"
-PLUGIN_URL="https://github.com/I-SYST/iocomposer.io/raw/main/plugin/com.iocomposer.embedcdt.ai_0.0.22.jar"
+PLUGIN_REPO="I-SYST/iocomposer.io"
+PLUGIN_REPO_BRANCH="main"
+PLUGIN_DIR_PATH="plugin"
+PLUGIN_ID="com.iocomposer.embedcdt.ai"
+PLUGIN_URL="${IOCOMPOSER_AI_PLUGIN_URL:-}"
 OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ai.jar"
 
 INSTALLER_URL="https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/master/Installer/install_iocdevtools_macos.sh"
+
+# ---------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------
+version_key() {
+  # Turn a dotted version like 0.0.22 into a lexicographically sortable key.
+  # macOS uses BSD sort (no -V), so we compare padded strings in bash.
+  local ver="$1"
+  local key=""
+  local IFS='.'
+  local parts=()
+  read -ra parts <<< "$ver"
+
+  local p=""
+  for p in "${parts[@]}"; do
+    key="${key}$(printf '%05d' "$p")"
+  done
+
+  # pad to 6 segments: 1.2 == 1.2.0.0.0.0
+  local i=0
+  for ((i=${#parts[@]}; i<6; i++)); do
+    key="${key}00000"
+  done
+
+  echo "$key"
+}
+
+discover_latest_plugin_url() {
+  local api="https://api.github.com/repos/${PLUGIN_REPO}/contents/${PLUGIN_DIR_PATH}?ref=${PLUGIN_REPO_BRANCH}"
+  local json=""
+
+  json="$(curl -fsSL -H 'Accept: application/vnd.github+json' -H 'User-Agent: iocomposer-installer' "$api")" || return 1
+
+  # Extract "name" fields (avoid jq dependency)
+  local names=""
+  names="$(echo "$json" | grep -oE '"name"[[:space:]]*:[[:space:]]*"[^"]+"' | sed -E 's/.*"name"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/')" || true
+
+  local best_file=""
+  local best_key=""
+
+  local f=""
+  while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    [[ "$f" == ${PLUGIN_ID}_*.jar ]] || continue
+
+    local ver="${f#${PLUGIN_ID}_}"
+    ver="${ver%.jar}"
+
+    # Accept numeric dotted versions like 0.0.22
+    if [[ ! "$ver" =~ ^[0-9]+(\.[0-9]+)*$ ]]; then
+      continue
+    fi
+
+    local key
+    key="$(version_key "$ver")"
+
+    if [[ -z "$best_key" || "$key" > "$best_key" ]]; then
+      best_key="$key"
+      best_file="$f"
+    fi
+  done <<< "$names"
+
+  [ -n "$best_file" ] || return 1
+  echo "https://github.com/${PLUGIN_REPO}/raw/${PLUGIN_REPO_BRANCH}/${PLUGIN_DIR_PATH}/${best_file}"
+}
 
 # ---------------------------------------------------------
 # DOWNLOAD AND RUN MAIN INSTALLER
@@ -32,21 +103,19 @@ INSTALLER_URL="https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/ma
 echo ">>> Downloading Main Installer..."
 TEMP_INSTALLER=$(mktemp /tmp/install_iocdevtools_macos.XXXXXX.sh)
 
-# Cleanup on exit
 cleanup() {
-    rm -f "$TEMP_INSTALLER" 2>/dev/null || true
+  rm -f "$TEMP_INSTALLER" 2>/dev/null || true
 }
 trap cleanup EXIT
 
 if ! curl -fsSL "$INSTALLER_URL" -o "$TEMP_INSTALLER"; then
-    echo "❌ Failed to download installer from:"
-    echo "   $INSTALLER_URL"
-    exit 1
+  echo "❌ Failed to download installer from:"
+  echo "   $INSTALLER_URL"
+  exit 1
 fi
 
 chmod +x "$TEMP_INSTALLER"
 
-echo ">>> Launching Main Installer..."
 echo ">>> Launching Main Installer..."
 
 if [ -t 0 ]; then
@@ -71,32 +140,43 @@ echo ">>> Post-Install: Adding AI Plugin ($PLUGIN_NAME)..."
 # Check if Eclipse is installed
 if [ -d "$ECLIPSE_APP" ]; then
 
-    # Make sure dropins folder exists
-    if [ ! -d "$DROPINS_DIR" ]; then
-        echo "  Creating dropins directory..."
-        sudo mkdir -p "$DROPINS_DIR"
+  # Make sure dropins folder exists
+  if [ ! -d "$DROPINS_DIR" ]; then
+    echo "  Creating dropins directory..."
+    sudo mkdir -p "$DROPINS_DIR"
+  fi
+
+  # Discover latest plugin URL if not overridden
+  if [ -z "$PLUGIN_URL" ]; then
+    echo "  Discovering latest AI plugin from GitHub..."
+    if ! PLUGIN_URL="$(discover_latest_plugin_url)"; then
+      echo "  [ERROR] Failed to discover latest plugin JAR for: $PLUGIN_ID"
+      echo "          You can override by setting IOCOMPOSER_AI_PLUGIN_URL to a direct JAR URL."
+      exit 1
     fi
+    echo "  Latest plugin URL: $PLUGIN_URL"
+  else
+    echo "  Using overridden plugin URL: $PLUGIN_URL"
+  fi
 
-    # Download to a temporary location first
-    TMP_JAR=$(mktemp)
-    echo "  Downloading from $PLUGIN_URL..."
+  # Download to a temporary location first
+  TMP_JAR=$(mktemp)
+  echo "  Downloading from $PLUGIN_URL..."
 
-    # Move to dropin folder if succesful download
-    if curl -fL "$PLUGIN_URL" -o "$TMP_JAR"; then
-        echo "  Installing to $DROPINS_DIR..."
-        sudo mv "$TMP_JAR" "$OUTPUT_JAR"
-        sudo chmod 644 "$OUTPUT_JAR"
-        echo "  [OK] AI Plugin installed successfully: $OUTPUT_JAR"
-
-    # Otherwise, delete the temporary folder
-    else
-        echo "  [ERROR] Failed to download plugin."
-        rm -f "$TMP_JAR"
-        exit 1
-    fi
-else
-    echo "  [ERROR] Eclipse directory ($ECLIPSE_DIR) not found. The main installation may have failed."
+  if curl -fL "$PLUGIN_URL" -o "$TMP_JAR"; then
+    echo "  Installing to $DROPINS_DIR..."
+    sudo mv "$TMP_JAR" "$OUTPUT_JAR"
+    sudo chmod 644 "$OUTPUT_JAR"
+    echo "  [OK] AI Plugin installed successfully: $OUTPUT_JAR"
+  else
+    echo "  [ERROR] Failed to download plugin."
+    rm -f "$TMP_JAR"
     exit 1
+  fi
+
+else
+  echo "  [ERROR] Eclipse app ($ECLIPSE_APP) not found. The main installation may have failed."
+  exit 1
 fi
 
 echo ">>> Setup complete."
