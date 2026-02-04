@@ -394,7 +394,53 @@
             .install-section { padding: 24px 16px; }
             .install-command code { font-size: 11px; padding: 10px 12px; }
         }
-    </style>
+    
+/* --- Shared carousel styles (screenshots + videos) --- */
+.carousel-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 10px 10px 0;
+}
+.carousel-toolbar-centered {
+    justify-content: center;
+    padding: 0 0 12px;
+}
+.carousel-btn {
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    border-radius: 10px;
+    width: 40px;
+    height: 34px;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 32px;
+    user-select: none;
+}
+.carousel-btn:active {
+    transform: translateY(1px);
+}
+.carousel-track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 10px 14px;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin; /* Firefox */
+}
+.carousel-item {
+    flex: 0 0 auto;
+    /* Slightly smaller than the 800px container so the next card peeks in */
+    width: min(740px, calc(100vw - 52px));
+    scroll-snap-align: start;
+}
+@media (min-width: 980px) {
+    }
+</style>
 </head>
 <body>
     <div class="beta-banner">🚀 Preview Access — Create a free account in the IDE to enable AI Chat (Advanced features enabled during preview)</div>
@@ -410,25 +456,89 @@
             Built on Eclipse Embedded CDT with the IOsonata framework.
         </p>
 
-        <div class="screenshot-section">
+        <div class="screenshot-section carousel js-carousel" aria-label="Screenshot carousel">
+    <div class="carousel-toolbar" aria-label="Carousel navigation">
+        <button class="carousel-btn js-carousel-prev" type="button" aria-label="Previous">‹</button>
+        <button class="carousel-btn js-carousel-next" type="button" aria-label="Next">›</button>
+    </div>
+
+    <div class="carousel-track js-carousel-track">
+        <div class="carousel-item">
             <a href="images/IOcomposer_AddSPI.png" class="js-open-image" aria-label="Open screenshot full size">
                 <img src="images/IOcomposer_AddSPI.png" alt="IOcomposer IDE showing AI-powered code validation" class="screenshot">
             </a>
             <p class="screenshot-caption">AI detects hidden SPI pin inversion error — a subtle bug compilers miss — and suggests the fix</p>
         </div>
 
-        <div class="video-section">
-            <h2>See It In Action</h2>
-            <div class="video-container">
-                <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
-                <video class="js-video" controls playsinline poster="images/IOcomposer_AddSPI.png">
-                    <source src="video/IOcomposer_WizardBLEPeriph.mp4" type="video/mp4">
-                    <source src="video/IOcomposer_WizardBLEPeriph.mov" type="video/quicktime">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            <p class="video-caption">Creating a BLE Peripheral project with the IOcomposer wizard</p>
+        <!-- Add more screenshots by duplicating .carousel-item blocks -->
+        <!--
+        <div class="carousel-item">
+            <a href="images/another_screenshot.png" class="js-open-image" aria-label="Open screenshot full size">
+                <img src="images/another_screenshot.png" alt="Another screenshot" class="screenshot">
+            </a>
+            <p class="screenshot-caption">Caption here</p>
         </div>
+        -->
+    </div>
+</div>
+
+
+                <div class="video-section carousel js-carousel">
+            <h2>See It In Action</h2>
+
+            <div class="carousel-toolbar carousel-toolbar-centered" aria-label="Carousel navigation">
+                <button class="carousel-btn js-carousel-prev" type="button" aria-label="Previous">‹</button>
+                <button class="carousel-btn js-carousel-next" type="button" aria-label="Next">›</button>
+            </div>
+
+            <div class="carousel-track js-carousel-track" aria-label="Video carousel">
+<div class="carousel-item">
+    <div class="video-container">
+        <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
+        <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
+            <source src="video/IOcomposer_WizardBLEPeriph.mp4" type="video/mp4">
+    <source src="video/IOcomposer_WizardBLEPeriph.mov" type="video/quicktime">
+    Your browser does not support the video tag.
+        </video>
+    </div>
+    <p class="video-caption">Creating a BLE Peripheral project with the IOcomposer wizard</p>
+</div>
+                <div class="carousel-item">
+    <div class="video-container">
+        <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
+        <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
+            <source src="video/IOcomposer_BuildFix2.mov" type="video/quicktime">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <p class="video-caption">AI-assisted build fix: resolve errors and regenerate clean project</p>
+</div>
+<div class="carousel-item">
+    <div class="video-container">
+        <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
+        <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
+            <source src="video/IOcomposer_LaunchDebug.mov" type="video/quicktime">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <p class="video-caption">One-click: flash + launch debugger from the chat panel</p>
+</div>
+                <!-- Add more videos by duplicating .carousel-item blocks -->
+                <!--
+                <div class="carousel-item">
+                    <div class="video-container">
+                        <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
+                        <video class="js-video" controls playsinline preload="metadata" poster="images/your_poster.png">
+                            <source src="video/your_demo.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <p class="video-caption">Caption here</p>
+                </div>
+                -->
+            </div>
+        </div>
+
 
         <div class="features">
             <div class="feature">
@@ -721,7 +831,8 @@
             // Video full-size -> lightbox
             document.querySelectorAll('.js-open-video').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    const video = document.querySelector('video.js-video');
+                    const host = btn.closest('.video-container') || btn.parentElement;
+                    const video = host ? host.querySelector('video.js-video') : null;
                     if (!video) return;
 
                     // Build a new video element so we don’t steal the inline player
@@ -748,15 +859,70 @@
                 });
             });
 
-            // Optional: double-click the inline video to open full size
-            const inlineVideo = document.querySelector('video.js-video');
-            if (inlineVideo) {
-                inlineVideo.addEventListener('dblclick', () => {
-                    const btn = document.querySelector('.js-open-video');
-                    if (btn) btn.click();
-                });
+            // Double-click any inline video to open full size
+document.querySelectorAll('video.js-video').forEach(v => {
+    v.addEventListener('dblclick', (e) => {
+        e.preventDefault();
+        const host = v.closest('.video-container') || v.parentElement;
+        const btn = host ? host.querySelector('.js-open-video') : document.querySelector('.js-open-video');
+        if (btn) btn.click();
+    });
+});
+
+
+// Ensure only one video plays at a time on the page
+const allVideos = Array.from(document.querySelectorAll('video'));
+allVideos.forEach(v => {
+    v.addEventListener('play', () => {
+        allVideos.forEach(other => {
+            if (other !== v) {
+                try { other.pause(); } catch (_) {}
             }
-        })();
+        });
+    });
+});
+
+// Carousel navigation (screenshots + videos)
+document.querySelectorAll('.js-carousel').forEach(carousel => {
+    const track = carousel.querySelector('.js-carousel-track');
+    const btnPrev = carousel.querySelector('.js-carousel-prev');
+    const btnNext = carousel.querySelector('.js-carousel-next');
+    if (!track) return;
+
+    function scrollByCard(dir) {
+        const first = track.querySelector('.carousel-item');
+        const cardW = first ? first.getBoundingClientRect().width : 740;
+        track.scrollBy({ left: dir * (cardW + 16), behavior: 'smooth' });
+    }
+
+    if (btnPrev) btnPrev.addEventListener('click', () => scrollByCard(-1));
+    if (btnNext) btnNext.addEventListener('click', () => scrollByCard(1));
+
+    // Mouse drag-to-scroll (nice on desktop when scrollbars are hidden)
+    let isDown = false;
+    let startX = 0;
+    let startLeft = 0;
+
+    track.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX;
+        startLeft = track.scrollLeft;
+        track.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mouseup', () => {
+        isDown = false;
+        track.style.cursor = '';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        const dx = e.pageX - startX;
+        track.scrollLeft = startLeft - dx;
+    });
+});
+
+})();
     </script>
 </body>
 </html>
