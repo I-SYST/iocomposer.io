@@ -4,16 +4,13 @@
 
 set -euo pipefail
 
+# ---------------------------------------------------------
+# Banner
+# ---------------------------------------------------------
 echo "=========================================="
 echo "  IOcomposer Installer for macOS"
 echo "=========================================="
 echo ""
-echo "IOcomposer is currently in preview."
-echo "The installer is not yet available."
-echo ""
-echo "To join the preview, contact: info@i-syst.com"
-echo ""
-echo "=========================================="
 
 # ---------------------------------------------------------
 # CONFIGURATION
@@ -35,15 +32,25 @@ INSTALLER_URL="https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/ma
 # SDK root (where IOsonata/external live). Default matches the main installer.
 SDK_ROOT="$HOME/IOcomposer"
 
-# If caller passed --home <path>, respect it (without consuming $@)
-ARGS=("$@")
-for ((i=0; i<${#ARGS[@]}; i++)); do
-  if [[ "${ARGS[$i]}" == "--home" ]] && (( i+1 < ${#ARGS[@]} )); then
-    SDK_ROOT="${ARGS[$((i+1))]}"
-    break
-  fi
-done
+# Parse --home <path> (without consuming $@, works under set -u)
+if [[ $# -gt 0 ]]; then
+  for ((i=1; i<=$#; i++)); do
+    arg="${!i}"
+    if [[ "$arg" == "--home" ]] && (( i < $# )); then
+      next=$((i+1))
+      SDK_ROOT="${!next}"
+      break
+    fi
+  done
+fi
 
+# Skip post-install steps for non-install flows
+SKIP_POST=0
+for a in "$@"; do
+  case "$a" in
+    --uninstall|--help|--version) SKIP_POST=1 ;;
+  esac
+done
 
 # ---------------------------------------------------------
 # Helpers
@@ -86,7 +93,7 @@ discover_latest_plugin_url() {
 
   local f=""
   while IFS= read -r f; do
-    [ -n "$f" ] || continue
+    [[ -n "$f" ]] || continue
     [[ "$f" == ${PLUGIN_ID}_*.jar ]] || continue
 
     local ver="${f#${PLUGIN_ID}_}"
@@ -106,7 +113,7 @@ discover_latest_plugin_url() {
     fi
   done <<< "$names"
 
-  [ -n "$best_file" ] || return 1
+  [[ -n "$best_file" ]] || return 1
   echo "https://github.com/${PLUGIN_REPO}/raw/${PLUGIN_REPO_BRANCH}/${PLUGIN_DIR_PATH}/${best_file}"
 }
 
@@ -144,6 +151,13 @@ else
   exit 1
 fi
 
+# If we ran a non-install flow (uninstall/help/version), do not attempt post-install steps.
+if [[ "$SKIP_POST" == "1" ]]; then
+  echo ""
+  echo ">>> Skipping post-install steps."
+  exit 0
+fi
+
 # ---------------------------------------------------------
 # POST-INSTALL: AI PLUGIN
 # ---------------------------------------------------------
@@ -151,16 +165,16 @@ echo ""
 echo ">>> Post-Install: Adding AI Plugin ($PLUGIN_NAME)..."
 
 # Check if Eclipse is installed
-if [ -d "$ECLIPSE_APP" ]; then
+if [[ -d "$ECLIPSE_APP" ]]; then
 
   # Make sure dropins folder exists
-  if [ ! -d "$DROPINS_DIR" ]; then
+  if [[ ! -d "$DROPINS_DIR" ]]; then
     echo "  Creating dropins directory..."
     sudo mkdir -p "$DROPINS_DIR"
   fi
 
   # Discover latest plugin URL if not overridden
-  if [ -z "$PLUGIN_URL" ]; then
+  if [[ -z "$PLUGIN_URL" ]]; then
     echo "  Discovering latest AI plugin from GitHub..."
     if ! PLUGIN_URL="$(discover_latest_plugin_url)"; then
       echo "  [ERROR] Failed to discover latest plugin JAR for: $PLUGIN_ID"
@@ -199,7 +213,7 @@ echo ""
 echo ">>> Post-Install: Building external SDK index..."
 INDEX_SCRIPT="$SDK_ROOT/IOsonata/Installer/build_external_index.py"
 
-if [ -f "$INDEX_SCRIPT" ]; then
+if [[ -f "$INDEX_SCRIPT" ]]; then
   if command -v python3 >/dev/null 2>&1; then
     echo "  Running: python3 $INDEX_SCRIPT --sdk-root $SDK_ROOT/external"
     if python3 "$INDEX_SCRIPT" --sdk-root "$SDK_ROOT/external"; then
@@ -207,7 +221,7 @@ if [ -f "$INDEX_SCRIPT" ]; then
     else
       echo "  [WARN] External SDK index build failed."
       echo "         You can retry manually with:"
-      echo "         python3 "$INDEX_SCRIPT" --sdk-root "$SDK_ROOT/external""
+      echo "         python3 \"$INDEX_SCRIPT\" --sdk-root \"$SDK_ROOT/external\""
     fi
   else
     echo "  [WARN] python3 not found. Skipping external SDK index build."
@@ -219,7 +233,3 @@ fi
 
 echo ""
 echo ">>> Setup complete."
-echo ""
-echo ">>> Launch Eclipse and register your free AI subscription <<<"
-echo ""
-
