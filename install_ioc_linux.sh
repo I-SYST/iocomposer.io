@@ -4,16 +4,13 @@
 
 set -euo pipefail
 
+# ---------------------------------------------------------
+# BANNER
+# ---------------------------------------------------------
 echo "=========================================="
 echo "  IOcomposer Installer for Linux"
 echo "=========================================="
 echo ""
-echo "IOcomposer is currently in preview."
-echo "The installer is not yet available."
-echo ""
-echo "To join the preview, contact: info@i-syst.com"
-echo ""
-echo "=========================================="
 
 # ---------------------------------------------------------
 # CONFIGURATION
@@ -31,6 +28,29 @@ PLUGIN_URL="${IOCOMPOSER_AI_PLUGIN_URL:-}"
 OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ai.jar"
 
 INSTALLER_URL="https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/master/Installer/install_iocdevtools_linux.sh"
+
+# SDK root (where IOsonata/external live). Default matches the main installer.
+SDK_ROOT="$HOME/IOcomposer"
+
+# Parse --home <path> (without consuming $@)
+if [[ $# -gt 0 ]]; then
+  for ((i=1; i<=$#; i++)); do
+    arg="${!i}"
+    if [[ "$arg" == "--home" ]] && (( i < $# )); then
+      next=$((i+1))
+      SDK_ROOT="${!next}"
+      break
+    fi
+  done
+fi
+
+# Skip post-install steps for non-install flows
+SKIP_POST=0
+for a in "$@"; do
+  case "$a" in
+    --uninstall|--help|--version) SKIP_POST=1 ;;
+  esac
+done
 
 # ---------------------------------------------------------
 # Helpers
@@ -127,6 +147,13 @@ else
   echo "   Run instead:"
   echo "   curl -fsSL https://iocomposer.io/install_ioc_linux.sh -o /tmp/install.sh && bash /tmp/install.sh"
   exit 1
+fi
+
+# If we ran a non-install flow (uninstall/help/version), do not attempt post-install steps.
+if [[ "$SKIP_POST" == "1" ]]; then
+  echo ""
+  echo ">>> Skipping post-install steps."
+  exit 0
 fi
 
 # ---------------------------------------------------------

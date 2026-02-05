@@ -1,16 +1,13 @@
 # IOcomposer Installer for Windows
 # https://iocomposer.io
 
+# ---------------------------------------------------------
+# BANNER
+# ---------------------------------------------------------
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host "  IOcomposer Installer for Windows" -ForegroundColor Cyan
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "IOcomposer is currently in preview."
-Write-Host "The installer is not yet available."
-Write-Host ""
-Write-Host "To join the preview, contact: info@i-syst.com"
-Write-Host ""
-Write-Host "==========================================" -ForegroundColor Cyan
 
 # ---------------------------------------------------------
 # CONFIGURATION
@@ -28,6 +25,26 @@ $PluginUrl      = $env:IOCOMPOSER_AI_PLUGIN_URL
 $OutputJar      = "$DropinsDir\com.iocomposer.embedcdt.ai.jar"
 
 $InstallerUrl   = "https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/master/Installer/install_iocdevtools_win.ps1"
+
+# SDK root (where IOsonata/external live). Default matches the main installer.
+$SdkRoot = "$env:USERPROFILE\IOcomposer"
+
+# Parse --home <path> argument
+for ($i = 0; $i -lt $args.Count; $i++) {
+    if ($args[$i] -eq "--home" -and ($i + 1) -lt $args.Count) {
+        $SdkRoot = $args[$i + 1]
+        break
+    }
+}
+
+# Skip post-install steps for non-install flows
+$SkipPost = $false
+foreach ($a in $args) {
+    if ($a -eq "--uninstall" -or $a -eq "--help" -or $a -eq "--version") {
+        $SkipPost = $true
+        break
+    }
+}
 
 # ---------------------------------------------------------
 # Helpers
@@ -104,6 +121,13 @@ try {
     exit 1
 }
 
+# If we ran a non-install flow (uninstall/help/version), do not attempt post-install steps.
+if ($SkipPost) {
+    Write-Host ""
+    Write-Host ">>> Skipping post-install steps." -ForegroundColor Cyan
+    exit 0
+}
+
 # ---------------------------------------------------------
 # POST-INSTALL: AI PLUGIN
 # ---------------------------------------------------------
@@ -160,8 +184,6 @@ if (Test-Path $EclipseDir) {
 Write-Host ""
 Write-Host ">>> Post-Install: Building external SDK index..." -ForegroundColor Cyan
 
-# Default SDK Root (matches main installer default)
-$SdkRoot = "$env:USERPROFILE\IOcomposer"
 $IndexScript = "$SdkRoot\IOsonata\Installer\build_external_index.py"
 $ExternalSdkPath = "$SdkRoot\external"
 
