@@ -24,7 +24,7 @@ $PluginId       = "com.iocomposer.embedcdt.ai"
 $PluginUrl      = $env:IOCOMPOSER_AI_PLUGIN_URL
 $OutputJar      = "$DropinsDir\com.iocomposer.embedcdt.ai.jar"
 
-$InstallerUrl   = "https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/master/Installer/install_iocdevtools_win.ps1"
+$InstallerUrl = "https://raw.githubusercontent.com/IOsonata/IOsonata/master/Installer/install_iocdevtools_win.ps1"
 
 # SDK root (where IOsonata/external live). Default matches the main installer.
 $SdkRoot = "$env:USERPROFILE\IOcomposer"
