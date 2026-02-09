@@ -3,8 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOcomposer - AI-Powered IDE for Embedded Development</title>
-    <meta name="description" content="IOcomposer is an Eclipse-based IDE with AI assistance for embedded firmware development using the IOsonata framework.">
+    <title>IOcomposer — AI-Powered Embedded IDE | nRF52 nRF54 ARM RISC-V Development</title>
+    <meta name="description" content="AI-powered Eclipse IDE for embedded firmware. Go from install to debug in 15 minutes. Supports Nordic nRF52/nRF54, STM32, NXP, Renesas, and RISC-V with the IOsonata framework. The Arduino alternative for professional embedded development.">
+    <meta name="keywords" content="embedded IDE, AI firmware assistant, nRF52 IDE, nRF54 development, ARM Cortex-M, RISC-V IDE, Eclipse embedded CDT, IOsonata, Arduino alternative, BLE development, embedded debugger, JTAG SWD, MCU programming">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://iocomposer.io/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://iocomposer.io/">
+    <meta property="og:title" content="IOcomposer — AI-Powered IDE for Embedded Development">
+    <meta property="og:description" content="Professional embedded firmware IDE with AI assistance. Install to debug in 15 minutes. Nordic nRF52/nRF54, STM32, NXP, Renesas, ARM &amp; RISC-V.">
+    <meta property="og:image" content="https://iocomposer.io/images/IOcomposer_AddSPI.png">
+    <meta property="og:site_name" content="IOcomposer">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="IOcomposer — AI-Powered IDE for Embedded Development">
+    <meta name="twitter:description" content="Professional embedded firmware IDE with AI assistance. Install to debug in 15 minutes. Nordic nRF52/nRF54, STM32, NXP, Renesas, ARM &amp; RISC-V.">
+    <meta name="twitter:image" content="https://iocomposer.io/images/IOcomposer_AddSPI.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "IOcomposer",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Linux, Windows",
+        "description": "AI-powered Eclipse-based IDE for embedded firmware development with the IOsonata framework. Supports Nordic nRF52/nRF54 BLE, STM32, NXP, Renesas, Microchip — ARM Cortex-M and RISC-V.",
+        "url": "https://iocomposer.io",
+        "screenshot": "https://iocomposer.io/images/IOcomposer_AddSPI.png",
+        "offers": [
+            {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+                "name": "Free",
+                "description": "20 AI queries/month, full IDE features, debug and flash"
+            },
+            {
+                "@type": "Offer",
+                "price": "19.95",
+                "priceCurrency": "USD",
+                "name": "Advanced",
+                "description": "250 AI queries/month, adaptive intelligence, file uploads, context memory"
+            },
+            {
+                "@type": "Offer",
+                "price": "49.95",
+                "priceCurrency": "USD",
+                "name": "Pro",
+                "description": "1000 AI queries/month, max intelligence, large file uploads, extended context"
+            }
+        ],
+        "author": {
+            "@type": "Organization",
+            "name": "I-SYST Inc.",
+            "url": "https://www.i-syst.com"
+        }
+    }
+    </script>
+
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -460,8 +520,11 @@
 </style>
 </head>
 <body>
-    <div class="beta-banner">🚀 Preview Access — Create a free account in the IDE to enable AI Chat (Advanced features enabled during preview)</div>
+    <header>
+    <div class="beta-banner" role="banner">🚀 Preview Access — Create a free account in the IDE to enable AI Chat (Advanced features enabled during preview)</div>
+    </header>
 
+    <main>
     <div class="container">
         <div class="logo" aria-label="IOcomposer"><span class="sr-only">IOcomposer</span><span class="logo-io" aria-hidden="true">IO</span><span class="logo-composer" aria-hidden="true">composer</span></div>
         <p class="tagline">Start like Arduino, grow like a pro — without switching tools.</p>
@@ -557,6 +620,8 @@
         </div>
 
 
+        <section aria-label="Features">
+        <h2 class="sr-only">Features</h2>
         <div class="features">
             <div class="feature">
                 <h3>🤖 AI Assistant</h3>
@@ -571,7 +636,7 @@
                 <p>ST, Renesas, NXP, Microchip, and Nordic. No Device Tree. No BSP. No board files. One MCU port runs on every board variant — your custom PCB works instantly. Device drivers are MCU-independent too: one sensor driver works across all supported chips.</p>
             </div>
             <div class="feature nordic-feature">
-                <img src="images/nordic-logo.png" alt="Nordic Semiconductor" class="nordic-logo">
+                <img src="images/nordic-logo.png" alt="Nordic Semiconductor" class="nordic-logo" loading="lazy" width="120" height="28">
                 <h3>📶 Nordic BLE Ready</h3>
                 <p>Full SoftDevice support for nRF52 and nRF54. BLE stack integration without the complexity.</p>
             </div>
@@ -586,6 +651,7 @@
         </div>
 
         <p class="ai-footnote">* IOcomposer AI is purpose-built for embedded firmware development with IOsonata, vendor SDKs, and MCU programming — not a general-purpose chatbot.</p>
+        </section>
 
         <div class="install-section">
             <p class="install-quote">Resistance is futile.</p>
@@ -689,16 +755,17 @@
         </div>
 
         <footer>
-            <div class="footer-links">
+            <nav class="footer-links" aria-label="Footer navigation">
                 <a href="https://iosonata.io">IOsonata</a>
                 <a href="https://github.com/IOsonata">GitHub</a>
                 <a href="/terms">Terms</a>
                 <a href="/privacy">Privacy</a>
                 <a href="/legal">Legal</a>
-            </div>
+            </nav>
 <p>© 2026 <a href="https://www.i-syst.com" target="_blank" style="color: #94a3b8; text-decoration: underline;">I-SYST Inc.</a> All rights reserved. Engineering in Boucherville, QC.</p>
         </footer>
     </div>
+    </main>
 
     <!-- Lightbox overlay (image + video full size) -->
     <div id="lightbox" class="lightbox mode-fit" aria-hidden="true" role="dialog" aria-label="Media viewer">
