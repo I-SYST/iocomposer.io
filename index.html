@@ -577,7 +577,7 @@
             </div>
             <div class="feature">
                 <h3>🔧 Professional Tools</h3>
-                <p>Debug, flash, serial monitor — everything you need in one IDE.</p>
+                <p>JTAG/SWD debug with breakpoints, register and memory inspection, flash via probe — professional embedded workflow without juggling separate tools.</p>
             </div>
 <div class="feature">
     <h3>🔒 Privacy-First</h3>
@@ -718,7 +718,7 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
         function copyCommand(id) {
     const codeEl = document.getElementById(id);
     if (!codeEl) return;
@@ -930,4 +930,17 @@ document.querySelectorAll('.js-carousel').forEach(carousel => {
 
     window.addEventListener('mouseup', () => {
         isDown = false;
-        track.s
+        track.style.cursor = '';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        const dx = e.pageX - startX;
+        track.scrollLeft = startLeft - dx;
+    });
+});
+
+})();
+    </script>
+</body>
+</html>
