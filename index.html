@@ -3,69 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOcomposer — AI-Powered Embedded IDE | nRF52 nRF54 ARM RISC-V Development</title>
-    <meta name="description" content="AI-powered Eclipse IDE for embedded firmware. Go from install to debug in 15 minutes. Supports Nordic nRF52/nRF54, STM32, NXP, Renesas, and RISC-V with the IOsonata framework. The Arduino alternative for professional embedded development.">
-    <meta name="keywords" content="embedded IDE, AI firmware assistant, nRF52 IDE, nRF54 development, ARM Cortex-M, RISC-V IDE, Eclipse embedded CDT, IOsonata, Arduino alternative, BLE development, embedded debugger, JTAG SWD, MCU programming">
+
+    <title>IOcomposer — AI-Powered Embedded IDE for nRF52/nRF54, ARM &amp; RISC-V</title>
+    <meta name="description" content="AI-powered Eclipse Embedded CDT IDE for firmware. Install → flash → debug in ~15 minutes. Supports Nordic nRF52/nRF54, STM32, NXP, Renesas, Microchip, ARM Cortex-M and RISC-V. Built on IOsonata.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://iocomposer.io/">
+    <meta name="theme-color" content="#16213e">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://iocomposer.io/">
-    <meta property="og:title" content="IOcomposer — AI-Powered IDE for Embedded Development">
-    <meta property="og:description" content="Professional embedded firmware IDE with AI assistance. Install to debug in 15 minutes. Nordic nRF52/nRF54, STM32, NXP, Renesas, ARM &amp; RISC-V.">
-    <meta property="og:image" content="https://iocomposer.io/images/IOcomposer_AddSPI.png">
     <meta property="og:site_name" content="IOcomposer">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="IOcomposer — AI-Powered IDE for Embedded Development">
+    <meta property="og:description" content="Professional embedded firmware IDE with AI assistance. Install to debug in ~15 minutes. Nordic nRF52/nRF54, STM32, NXP, Renesas, ARM &amp; RISC-V.">
+    <meta property="og:image" content="https://iocomposer.io/images/IOcomposer_AddSPI.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="IOcomposer — AI-Powered IDE for Embedded Development">
-    <meta name="twitter:description" content="Professional embedded firmware IDE with AI assistance. Install to debug in 15 minutes. Nordic nRF52/nRF54, STM32, NXP, Renesas, ARM &amp; RISC-V.">
+    <meta name="twitter:description" content="Professional embedded firmware IDE with AI assistance. Install to debug in ~15 minutes. Nordic nRF52/nRF54, STM32, NXP, Renesas, ARM &amp; RISC-V.">
     <meta name="twitter:image" content="https://iocomposer.io/images/IOcomposer_AddSPI.png">
 
-    <!-- Structured Data -->
+    <!-- Structured Data: SoftwareApplication + Offers -->
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "IOcomposer",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "macOS, Linux, Windows",
-        "description": "AI-powered Eclipse-based IDE for embedded firmware development with the IOsonata framework. Supports Nordic nRF52/nRF54 BLE, STM32, NXP, Renesas, Microchip — ARM Cortex-M and RISC-V.",
-        "url": "https://iocomposer.io",
-        "screenshot": "https://iocomposer.io/images/IOcomposer_AddSPI.png",
-        "offers": [
-            {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD",
-                "name": "Free",
-                "description": "20 AI queries/month, full IDE features, debug and flash"
-            },
-            {
-                "@type": "Offer",
-                "price": "19.95",
-                "priceCurrency": "USD",
-                "name": "Advanced",
-                "description": "250 AI queries/month, adaptive intelligence, file uploads, context memory"
-            },
-            {
-                "@type": "Offer",
-                "price": "49.95",
-                "priceCurrency": "USD",
-                "name": "Pro",
-                "description": "1000 AI queries/month, max intelligence, large file uploads, extended context"
-            }
-        ],
-        "author": {
-            "@type": "Organization",
-            "name": "I-SYST Inc.",
-            "url": "https://www.i-syst.com"
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "@id": "https://iocomposer.io/#softwareapplication",
+      "name": "IOcomposer",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "macOS, Linux, Windows",
+      "description": "AI-powered Eclipse Embedded CDT–based IDE for embedded firmware development with the IOsonata framework. Supports Nordic nRF52/nRF54 BLE, STM32, NXP, Renesas, Microchip — ARM Cortex-M and RISC-V.",
+      "url": "https://iocomposer.io/",
+      "screenshot": "https://iocomposer.io/images/IOcomposer_AddSPI.png",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Free",
+          "price": "0",
+          "priceCurrency": "USD",
+          "url": "https://iocomposer.io/#pricing",
+          "description": "20 AI queries/month, full IDE features, debug and flash"
+        },
+        {
+          "@type": "Offer",
+          "name": "Advanced",
+          "price": "19.95",
+          "priceCurrency": "USD",
+          "url": "https://iocomposer.io/#pricing",
+          "description": "250 AI queries/month, adaptive intelligence, file uploads, context memory"
+        },
+        {
+          "@type": "Offer",
+          "name": "Pro",
+          "price": "49.95",
+          "priceCurrency": "USD",
+          "url": "https://iocomposer.io/#pricing",
+          "description": "1000 AI queries/month, max intelligence, large file uploads, extended context"
         }
+      ],
+      "author": {
+        "@type": "Organization",
+        "name": "I-SYST Inc.",
+        "url": "https://www.i-syst.com"
+      }
+    }
+    </script>
+
+    <!-- Structured Data: FAQ (helps long-tail / rich results) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": "https://iocomposer.io/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is IOcomposer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IOcomposer is an Eclipse Embedded CDT–based IDE with AI assistance for embedded firmware development. It is built to support prompt-to-flash workflows and integrates with the IOsonata framework."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which MCUs and architectures are supported?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IOcomposer targets multi-vendor MCU development, including Nordic nRF52/nRF54, STM32, NXP, Renesas, and Microchip families. Architectures include ARM Cortex-M and RISC-V."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you upload my project files to your servers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Your workspace stays on your machine. IOcomposer does not store your project files on our servers, and chat sessions are discarded when you exit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I enable AI Chat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Install the IDE, then open Preferences → IOcomposer → Account and create a free account (or sign in) to enable AI Chat."
+          }
+        }
+      ]
     }
     </script>
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -74,7 +124,7 @@
             min-height: 100vh;
             color: #fff;
         }
-        
+
         .sr-only{
             position:absolute;
             width:1px;height:1px;
@@ -84,24 +134,29 @@
             white-space:nowrap;
             border:0;
         }
-.beta-banner {
+
+        .beta-banner {
             background: linear-gradient(90deg, #10b981, #3b82f6);
             text-align: center;
             padding: 12px;
             font-weight: 600;
         }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 60px 24px;
             text-align: center;
         }
+
         .logo { font-size: 36px; font-weight: 700; margin-bottom: 16px; }
         .logo .logo-composer { color: #3b82f6; }
+
         .tagline { font-size: 20px; color: #94a3b8; margin-bottom: 48px; }
         h1 { font-size: 48px; margin-bottom: 24px; line-height: 1.2; }
         h1 .highlight { color: #3b82f6; }
         .description { font-size: 20px; color: #94a3b8; line-height: 1.6; margin-bottom: 48px; }
+
         .screenshot-section {
             margin: 48px 0;
             border-radius: 12px;
@@ -109,11 +164,14 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255,255,255,0.1);
         }
+
         .screenshot-section a { display: block; }
         .screenshot {
             width: 100%;
             display: block;
+            cursor: zoom-in;
         }
+
         .screenshot-caption {
             background: rgba(255,255,255,0.05);
             padding: 12px 16px;
@@ -122,29 +180,36 @@
             text-align: center;
             margin: 0;
         }
+
         .video-section {
             margin: 48px 0;
             text-align: center;
         }
+
         .video-section h2 {
             font-size: 24px;
-            margin-bottom: 24px;
+            margin-bottom: 18px;
         }
+
         .video-container {
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
         }
+
         .video-container video {
             width: 100%;
             display: block;
         }
+
         .video-caption {
             margin-top: 12px;
             font-size: 14px;
             color: #94a3b8;
         }
+
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -152,14 +217,16 @@
             margin: 48px 0;
             text-align: left;
         }
+
         .feature {
             background: rgba(255,255,255,0.05);
             border-radius: 12px;
             padding: 24px;
         }
+
         .feature h3 { font-size: 18px; margin-bottom: 8px; color: #fff; }
         .feature p { font-size: 14px; color: #94a3b8; line-height: 1.5; }
-        .nordic-feature { position: relative; }
+
         .ai-footnote {
             font-size: 13px;
             color: #64748b;
@@ -167,6 +234,7 @@
             margin: -24px 0 48px 0;
             font-style: italic;
         }
+
         .nordic-logo {
             height: 28px;
             width: auto;
@@ -175,20 +243,25 @@
             padding: 6px 10px;
             border-radius: 4px;
         }
+
         .pricing {
             background: rgba(255,255,255,0.05);
             border-radius: 16px;
             padding: 32px;
             margin: 48px 0;
         }
+
         .pricing h2 { font-size: 24px; margin-bottom: 8px; text-align: center; }
         .pricing-note { text-align: center; color: #64748b; font-size: 13px; margin-bottom: 24px; }
+
         .plans {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 24px;
         }
+
         .plans.three-tier { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+
         .plan {
             background: rgba(0,0,0,0.2);
             border-radius: 12px;
@@ -196,10 +269,12 @@
             text-align: left;
             position: relative;
         }
+
         .plan.pro {
             border: 2px solid #3b82f6;
             background: rgba(59, 130, 246, 0.1);
         }
+
         .plan-badge {
             position: absolute;
             top: -10px;
@@ -214,6 +289,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+
         .plan h3 { font-size: 20px; margin-bottom: 8px; }
         .plan .price { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
         .plan .price span { font-size: 14px; font-weight: 400; color: #94a3b8; }
@@ -221,8 +297,10 @@
         .plan ul { list-style: none; }
         .plan li { padding: 6px 0; color: #94a3b8; font-size: 14px; }
         .plan li::before { content: "✓ "; color: #10b981; }
+
         .cta { margin: 48px 0; }
         .cta p { font-size: 18px; color: #94a3b8; margin-bottom: 16px; }
+
         .download-note {
             display: inline-block;
             background: rgba(59, 130, 246, 0.1);
@@ -231,8 +309,10 @@
             padding: 16px 24px;
             color: #93c5fd;
         }
+
         .download-note a { color: #3b82f6; text-decoration: none; }
         .download-note a:hover { text-decoration: underline; }
+
         footer {
             margin-top: 64px;
             padding-top: 32px;
@@ -240,9 +320,12 @@
             color: #64748b;
             font-size: 14px;
         }
+
         footer a { color: #94a3b8; text-decoration: none; margin: 0 8px; }
         footer a:hover { color: #fff; }
+
         .footer-links { margin-bottom: 16px; }
+
         .install-section {
             background: rgba(255,255,255,0.05);
             border-radius: 16px;
@@ -250,19 +333,23 @@
             margin: 48px 0;
             text-align: left;
         }
+
         .install-section h2 { font-size: 24px; margin-bottom: 8px; text-align: center; }
         .install-note { text-align: center; color: #64748b; font-size: 14px; margin-bottom: 24px; }
-        
+
         .install-quote {
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
             color: #94a3b8;
             margin: 0 0 12px 0;
         }
-.install-option { margin-bottom: 16px; }
+
+        .install-option { margin-bottom: 16px; }
         .install-option:last-child { margin-bottom: 0; }
+
         .install-label { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #94a3b8; }
         .install-hint { font-weight: 400; color: #64748b; }
+
         .install-command {
             display: flex;
             align-items: center;
@@ -271,6 +358,7 @@
             border: 1px solid rgba(255,255,255,0.1);
             overflow: hidden;
         }
+
         .install-command code {
             flex: 1;
             padding: 12px 16px;
@@ -280,6 +368,7 @@
             overflow-x: auto;
             white-space: nowrap;
         }
+
         .copy-btn {
             background: rgba(255,255,255,0.1);
             border: none;
@@ -288,43 +377,40 @@
             font-size: 16px;
             transition: background 0.2s;
         }
+
         .copy-btn:hover { background: rgba(255,255,255,0.2); }
         .copy-btn.copied { background: rgba(16, 185, 129, 0.3); }
 
+        .enable-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 48px 0;
+            text-align: left;
+        }
 
-.enable-section {
-    background: rgba(255,255,255,0.05);
-    border-radius: 16px;
-    padding: 32px;
-    margin: 48px 0;
-    text-align: left;
-}
-.enable-section h2 { font-size: 24px; margin-bottom: 8px; text-align: center; }
-.enable-note { text-align: center; color: #64748b; font-size: 14px; margin-bottom: 18px; }
-.enable-steps {
-    margin: 0 auto 14px auto;
-    padding-left: 20px;
-    color: #94a3b8;
-    font-size: 14px;
-    line-height: 1.6;
-    max-width: 640px;
-}
-.enable-steps li { margin: 8px 0; }
-.enable-footnote {
-    margin-top: 10px;
-    font-size: 12px;
-    color: #64748b;
-    text-align: center;
-}
+        .enable-section h2 { font-size: 24px; margin-bottom: 8px; text-align: center; }
+        .enable-note { text-align: center; color: #64748b; font-size: 14px; margin-bottom: 18px; }
 
+        .enable-steps {
+            margin: 0 auto 14px auto;
+            padding-left: 20px;
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 640px;
+        }
+
+        .enable-steps li { margin: 8px 0; }
+
+        .enable-footnote {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #64748b;
+            text-align: center;
+        }
 
         /* ---- Full-size media viewer (lightbox) ---- */
-
-        /* Make screenshot feel clickable */
-        .screenshot { cursor: zoom-in; }
-
-        /* Optional: Full size button on video */
-        .video-container { position: relative; }
         .video-full-btn {
             position: absolute;
             top: 10px;
@@ -339,9 +425,9 @@
             user-select: none;
             z-index: 2;
         }
+
         .video-full-btn:hover { background: rgba(0,0,0,0.6); }
 
-        /* Lightbox overlay */
         .lightbox {
             position: fixed;
             inset: 0;
@@ -352,6 +438,7 @@
             padding: 24px;
             z-index: 9999;
         }
+
         .lightbox.is-open { display: flex; }
 
         .lightbox-inner {
@@ -368,16 +455,15 @@
             background: rgba(0,0,0,0.35);
             border: 1px solid rgba(255,255,255,0.12);
             border-radius: 12px;
-            overflow: auto; /* enables scroll in "Actual size" mode */
+            overflow: auto;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
             display: flex;
             align-items: center;
             justify-content: center;
             flex: 1 1 auto;
-            min-height: 0; /* critical for flex children to size correctly */
+            min-height: 0;
         }
 
-        /* Default: Fit-to-window (no cropping) */
         .lightbox.mode-fit .lightbox-media img,
         .lightbox.mode-fit .lightbox-media video {
             display: block;
@@ -389,11 +475,11 @@
             background: #000;
         }
 
-        /* Actual size: show 1:1 pixels; scroll if needed */
         .lightbox.mode-actual .lightbox-media {
             align-items: flex-start;
             justify-content: flex-start;
         }
+
         .lightbox.mode-actual .lightbox-media img,
         .lightbox.mode-actual .lightbox-media video {
             display: block;
@@ -425,6 +511,7 @@
             text-decoration: none;
             font-size: 13px;
         }
+
         .lightbox-link:hover { text-decoration: underline; }
 
         .lightbox-mode-btn {
@@ -437,7 +524,9 @@
             font-size: 12px;
             user-select: none;
         }
+
         .lightbox-mode-btn:hover { background: rgba(0,0,0,0.6); }
+
         .lightbox-mode-btn.is-active {
             border-color: rgba(59,130,246,0.9);
             background: rgba(59,130,246,0.25);
@@ -458,7 +547,87 @@
             line-height: 38px;
         }
 
-@media (max-width: 600px) {
+        /* --- Shared carousel styles (screenshots + videos) --- */
+        .carousel-toolbar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 10px 10px 0;
+        }
+
+        .carousel-toolbar-centered {
+            justify-content: center;
+            padding: 0 0 12px;
+        }
+
+        .carousel-btn {
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(0,0,0,0.35);
+            color: #fff;
+            border-radius: 10px;
+            width: 40px;
+            height: 34px;
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 32px;
+            user-select: none;
+        }
+
+        .carousel-btn:active { transform: translateY(1px); }
+
+        .carousel-track {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 10px 10px 14px;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+
+        .carousel-item {
+            flex: 0 0 auto;
+            width: min(740px, calc(100vw - 52px));
+            scroll-snap-align: start;
+        }
+
+        /* FAQ */
+        .faq {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 48px 0;
+            text-align: left;
+        }
+
+        .faq h2 { font-size: 24px; margin-bottom: 12px; text-align: center; }
+        .faq p.note { text-align: center; color: #64748b; font-size: 13px; margin-bottom: 18px; }
+
+        .faq details {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 10px 0;
+        }
+
+        .faq summary {
+            cursor: pointer;
+            color: #fff;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .faq details p {
+            margin-top: 10px;
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
             h1 { font-size: 32px; }
             .logo { font-size: 28px; }
             .tagline { font-size: 16px; }
@@ -471,198 +640,143 @@
             .install-section { padding: 24px 16px; }
             .install-command code { font-size: 11px; padding: 10px 12px; }
         }
-    
-/* --- Shared carousel styles (screenshots + videos) --- */
-.carousel-toolbar {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    padding: 10px 10px 0;
-}
-.carousel-toolbar-centered {
-    justify-content: center;
-    padding: 0 0 12px;
-}
-.carousel-btn {
-    border: 1px solid rgba(255,255,255,0.18);
-    background: rgba(0,0,0,0.35);
-    color: #fff;
-    border-radius: 10px;
-    width: 40px;
-    height: 34px;
-    cursor: pointer;
-    font-size: 18px;
-    line-height: 32px;
-    user-select: none;
-}
-.carousel-btn:active {
-    transform: translateY(1px);
-}
-.carousel-track {
-    display: flex;
-    gap: 16px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 10px 10px 14px;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin; /* Firefox */
-}
-.carousel-item {
-    flex: 0 0 auto;
-    /* Slightly smaller than the 800px container so the next card peeks in */
-    width: min(740px, calc(100vw - 52px));
-    scroll-snap-align: start;
-}
-@media (min-width: 980px) {
-    }
-</style>
+    </style>
 </head>
-<body>
-    <header>
-    <div class="beta-banner" role="banner">🚀 Preview Access — Create a free account in the IDE to enable AI Chat (Advanced features enabled during preview)</div>
-    </header>
 
-    <main>
+<body>
+<header>
+    <div class="beta-banner" role="banner">🚀 Preview Access — Create a free account in the IDE to enable AI Chat (Advanced features enabled during preview)</div>
+</header>
+
+<main>
     <div class="container">
-        <div class="logo" aria-label="IOcomposer"><span class="sr-only">IOcomposer</span><span class="logo-io" aria-hidden="true">IO</span><span class="logo-composer" aria-hidden="true">composer</span></div>
+        <div class="logo" aria-label="IOcomposer">
+            <span class="sr-only">IOcomposer</span>
+            <span class="logo-io" aria-hidden="true">IO</span><span class="logo-composer" aria-hidden="true">composer</span>
+        </div>
+
         <p class="tagline">Start like Arduino, grow like a pro — without switching tools.</p>
 
         <h1>AI-Powered IDE for <span class="highlight">Embedded Development</span></h1>
 
         <p class="description">
-            Professional embedded firmware development with AI assistance. 
+            Professional embedded firmware development with AI assistance.
             Built on Eclipse Embedded CDT with the IOsonata framework.
         </p>
 
-        <div class="screenshot-section carousel js-carousel" aria-label="Screenshot carousel">
-    <div class="carousel-toolbar" aria-label="Carousel navigation">
-        <button class="carousel-btn js-carousel-prev" type="button" aria-label="Previous">‹</button>
-        <button class="carousel-btn js-carousel-next" type="button" aria-label="Next">›</button>
-    </div>
+        <section id="demo" aria-label="Product screenshots and demos">
+            <h2 class="sr-only">Product Demos</h2>
 
-    <div class="carousel-track js-carousel-track">
-        <div class="carousel-item">
-            <a href="images/IOcomposer_AddSPI.png" class="js-open-image" aria-label="Open screenshot full size">
-                <img src="images/IOcomposer_AddSPI.png" alt="IOcomposer IDE showing AI-powered code validation" class="screenshot">
-            </a>
-            <p class="screenshot-caption">AI detects hidden SPI pin inversion error — a subtle bug compilers miss — and suggests the fix</p>
-        </div>
-
-        <!-- Add more screenshots by duplicating .carousel-item blocks -->
-        <!--
-        <div class="carousel-item">
-            <a href="images/another_screenshot.png" class="js-open-image" aria-label="Open screenshot full size">
-                <img src="images/another_screenshot.png" alt="Another screenshot" class="screenshot">
-            </a>
-            <p class="screenshot-caption">Caption here</p>
-        </div>
-        -->
-    </div>
-</div>
-
-
-                <div class="video-section carousel js-carousel">
-            <h2>See It In Action</h2>
-
-            <div class="carousel-toolbar carousel-toolbar-centered" aria-label="Carousel navigation">
-                <button class="carousel-btn js-carousel-prev" type="button" aria-label="Previous">‹</button>
-                <button class="carousel-btn js-carousel-next" type="button" aria-label="Next">›</button>
-            </div>
-
-            <div class="carousel-track js-carousel-track" aria-label="Video carousel">
-<div class="carousel-item">
-    <div class="video-container">
-        <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
-        <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
-            <source src="video/IOcomposer_WizardBLEPeriph.mp4" type="video/mp4">
-    <source src="video/IOcomposer_WizardBLEPeriph.mov" type="video/quicktime">
-    Your browser does not support the video tag.
-        </video>
-    </div>
-    <p class="video-caption">Creating a BLE Peripheral project with the IOcomposer wizard</p>
-</div>
-                <div class="carousel-item">
-    <div class="video-container">
-        <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
-        <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
-            <source src="video/IOcomposer_BuildFix2.mov" type="video/quicktime">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-    <p class="video-caption">AI-assisted build fix: resolve errors and regenerate clean project</p>
-</div>
-<div class="carousel-item">
-    <div class="video-container">
-        <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
-        <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
-            <source src="video/IOcomposer_LaunchDebug.mov" type="video/quicktime">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-    <p class="video-caption">One-click: flash + launch debugger from the chat panel</p>
-</div>
-                <!-- Add more videos by duplicating .carousel-item blocks -->
-                <!--
-                <div class="carousel-item">
-                    <div class="video-container">
-                        <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
-                        <video class="js-video" controls playsinline preload="metadata" poster="images/your_poster.png">
-                            <source src="video/your_demo.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                    <p class="video-caption">Caption here</p>
+            <div class="screenshot-section carousel js-carousel" aria-label="Screenshot carousel">
+                <div class="carousel-toolbar" aria-label="Carousel navigation">
+                    <button class="carousel-btn js-carousel-prev" type="button" aria-label="Previous">‹</button>
+                    <button class="carousel-btn js-carousel-next" type="button" aria-label="Next">›</button>
                 </div>
-                -->
-            </div>
-        </div>
 
+                <div class="carousel-track js-carousel-track">
+                    <div class="carousel-item">
+                        <a href="images/IOcomposer_AddSPI.png" class="js-open-image" aria-label="Open screenshot full size">
+                            <img src="images/IOcomposer_AddSPI.png" alt="IOcomposer IDE showing AI-assisted code validation for an SPI pin configuration issue" class="screenshot">
+                        </a>
+                        <p class="screenshot-caption">AI detects a subtle SPI configuration error and suggests the fix</p>
+                    </div>
+                </div>
+            </div>
 
-        <section aria-label="Features">
-        <h2 class="sr-only">Features</h2>
-        <div class="features">
-            <div class="feature">
-                <h3>🤖 AI Assistant</h3>
-                <p>AI assistant tuned for embedded firmware, IOsonata, and vendor SDKs — built for prompt‑to‑flash workflows.</p>
-            </div>
-            <div class="feature">
-                <h3>⚡ Quick Start</h3>
-                <p>From clean machine to full debug with breakpoint at main() in 15 minutes. One command installs Eclipse, ARM &amp; RISC-V toolchains, OpenOCD, IOsonata, Nordic SDKs, and AI plugin — all pre-configured. No manual setup.</p>
-            </div>
-            <div class="feature">
-                <h3>🎯 Multi-Vendor MCU Support</h3>
-                <p>ST, Renesas, NXP, Microchip, and Nordic. No Device Tree. No BSP. No board files. One MCU port runs on every board variant — your custom PCB works instantly. Device drivers are MCU-independent too: one sensor driver works across all supported chips.</p>
-            </div>
-            <div class="feature nordic-feature">
-                <img src="images/nordic-logo.png" alt="Nordic Semiconductor" class="nordic-logo" loading="lazy" width="120" height="28">
-                <h3>📶 Nordic BLE Ready</h3>
-                <p>Full SoftDevice support for nRF52 and nRF54. BLE stack integration without the complexity.</p>
-            </div>
-            <div class="feature">
-                <h3>🔧 Professional Tools</h3>
-                <p>JTAG/SWD debug with breakpoints, register and memory inspection, flash via probe — professional embedded workflow without juggling separate tools.</p>
-            </div>
-<div class="feature">
-    <h3>🔒 Privacy-First</h3>
-    <p>Your workspace stays on your machine — IOcomposer does not store your project files on our servers. Chat sessions are discarded when you exit.</p>
-</div>
-        </div>
+            <div class="video-section carousel js-carousel" aria-label="Video carousel section">
+                <h2>See It In Action</h2>
 
-        <p class="ai-footnote">* IOcomposer AI is purpose-built for embedded firmware development with IOsonata, vendor SDKs, and MCU programming — not a general-purpose chatbot.</p>
+                <div class="carousel-toolbar carousel-toolbar-centered" aria-label="Carousel navigation">
+                    <button class="carousel-btn js-carousel-prev" type="button" aria-label="Previous">‹</button>
+                    <button class="carousel-btn js-carousel-next" type="button" aria-label="Next">›</button>
+                </div>
+
+                <div class="carousel-track js-carousel-track" aria-label="Video carousel">
+                    <div class="carousel-item">
+                        <div class="video-container">
+                            <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
+                            <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
+                                <source src="video/IOcomposer_WizardBLEPeriph.mp4" type="video/mp4">
+                                <source src="video/IOcomposer_WizardBLEPeriph.mov" type="video/quicktime">
+                                Video playback isn't supported in this browser.
+                            </video>
+                        </div>
+                        <p class="video-caption">Creating a BLE Peripheral project with the IOcomposer wizard</p>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="video-container">
+                            <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
+                            <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
+                                <source src="video/IOcomposer_BuildFix2.mov" type="video/quicktime">
+                                Video playback isn't supported in this browser.
+                            </video>
+                        </div>
+                        <p class="video-caption">AI-assisted build fix: resolve errors and regenerate clean project</p>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="video-container">
+                            <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
+                            <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
+                                <source src="video/IOcomposer_LaunchDebug.mov" type="video/quicktime">
+                                Video playback isn't supported in this browser.
+                            </video>
+                        </div>
+                        <p class="video-caption">One-click: flash + launch debugger from the chat panel</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <div class="install-section">
-            <p class="install-quote">Resistance is futile.</p>
-            <h2>Install Now!</h2>
-            <p class="install-note">Copy/paste in your terminal (download‑then‑run avoids interactive prompt issues):</p>
+        <section aria-label="Features">
+            <h2 class="sr-only">Features</h2>
+
+            <div class="features">
+                <div class="feature">
+                    <h3>🤖 AI Assistant</h3>
+                    <p>AI assistant tuned for embedded firmware, IOsonata, and vendor SDKs — built for prompt-to-flash workflows.</p>
+                </div>
+
+                <div class="feature">
+                    <h3>⚡ Quick Start</h3>
+                    <p>From clean machine to full debug with breakpoint at main() in ~15 minutes. One command installs Eclipse, ARM &amp; RISC-V toolchains, OpenOCD, IOsonata, Nordic SDKs, and AI plugin — all pre-configured.</p>
+                </div>
+
+                <div class="feature">
+                    <h3>🎯 Multi-Vendor MCU Support</h3>
+                    <p>ST, Renesas, NXP, Microchip, and Nordic. No Device Tree. No BSP. No board files. One MCU port runs on every board variant — your custom PCB works instantly.</p>
+                </div>
+
+                <div class="feature">
+                    <img src="images/nordic-logo.png" alt="Nordic Semiconductor" class="nordic-logo" loading="lazy" width="120" height="28">
+                    <h3>📶 Nordic BLE Ready</h3>
+                    <p>SoftDevice support for nRF52 and nRF54. BLE stack integration without the complexity.</p>
+                </div>
+
+                <div class="feature">
+                    <h3>🔧 Professional Tools</h3>
+                    <p>JTAG/SWD debug with breakpoints, register and memory inspection, flash via probe — professional embedded workflow without juggling separate tools.</p>
+                </div>
+
+                <div class="feature">
+                    <h3>🔒 Privacy-First</h3>
+                    <p>Your workspace stays on your machine — IOcomposer does not store your project files on our servers. Chat sessions are discarded when you exit.</p>
+                </div>
+            </div>
+
+            <p class="ai-footnote">* IOcomposer AI is purpose-built for embedded firmware development with IOsonata, vendor SDKs, and MCU programming — not a general-purpose chatbot.</p>
+        </section>
+
+        <section id="install" class="install-section" aria-label="Installation">
+            <h2>Install Now</h2>
+            <p class="install-note">Copy/paste in your terminal (download-then-run avoids interactive prompt issues):</p>
 
             <div class="install-option">
                 <div class="install-label">macOS</div>
                 <div class="install-command">
                     <code id="cmd-macos">curl -fsSL https://iocomposer.io/install_ioc_macos.sh -o /tmp/install_ioc_macos.sh && bash /tmp/install_ioc_macos.sh</code>
-                    <button class="copy-btn" onclick="copyCommand('cmd-macos')" title="Copy to clipboard">📋</button>
+                    <button class="copy-btn" onclick="copyCommand('cmd-macos')" title="Copy to clipboard" aria-label="Copy macOS install command">📋</button>
                 </div>
             </div>
 
@@ -670,7 +784,7 @@
                 <div class="install-label">Linux</div>
                 <div class="install-command">
                     <code id="cmd-linux">curl -fsSL https://iocomposer.io/install_ioc_linux.sh -o /tmp/install_ioc_linux.sh && bash /tmp/install_ioc_linux.sh</code>
-                    <button class="copy-btn" onclick="copyCommand('cmd-linux')" title="Copy to clipboard">📋</button>
+                    <button class="copy-btn" onclick="copyCommand('cmd-linux')" title="Copy to clipboard" aria-label="Copy Linux install command">📋</button>
                 </div>
             </div>
 
@@ -678,79 +792,113 @@
                 <div class="install-label">Windows <span class="install-hint">(PowerShell as Admin)</span></div>
                 <div class="install-command">
                     <code id="cmd-windows">powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://iocomposer.io/install_ioc_windows.ps1 | iex"</code>
-                    <button class="copy-btn" onclick="copyCommand('cmd-windows')" title="Copy to clipboard">📋</button>
+                    <button class="copy-btn" onclick="copyCommand('cmd-windows')" title="Copy to clipboard" aria-label="Copy Windows install command">📋</button>
                 </div>
             </div>
+
             <p style="font-size: 12px; color: #64748b; margin-top: 24px; text-align: center; line-height: 1.5;">
-    By installing IOcomposer, you agree to the <a href="/terms" style="color: #3b82f6;">Terms of Service</a> and <a href="/privacy" style="color: #3b82f6;">Privacy Policy</a>.<br>
-    The installer may download third-party SDKs (e.g., Nordic) subject to their own <a href="/legal" style="color: #3b82f6;">license terms</a>.
-</p>
-        </div>
+                By installing IOcomposer, you agree to the <a href="/terms" style="color: #3b82f6;">Terms of Service</a> and <a href="/privacy" style="color: #3b82f6;">Privacy Policy</a>.<br>
+                The installer may download third-party SDKs (e.g., Nordic) subject to their own <a href="/legal" style="color: #3b82f6;">license terms</a>.
+            </p>
+        </section>
 
-<div class="enable-section">
-    <h2>Enable AI Chat</h2>
-    <p class="enable-note">A free account is required to unlock AI features (no payment needed for Free tier).</p>
+        <section class="enable-section" aria-label="Enable AI Chat">
+            <h2>Enable AI Chat</h2>
+            <p class="enable-note">A free account is required to unlock AI features (no payment needed for Free tier).</p>
 
-    <ol class="enable-steps">
-        <li>Install IOcomposer (above), then launch the IDE.</li>
-        <li>Open <strong>Preferences</strong> → <strong>IOcomposer</strong> → <strong>Account</strong>.</li>
-        <li>Click <strong>Create free account</strong> (or <strong>Sign in</strong>) to enable AI Chat.</li>
-    </ol>
+            <ol class="enable-steps">
+                <li>Install IOcomposer (above), then launch the IDE.</li>
+                <li>Open <strong>Preferences</strong> → <strong>IOcomposer</strong> → <strong>Account</strong>.</li>
+                <li>Click <strong>Create free account</strong> (or <strong>Sign in</strong>) to enable AI Chat.</li>
+            </ol>
 
-    <p class="enable-footnote">Tip: If AI Chat is disabled, the Chat panel will show a sign‑in prompt and a shortcut to the Preferences page.</p>
-</div>
+            <p class="enable-footnote">Tip: If AI Chat is disabled, the Chat panel will show a sign-in prompt and a shortcut to the Preferences page.</p>
+        </section>
 
-        <div class="pricing">
+        <section id="pricing" class="pricing" aria-label="Pricing">
             <h2>Simple Pricing</h2>
             <p class="pricing-note">During preview, Advanced features are enabled for all accounts. Pricing below reflects target launch plans and may change.</p>
 
+            <div class="plans three-tier">
+                <div class="plan">
+                    <h3>Free</h3>
+                    <div class="price">$0 <span>/month</span></div>
+                    <p class="plan-desc">Test the waters</p>
+                    <ul>
+                        <li>20 AI queries/month</li>
+                        <li>Fast models (Mini/Haiku)</li>
+                        <li>Full IDE features</li>
+                        <li>Debug &amp; flash</li>
+                    </ul>
+                </div>
 
-<div class="plans three-tier">
-    <div class="plan">
-        <h3>Free</h3>
-        <div class="price">$0 <span>/month</span></div>
-        <p class="plan-desc">Test the waters</p>
-        <ul>
-            <li>20 AI queries/month</li>
-            <li>Fast models (Mini/Haiku)</li> <li>Full IDE features</li>
-            <li>Debug & flash</li>
-        </ul>
-    </div>
-    <div class="plan pro">
-        <div class="plan-badge">Most Popular</div>
-        <h3>Advanced</h3>
-        <div class="price">$19.95 <span>/month</span></div>
-        <p class="plan-desc">Daily development</p>
-        <ul>
-            <li>250 AI queries/month*</li> <li>Adaptive Intelligence (Router)</li>
-            <li>File uploads (Max 5MB)</li>
-            <li>Standard context memory</li>
-            <li>Priority support</li>
-        </ul>
-        <p style="font-size: 11px; color: #64748b; margin-top: 12px; font-style: italic;">
-            *Complex queries (e.g. large file analysis) may consume >1 query credit.
-        </p>
-    </div>
-    <div class="plan">
-        <h3>Pro</h3>
-        <div class="price">$49.95 <span>/month</span></div>
-        <p class="plan-desc">Heavy research & code</p>
-        <ul>
-            <li>1,000 AI queries/month*</li> <li>Max Intelligence</li>
-            <li>Large file uploads (Max 50MB)</li>
-            <li>Extended context memory</li>
-            <li>Priority support</li>
-        </ul>
-        <p style="font-size: 11px; color: #64748b; margin-top: 12px; font-style: italic;">
-            *Complex queries may consume >1 query credit.
-        </p>
-    </div>
-</div>
+                <div class="plan pro">
+                    <div class="plan-badge">Most Popular</div>
+                    <h3>Advanced</h3>
+                    <div class="price">$19.95 <span>/month</span></div>
+                    <p class="plan-desc">Daily development</p>
+                    <ul>
+                        <li>250 AI queries/month*</li>
+                        <li>Adaptive Intelligence (Router)</li>
+                        <li>File uploads (Max 5MB)</li>
+                        <li>Standard context memory</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <p style="font-size: 11px; color: #64748b; margin-top: 12px; font-style: italic;">
+                        *Complex queries (e.g. large file analysis) may consume &gt;1 query credit.
+                    </p>
+                </div>
+
+                <div class="plan">
+                    <h3>Pro</h3>
+                    <div class="price">$49.95 <span>/month</span></div>
+                    <p class="plan-desc">Heavy research &amp; code</p>
+                    <ul>
+                        <li>1,000 AI queries/month*</li>
+                        <li>Max Intelligence</li>
+                        <li>Large file uploads (Max 50MB)</li>
+                        <li>Extended context memory</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <p style="font-size: 11px; color: #64748b; margin-top: 12px; font-style: italic;">
+                        *Complex queries may consume &gt;1 query credit.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq" aria-label="FAQ">
+            <h2>FAQ</h2>
+            <p class="note">Quick answers for evaluation and onboarding.</p>
+
+            <details>
+                <summary>What is IOcomposer?</summary>
+                <p>IOcomposer is an Eclipse Embedded CDT–based IDE with AI assistance for embedded firmware development, designed for prompt-to-flash workflows and integrated with the IOsonata framework.</p>
+            </details>
+
+            <details>
+                <summary>Which MCUs and architectures are supported?</summary>
+                <p>IOcomposer targets multi-vendor MCU development (including Nordic nRF52/nRF54, STM32, NXP, Renesas, Microchip) across ARM Cortex-M and RISC-V.</p>
+            </details>
+
+            <details>
+                <summary>Do you upload my project files to your servers?</summary>
+                <p>No. Your workspace stays on your machine. IOcomposer does not store your project files on our servers, and chat sessions are discarded when you exit.</p>
+            </details>
+
+            <details>
+                <summary>How do I enable AI Chat?</summary>
+                <p>Install the IDE, then open Preferences → IOcomposer → Account and create a free account (or sign in) to enable AI Chat.</p>
+            </details>
+        </section>
 
         <div class="cta">
             <p>IOcomposer is currently in preview.<br/>Enable AI Chat: Preferences → IOcomposer → Account → Create free account / Sign in</p>
             <div class="download-note">
-                Join the Collective — Contact us at <a href="/cdn-cgi/l/email-protection#1d74737b725d74306e646e69337e7270"><span class="__cf_email__" data-cfemail="2a43444c456a43075953595e04494547">[email&#160;protected]</span></a>
+                Join the Collective — Contact us at
+                <a href="/cdn-cgi/l/email-protection#1d74737b725d74306e646e69337e7270">
+                    <span class="__cf_email__" data-cfemail="2a43444c456a43075953595e04494547">[email&#160;protected]</span>
+                </a>
             </div>
         </div>
 
@@ -762,31 +910,31 @@
                 <a href="/privacy">Privacy</a>
                 <a href="/legal">Legal</a>
             </nav>
-<p>© 2026 <a href="https://www.i-syst.com" target="_blank" style="color: #94a3b8; text-decoration: underline;">I-SYST Inc.</a> All rights reserved. Engineering in Boucherville, QC.</p>
+            <p>© 2026 <a href="https://www.i-syst.com" target="_blank" rel="noopener" style="color: #94a3b8; text-decoration: underline;">I-SYST Inc.</a> All rights reserved. Engineering in Boucherville, QC.</p>
         </footer>
     </div>
-    </main>
+</main>
 
-    <!-- Lightbox overlay (image + video full size) -->
-    <div id="lightbox" class="lightbox mode-fit" aria-hidden="true" role="dialog" aria-label="Media viewer">
-        <div class="lightbox-inner" role="document">
-            <button class="lightbox-close" type="button" id="lightbox-close" aria-label="Close">×</button>
+<!-- Lightbox overlay (image + video full size) -->
+<div id="lightbox" class="lightbox mode-fit" aria-hidden="true" role="dialog" aria-label="Media viewer">
+    <div class="lightbox-inner" role="document">
+        <button class="lightbox-close" type="button" id="lightbox-close" aria-label="Close">×</button>
 
-            <div class="lightbox-media" id="lightbox-media"></div>
+        <div class="lightbox-media" id="lightbox-media"></div>
 
-            <div class="lightbox-actions">
-    <div class="lightbox-left-actions">
-        <button class="lightbox-mode-btn is-active" type="button" id="lightbox-mode-fit" title="Fit to window">Fit</button>
-        <button class="lightbox-mode-btn" type="button" id="lightbox-mode-actual" title="Show at 1:1 pixels">Actual size</button>
-        <a class="lightbox-link" id="lightbox-open-original" href="#" target="_blank" rel="noopener">Open original</a>
-    </div>
-    <span style="font-size: 12px; color: #64748b;">Esc to close • Double‑click to toggle</span>
-</div>
+        <div class="lightbox-actions">
+            <div class="lightbox-left-actions">
+                <button class="lightbox-mode-btn is-active" type="button" id="lightbox-mode-fit" title="Fit to window">Fit</button>
+                <button class="lightbox-mode-btn" type="button" id="lightbox-mode-actual" title="Show at 1:1 pixels">Actual size</button>
+                <a class="lightbox-link" id="lightbox-open-original" href="#" target="_blank" rel="noopener">Open original</a>
+            </div>
+            <span style="font-size: 12px; color: #64748b;">Esc to close • Double-click to toggle</span>
         </div>
     </div>
+</div>
 
 <script>
-        function copyCommand(id) {
+function copyCommand(id) {
     const codeEl = document.getElementById(id);
     if (!codeEl) return;
 
@@ -829,185 +977,168 @@
     }
 }
 
+// --- Full-size media viewer (lightbox) ---
+(function () {
+    const lightbox = document.getElementById('lightbox');
+    const mediaHost = document.getElementById('lightbox-media');
+    const btnClose = document.getElementById('lightbox-close');
+    const linkOriginal = document.getElementById('lightbox-open-original');
 
-        // --- Full-size media viewer (lightbox) ---
-        (function () {
-            const lightbox = document.getElementById('lightbox');
-            const mediaHost = document.getElementById('lightbox-media');
-            const btnClose = document.getElementById('lightbox-close');
-            const linkOriginal = document.getElementById('lightbox-open-original');
+    const btnModeFit = document.getElementById('lightbox-mode-fit');
+    const btnModeActual = document.getElementById('lightbox-mode-actual');
 
-            const btnModeFit = document.getElementById('lightbox-mode-fit');
-            const btnModeActual = document.getElementById('lightbox-mode-actual');
+    function setMode(mode) {
+        lightbox.classList.remove('mode-fit', 'mode-actual');
+        lightbox.classList.add(mode === 'actual' ? 'mode-actual' : 'mode-fit');
 
-            function setMode(mode) {
-                // mode: 'fit' | 'actual'
-                lightbox.classList.remove('mode-fit', 'mode-actual');
-                lightbox.classList.add(mode === 'actual' ? 'mode-actual' : 'mode-fit');
-
-                if (btnModeFit && btnModeActual) {
-                    btnModeFit.classList.toggle('is-active', mode !== 'actual');
-                    btnModeActual.classList.toggle('is-active', mode === 'actual');
-                }
-            }
-
-
-            function openLightboxWithNode(node, originalHref) {
-                mediaHost.innerHTML = '';
-                mediaHost.appendChild(node);
-
-                // Double-click toggles between Fit and Actual size
-                node.addEventListener('dblclick', (ev) => {
-                    ev.preventDefault();
-                    const isActual = lightbox.classList.contains('mode-actual');
-                    setMode(isActual ? 'fit' : 'actual');
-                });
-
-                linkOriginal.href = originalHref || '#';
-
-                // Default to fit-to-window each time the lightbox opens
-                setMode('fit');
-
-                lightbox.classList.add('is-open');
-                lightbox.setAttribute('aria-hidden', 'false');
-
-                btnClose.focus();
-            }
-
-            function closeLightbox() {
-                const vid = mediaHost.querySelector('video');
-                if (vid) {
-                    try { vid.pause(); } catch (_) {}
-                }
-                mediaHost.innerHTML = '';
-                lightbox.classList.remove('is-open');
-                lightbox.setAttribute('aria-hidden', 'true');
-            }
-
-            // Close interactions
-            btnClose.addEventListener('click', closeLightbox);
-            if (btnModeFit) btnModeFit.addEventListener('click', () => setMode('fit'));
-            if (btnModeActual) btnModeActual.addEventListener('click', () => setMode('actual'));
-
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) closeLightbox();
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
-            });
-
-            // Image click -> lightbox
-            document.querySelectorAll('a.js-open-image').forEach(a => {
-                a.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const img = a.querySelector('img');
-                    if (!img) return;
-
-                    const fullSrc = a.getAttribute('href') || img.src;
-
-                    const fullImg = document.createElement('img');
-                    fullImg.src = fullSrc;
-                    fullImg.alt = img.alt || 'Image';
-
-                    openLightboxWithNode(fullImg, fullSrc);
-                });
-            });
-
-            // Video full-size -> lightbox
-            document.querySelectorAll('.js-open-video').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const host = btn.closest('.video-container') || btn.parentElement;
-                    const video = host ? host.querySelector('video.js-video') : null;
-                    if (!video) return;
-
-                    // Build a new video element so we don’t steal the inline player
-                    const fullVid = document.createElement('video');
-                    fullVid.controls = true;
-                    fullVid.playsInline = true;
-                    fullVid.autoplay = true;
-
-                    const poster = video.getAttribute('poster');
-                    if (poster) fullVid.setAttribute('poster', poster);
-
-                    const sources = video.querySelectorAll('source');
-                    sources.forEach(s => {
-                        const ns = document.createElement('source');
-                        ns.src = s.getAttribute('src');
-                        ns.type = s.getAttribute('type');
-                        fullVid.appendChild(ns);
-                    });
-
-                    const mp4 = video.querySelector('source[type="video/mp4"]');
-                    const originalHref = mp4 ? mp4.getAttribute('src') : (sources[0] ? sources[0].getAttribute('src') : '#');
-
-                    openLightboxWithNode(fullVid, originalHref);
-                });
-            });
-
-            // Double-click any inline video to open full size
-document.querySelectorAll('video.js-video').forEach(v => {
-    v.addEventListener('dblclick', (e) => {
-        e.preventDefault();
-        const host = v.closest('.video-container') || v.parentElement;
-        const btn = host ? host.querySelector('.js-open-video') : document.querySelector('.js-open-video');
-        if (btn) btn.click();
-    });
-});
-
-
-// Ensure only one video plays at a time on the page
-const allVideos = Array.from(document.querySelectorAll('video'));
-allVideos.forEach(v => {
-    v.addEventListener('play', () => {
-        allVideos.forEach(other => {
-            if (other !== v) {
-                try { other.pause(); } catch (_) {}
-            }
-        });
-    });
-});
-
-// Carousel navigation (screenshots + videos)
-document.querySelectorAll('.js-carousel').forEach(carousel => {
-    const track = carousel.querySelector('.js-carousel-track');
-    const btnPrev = carousel.querySelector('.js-carousel-prev');
-    const btnNext = carousel.querySelector('.js-carousel-next');
-    if (!track) return;
-
-    function scrollByCard(dir) {
-        const first = track.querySelector('.carousel-item');
-        const cardW = first ? first.getBoundingClientRect().width : 740;
-        track.scrollBy({ left: dir * (cardW + 16), behavior: 'smooth' });
+        if (btnModeFit && btnModeActual) {
+            btnModeFit.classList.toggle('is-active', mode !== 'actual');
+            btnModeActual.classList.toggle('is-active', mode === 'actual');
+        }
     }
 
-    if (btnPrev) btnPrev.addEventListener('click', () => scrollByCard(-1));
-    if (btnNext) btnNext.addEventListener('click', () => scrollByCard(1));
+    function openLightboxWithNode(node, originalHref) {
+        mediaHost.innerHTML = '';
+        mediaHost.appendChild(node);
 
-    // Mouse drag-to-scroll (nice on desktop when scrollbars are hidden)
-    let isDown = false;
-    let startX = 0;
-    let startLeft = 0;
+        node.addEventListener('dblclick', (ev) => {
+            ev.preventDefault();
+            const isActual = lightbox.classList.contains('mode-actual');
+            setMode(isActual ? 'fit' : 'actual');
+        });
 
-    track.addEventListener('mousedown', (e) => {
-        isDown = true;
-        startX = e.pageX;
-        startLeft = track.scrollLeft;
-        track.style.cursor = 'grabbing';
+        linkOriginal.href = originalHref || '#';
+        setMode('fit');
+
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        btnClose.focus();
+    }
+
+    function closeLightbox() {
+        const vid = mediaHost.querySelector('video');
+        if (vid) {
+            try { vid.pause(); } catch (_) {}
+        }
+        mediaHost.innerHTML = '';
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+    }
+
+    btnClose.addEventListener('click', closeLightbox);
+    if (btnModeFit) btnModeFit.addEventListener('click', () => setMode('fit'));
+    if (btnModeActual) btnModeActual.addEventListener('click', () => setMode('actual'));
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
     });
 
-    window.addEventListener('mouseup', () => {
-        isDown = false;
-        track.style.cursor = '';
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
     });
 
-    window.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        const dx = e.pageX - startX;
-        track.scrollLeft = startLeft - dx;
+    document.querySelectorAll('a.js-open-image').forEach(a => {
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            const img = a.querySelector('img');
+            if (!img) return;
+
+            const fullSrc = a.getAttribute('href') || img.src;
+            const fullImg = document.createElement('img');
+            fullImg.src = fullSrc;
+            fullImg.alt = img.alt || 'Image';
+
+            openLightboxWithNode(fullImg, fullSrc);
+        });
     });
-});
+
+    document.querySelectorAll('.js-open-video').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const host = btn.closest('.video-container') || btn.parentElement;
+            const video = host ? host.querySelector('video.js-video') : null;
+            if (!video) return;
+
+            const fullVid = document.createElement('video');
+            fullVid.controls = true;
+            fullVid.playsInline = true;
+            fullVid.autoplay = true;
+
+            const poster = video.getAttribute('poster');
+            if (poster) fullVid.setAttribute('poster', poster);
+
+            const sources = video.querySelectorAll('source');
+            sources.forEach(s => {
+                const ns = document.createElement('source');
+                ns.src = s.getAttribute('src');
+                ns.type = s.getAttribute('type');
+                fullVid.appendChild(ns);
+            });
+
+            const mp4 = video.querySelector('source[type="video/mp4"]');
+            const originalHref = mp4 ? mp4.getAttribute('src') : (sources[0] ? sources[0].getAttribute('src') : '#');
+            openLightboxWithNode(fullVid, originalHref);
+        });
+    });
+
+    document.querySelectorAll('video.js-video').forEach(v => {
+        v.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            const host = v.closest('.video-container') || v.parentElement;
+            const btn = host ? host.querySelector('.js-open-video') : document.querySelector('.js-open-video');
+            if (btn) btn.click();
+        });
+    });
+
+    const allVideos = Array.from(document.querySelectorAll('video'));
+    allVideos.forEach(v => {
+        v.addEventListener('play', () => {
+            allVideos.forEach(other => {
+                if (other !== v) {
+                    try { other.pause(); } catch (_) {}
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('.js-carousel').forEach(carousel => {
+        const track = carousel.querySelector('.js-carousel-track');
+        const btnPrev = carousel.querySelector('.js-carousel-prev');
+        const btnNext = carousel.querySelector('.js-carousel-next');
+        if (!track) return;
+
+        function scrollByCard(dir) {
+            const first = track.querySelector('.carousel-item');
+            const cardW = first ? first.getBoundingClientRect().width : 740;
+            track.scrollBy({ left: dir * (cardW + 16), behavior: 'smooth' });
+        }
+
+        if (btnPrev) btnPrev.addEventListener('click', () => scrollByCard(-1));
+        if (btnNext) btnNext.addEventListener('click', () => scrollByCard(1));
+
+        let isDown = false;
+        let startX = 0;
+        let startLeft = 0;
+
+        track.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX;
+            startLeft = track.scrollLeft;
+            track.style.cursor = 'grabbing';
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDown = false;
+            track.style.cursor = '';
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            const dx = e.pageX - startX;
+            track.scrollLeft = startLeft - dx;
+        });
+    });
 
 })();
-    </script>
+</script>
 </body>
 </html>

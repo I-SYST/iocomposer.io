@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Reduce crawl noise from CDN endpoints (common with Cloudflare)
+Disallow: /cdn-cgi/
+
+Sitemap: https://iocomposer.io/sitemap.xml
