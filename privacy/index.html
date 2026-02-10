@@ -60,14 +60,6 @@
             margin: 24px 0;
             color: #fb923c;
         }
-        .disclaimer {
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 32px;
-            color: #fbbf24;
-        }
         .provider-info {
             background: rgba(255,255,255,0.05);
             border-radius: 8px;
@@ -104,196 +96,112 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="logo"><a href="/">IO<span>composer</span></a></div>
-        <h1>Privacy Policy</h1>
-        <p class="meta">Effective: January 22, 2026 · Version 1.1</p>
-    </div>
-    
-    <div class="container">
-        <div class="disclaimer">
-            <strong>Note:</strong> This document should be reviewed by qualified legal counsel before production use.
-        </div>
 
-        <div class="provider-info">
-            <p style="margin-bottom: 8px;"><strong>Provider:</strong> I-SYST Inc. (Québec, Canada) ("I-SYST", "we", "us")</p>
-            <p style="margin-bottom: 8px;"><strong>Contact:</strong> <a href="mailto:info@i-syst.com">info@i-syst.com</a></p>
-            <p style="margin-bottom: 0;"><strong>Address:</strong> 50 de Lauzon, Boucherville, Quebec, Canada J4B 1E6</p>
-        </div>
+<div class="header">
+    <div class="logo"><a href="/">IO<span>composer</span></a></div>
+    <h1>Privacy Policy</h1>
+    <p class="meta">Effective: January 22, 2026 · Version 1.2</p>
+</div>
 
-        <p>This Privacy Policy explains how we collect, use, disclose, and protect personal information in connection with IOcomposer.</p>
+<div class="container">
 
-        <div class="highlight-box">
-            <strong>IOcomposer is designed to be local-first for development workflows. We do not store your prompts, source code, or AI outputs on our servers.</strong> We process certain data transiently to provide the Service, as described below.
-        </div>
+<div class="provider-info">
+    <p><strong>Provider:</strong> I-SYST Inc. (Québec, Canada)</p>
+    <p><strong>Privacy Officer:</strong> The person responsible for the protection of personal information can be contacted at
+        <a href="mailto:info@i-syst.com">info@i-syst.com</a>.</p>
+    <p><strong>Address:</strong> 50 de Lauzon, Boucherville, Québec, Canada J4B 1E6</p>
+</div>
 
-        <h2>1) What We Collect</h2>
-        
-        <p><strong>Third-party SDK downloads (local).</strong> The IOcomposer installer may download third-party SDKs directly from their official upstream repositories and store them locally in a separate <code>external/</code> folder on your machine. This activity typically does not involve collecting your prompts, source code, or AI outputs. Third-party SDKs remain governed by their own license terms.</p>
+<p>This Privacy Policy explains how I-SYST Inc. (“we”, “us”) collects, uses, discloses, and protects personal information in connection with IOcomposer.</p>
 
-        <h3>1.1 Account Information</h3>
-        <ul>
-            <li>Email address and basic account identifiers</li>
-            <li>Authentication metadata (sign-in timestamps, security events)</li>
-        </ul>
+<div class="highlight-box">
+<strong>IOcomposer is designed to be local-first.</strong> We do not intentionally retain prompts, source code, or AI outputs, except transiently for processing, security, error handling, or as otherwise described in this Policy.
+</div>
 
-        <h3>1.2 Billing Information (if you purchase a plan)</h3>
-        <p>Billing is processed by Stripe. We may receive:</p>
-        <ul>
-            <li>Payment status (paid/unpaid), subscription plan, renewal/cancellation status</li>
-            <li>Limited billing metadata (customer ID, subscription ID)</li>
-        </ul>
-        <p><strong>We do not receive or store full card numbers.</strong></p>
+<h2>1) What We Collect</h2>
 
-        <h3>1.3 Service Usage Information (metadata only)</h3>
-        <p>To operate the Service and enforce limits, we may collect and store:</p>
-        <ul>
-            <li>Feature usage counters (e.g., requests/day, tokens/month) — <strong>counts only, not content</strong></li>
-            <li>Coarse device/app telemetry (e.g., app version, OS type) if enabled</li>
-            <li>Security logs (e.g., IP address, timestamps) for abuse prevention</li>
-        </ul>
-        
-        <p><strong>We do not store:</strong></p>
-        <ul>
-            <li>Prompts or chat content</li>
-            <li>Project files or repositories</li>
-            <li>Retrieved code snippets from your local knowledge base</li>
-            <li>AI outputs returned to you</li>
-        </ul>
+<h3>1.1 Account Information</h3>
+<ul>
+<li>Email address and account identifiers</li>
+<li>Authentication and security metadata</li>
+</ul>
 
-        <div class="warning-box">
-            <strong>A Note on Secrets:</strong> While we employ best practices to redact sensitive data from logs, we cannot guarantee that user-submitted secrets (e.g., API keys, passwords, or private keys pasted directly into prompts) will be successfully redacted from crash reports or server-side error logs if an error occurs during processing. <strong>You are responsible for sanitizing your Content before submitting it to the Service.</strong>
-        </div>
+<h3>1.2 Billing Information</h3>
+<p>Billing is processed by Stripe. We receive limited billing metadata only (e.g., subscription status). We do not store full payment card numbers.</p>
 
-        <h3>1.4 Support Communications</h3>
-        <p>If you contact support, we collect the information you provide in your message. Please avoid sending source code or secrets. If you do include such data, it may be handled as support content.</p>
+<h3>1.3 Service Usage Metadata</h3>
+<ul>
+<li>Feature usage counters (counts only, not content)</li>
+<li>Device and application metadata</li>
+<li>Security logs (e.g., IP address, timestamps)</li>
+</ul>
 
-        <h2>2) How We Use Personal Information</h2>
-        <p>We use personal information to:</p>
-        <ul>
-            <li>Provide authentication and account management</li>
-            <li>Deliver the Service and Desktop App features</li>
-            <li>Enforce plan limits, prevent abuse, and maintain security</li>
-            <li>Process billing and subscription status</li>
-            <li>Communicate service notices (e.g., critical updates)</li>
-            <li>Comply with legal obligations</li>
-        </ul>
+<p><strong>We do not intentionally retain:</strong> prompts, project files, repositories, or AI outputs.</p>
 
-        <h2>3) How AI Processing & Routing Works</h2>
-        <p>When you use AI features, the Desktop App sends a request to our AI gateway.</p>
+<div class="warning-box">
+<strong>Important:</strong> Users are responsible for removing secrets or sensitive data before submitting content. While safeguards are used, error logs may temporarily process submitted data during failures.
+</div>
 
-        <h3>3.1 The Neural Router</h3>
-        <p>To provide the Service, we use an automated classification system ("Neural Router") that analyzes the metadata and complexity of your request (e.g., token count, presence of code, file attachments) to determine the most appropriate AI model.</p>
+<h2>2) How We Use Personal Information</h2>
+<ul>
+<li>Account management and authentication</li>
+<li>Service delivery and security</li>
+<li>Billing and subscription management</li>
+<li>Legal and compliance obligations</li>
+</ul>
 
-        <h3>3.2 Model Providers</h3>
-        <p>Based on this classification, we forward the required information to an AI model provider (currently <strong>Anthropic</strong> or <strong>OpenAI</strong>) to generate Output.</p>
-        <ul>
-            <li><strong>Simple Queries:</strong> May be processed by smaller, faster models to ensure speed.</li>
-            <li><strong>Complex Queries:</strong> Are processed by high-reasoning models for better accuracy.</li>
-        </ul>
-        <p>We use the latest available models from each provider. Current model families in use are published at: <a href="/ai-models">https://iocomposer.io/ai-models</a></p>
+<h2>3) AI Processing</h2>
+<p>AI requests are processed transiently and routed to third-party AI providers (currently Anthropic or OpenAI) based on technical characteristics.</p>
 
-        <h3>3.3 No Storage of Content</h3>
-        <p>Consistent with our local-first promise, prompts and snippets are processed <strong>transiently</strong> in memory to perform this routing and generation. They are <strong>not persisted</strong> by I-SYST. We may store <strong>non-content usage metadata</strong> (e.g., "Request ID 123 was classified as 'Complex' and used 3 quota units") for billing and plan enforcement.</p>
+<p><strong>By using AI features, you acknowledge and consent</strong> to the processing of applicable information by these providers as described in this Policy.</p>
 
-        <h2>4) Disclosure to Service Providers (Subprocessors)</h2>
-        <p>We disclose personal information to third parties only as needed to operate IOcomposer:</p>
+<h2>4) Service Providers</h2>
+<table>
+<thead>
+<tr><th>Provider</th><th>Purpose</th><th>Location</th></tr>
+</thead>
+<tbody>
+<tr><td>Supabase</td><td>Authentication and infrastructure</td><td>USA</td></tr>
+<tr><td>Stripe</td><td>Billing</td><td>USA</td></tr>
+<tr><td>Anthropic</td><td>AI services</td><td>USA</td></tr>
+<tr><td>OpenAI</td><td>AI services</td><td>USA</td></tr>
+</tbody>
+</table>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Subprocessor</th>
-                    <th>Purpose</th>
-                    <th>Location</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Supabase</strong></td>
-                    <td>Authentication, database, edge functions</td>
-                    <td>USA</td>
-                </tr>
-                <tr>
-                    <td><strong>Stripe</strong></td>
-                    <td>Billing and subscription management</td>
-                    <td>USA</td>
-                </tr>
-                <tr>
-                    <td><strong>Anthropic</strong></td>
-                    <td>AI model provider (Claude)</td>
-                    <td>USA</td>
-                </tr>
-                <tr>
-                    <td><strong>OpenAI</strong></td>
-                    <td>AI model provider (GPT)</td>
-                    <td>USA</td>
-                </tr>
-            </tbody>
-        </table>
+<h2>5) Data Retention</h2>
+<p>Personal information is retained only as long as necessary for service delivery, legal obligations, and security. Retention practices are reviewed periodically.</p>
 
-        <p>These providers process data under their own terms and privacy policies and under contracts intended to protect personal information.</p>
-        <p>We maintain a list of subprocessors at: <a href="/subprocessors">https://iocomposer.io/subprocessors</a></p>
-        <p><em>Note: "Location" indicates a primary processing region and may include other jurisdictions depending on service configuration.</em></p>
+<h2>6) International Transfers</h2>
+<p>Personal information may be processed outside Québec or Canada and may be subject to foreign laws. We use safeguards intended to provide a level of protection comparable to Canadian privacy requirements.</p>
 
-        <h2>5) Data Retention</h2>
-        <p>We retain personal information only as long as necessary for the purposes described above:</p>
+<h2>7) Security</h2>
+<p>We use appropriate administrative, technical, and organizational safeguards. No system is completely secure.</p>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Data Type</th>
-                    <th>Retention Period</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Account data</td>
-                    <td>While account is active, plus a reasonable period after deletion for security/legal compliance</td>
-                </tr>
-                <tr>
-                    <td>Billing metadata</td>
-                    <td>As required for accounting and legal compliance</td>
-                </tr>
-                <tr>
-                    <td>Security logs and usage metadata</td>
-                    <td><strong>90 days</strong> (metadata only; no prompts/code/output)</td>
-                </tr>
-            </tbody>
-        </table>
+<h2>8) Your Rights</h2>
+<ul>
+<li>Access and correction</li>
+<li>Account deletion</li>
+<li>Consent withdrawal where applicable</li>
+</ul>
 
-        <p><strong>Because we do not store prompts, code, or output, we do not retain that content.</strong></p>
+<h2>9) Children’s Privacy</h2>
+<p>IOcomposer is not intended for individuals under the age of 14.</p>
 
-        <h2>6) International Transfers</h2>
-        <p>Service providers may process personal information outside Québec/Canada (for example, in the United States or other regions). Where applicable, we use contractual and organizational safeguards designed to protect personal information during such transfers.</p>
+<h2>10) Changes</h2>
+<p>This Policy may be updated periodically. Continued use constitutes acceptance of the current version.</p>
 
-        <h2>7) Security</h2>
-        <p>We use administrative, technical, and physical safeguards appropriate to the sensitivity of the data, including access controls and encryption in transit. No method of transmission or storage is 100% secure.</p>
+<h2>11) Contact</h2>
+<p>Privacy inquiries: <a href="mailto:info@i-syst.com">info@i-syst.com</a></p>
 
-        <h2>8) Your Choices and Rights</h2>
-        <p>Depending on your jurisdiction, you may have rights to:</p>
-        <ul>
-            <li>Access and correct personal information</li>
-            <li>Request deletion of your account data</li>
-            <li>Withdraw consent where processing is based on consent</li>
-        </ul>
-        <p>To exercise these rights, contact: <a href="mailto:info@i-syst.com">info@i-syst.com</a></p>
+</div>
 
-        <h2>9) Children's Privacy</h2>
-        <p>IOcomposer is not intended for children under the age of 13. If you believe a child has provided personal information, contact us to request deletion.</p>
+<footer>
+<a href="/">Home</a>
+<a href="/terms">Terms</a>
+<a href="/legal">Legal Notices</a>
+<a href="/subprocessors">Subprocessors</a>
+<p>© 2026 I-SYST Inc.</p>
+</footer>
 
-        <h2>10) Changes to This Privacy Policy</h2>
-        <p>We may update this Privacy Policy from time to time. We will post the updated version and update the effective date.</p>
-
-        <h2>11) Contact</h2>
-        <p>Privacy questions or requests: <a href="mailto:info@i-syst.com">info@i-syst.com</a></p>
-    </div>
-
-    <footer>
-        <a href="/">Home</a>
-        <a href="/terms">Terms</a>
-        <a href="/legal">Legal Notices</a>
-        <a href="/subprocessors">Subprocessors</a>
-        <p style="margin-top: 16px;">© 2025 I-SYST Inc.</p>
-    </footer>
 </body>
 </html>
