@@ -592,6 +592,24 @@
             width: min(740px, calc(100vw - 52px));
             scroll-snap-align: start;
         }
+/* --- Screenshot carousel: lock viewport size so slides don't jump --- */
+.screenshot-section .js-open-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;              /* pick 16/9 or 4/3 if you prefer */
+    position: relative;
+    overflow: hidden;
+    background: rgba(0,0,0,0.35);      /* letterbox background */
+}
+
+/* Fill the fixed viewport, preserving image aspect ratio */
+.screenshot-section .js-open-image img.screenshot {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;               /* use "cover" if you want crop instead */
+}
 
         /* FAQ */
         .faq {
@@ -681,8 +699,14 @@
                         <p class="screenshot-caption">AI detects a subtle SPI configuration error and suggests the fix</p>
                     </div>
                     <div class="carousel-item">
+                        <a href="images/IOcomposer_Prompt_nRF54L15_SampleOpen.png" class="js-open-image" aria-label="Open screenshot full size">
+                            <img src="images/IOcomposer_Prompt_nRF54L15_SampleOpen.png" alt="IOcomposer IDE AI-assisted prompt opening in editor Nordic nRF54L15 baremetal SDK example" class="screenshot">
+                        </a>
+                        <p class="screenshot-caption">AI prompt opens Nordic nRF54L15 baremetal code sample file</p>
+                    </div>
+                    <div class="carousel-item">
                         <a href="images/IOcomposer_Show_Open_NordicBaremetalSDK_Example.png" class="js-open-image" aria-label="Open screenshot full size">
-                            <img src="images/IOcomposer_AddSPI.png" alt="IOcomposer IDE AI-assisted code snippet & opening in editor Nordic nRF54L15 baremetal SDK example" class="screenshot">
+                            <img src="images/IOcomposer_Show_Open_NordicBaremetalSDK_Example.png" alt="IOcomposer IDE AI-assisted code snippet & opening in editor Nordic nRF54L15 baremetal SDK example" class="screenshot">
                         </a>
                         <p class="screenshot-caption">AI shows Nordic nRF54L15 baremetal code sample</p>
                     </div>
