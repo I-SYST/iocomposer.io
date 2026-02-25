@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>IOcomposer — AI-Powered Embedded IDE for nRF52/nRF54, ARM &amp; RISC-V</title>
-    <meta name="description" content="AI-powered Eclipse Embedded CDT IDE for firmware. Install → flash → debug in ~15 minutes. Supports Nordic nRF52/nRF54, STM32, NXP, Renesas, Microchip, ARM Cortex-M and RISC-V. Built on IOsonata.">
+    <title>IOcomposer — Bare-Metal Embedded IDE with AI Code Generation | Nordic nRF52, nRF54L15, ARM &amp; RISC-V</title>
+    <meta name="description" content="IOcomposer is a bare-metal embedded IDE with AI code generation for Nordic nRF52, nRF54L15, STM32, NXP, and RISC-V microcontrollers. Direct hardware access with managed builds — no RTOS required. Install to first debug in 15 minutes.">
     <meta name="robots" content="index, follow">
+    <meta name="keywords" content="embedded IDE, bare-metal IDE, AI code generation, nRF52840, nRF54L15, Nordic semiconductor IDE, ARM Cortex-M IDE, RISC-V IDE, BLE development, SoftDevice, firmware development, JTAG debug, embedded AI assistant, MCU programming, STM32 IDE, NXP IDE">
     <link rel="canonical" href="https://iocomposer.io/">
     <meta name="theme-color" content="#16213e">
 
@@ -15,14 +16,14 @@
     <meta property="og:url" content="https://iocomposer.io/">
     <meta property="og:site_name" content="IOcomposer">
     <meta property="og:locale" content="en_US">
-    <meta property="og:title" content="IOcomposer — AI-Powered IDE for Embedded Development">
-    <meta property="og:description" content="Professional embedded firmware IDE with AI assistance. Install to debug in ~15 minutes. Nordic nRF52/nRF54, STM32, NXP, Renesas, ARM &amp; RISC-V.">
+    <meta property="og:title" content="IOcomposer — Bare-Metal Embedded IDE with AI Code Generation">
+    <meta property="og:description" content="Bare-metal embedded IDE with AI code generation. Nordic nRF52/nRF54L15, STM32, NXP, ARM Cortex-M &amp; RISC-V. Direct hardware access, managed builds. Install to debug in 15 minutes.">
     <meta property="og:image" content="https://iocomposer.io/images/IOcomposer_AddSPI.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="IOcomposer — AI-Powered IDE for Embedded Development">
-    <meta name="twitter:description" content="Professional embedded firmware IDE with AI assistance. Install to debug in ~15 minutes. Nordic nRF52/nRF54, STM32, NXP, Renesas, ARM &amp; RISC-V.">
+    <meta name="twitter:title" content="IOcomposer — Bare-Metal Embedded IDE with AI Code Generation">
+    <meta name="twitter:description" content="Bare-metal embedded IDE with AI code generation. Nordic nRF52/nRF54L15, STM32, NXP, ARM Cortex-M &amp; RISC-V. Direct hardware access, managed builds. Install to debug in 15 minutes.">
     <meta name="twitter:image" content="https://iocomposer.io/images/IOcomposer_AddSPI.png">
 
     <!-- Structured Data: SoftwareApplication + Offers -->
@@ -34,9 +35,14 @@
       "name": "IOcomposer",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "macOS, Linux, Windows",
-      "description": "AI-powered Eclipse Embedded CDT–based IDE for embedded firmware development with the IOsonata framework. Supports Nordic nRF52/nRF54 BLE, STM32, NXP, Renesas, Microchip — ARM Cortex-M and RISC-V.",
+      "description": "IOcomposer is a bare-metal embedded IDE with AI-powered code generation for professional firmware development. It supports Nordic nRF52832, nRF52840, nRF54L15, STM32, NXP, Renesas, and Microchip microcontrollers on ARM Cortex-M and RISC-V architectures. Uses GCC ARM and RISC-V toolchains with OpenOCD for JTAG/SWD debugging, and integrates Nordic SoftDevice BLE stacks natively. Bare-metal approach with direct hardware access and managed builds — no RTOS required.",
       "url": "https://iocomposer.io/",
+      "downloadUrl": "https://iocomposer.io/#install",
       "screenshot": "https://iocomposer.io/images/IOcomposer_AddSPI.png",
+      "sameAs": [
+        "https://github.com/IOsonata",
+        "https://iosonata.io"
+      ],
       "offers": [
         {
           "@type": "Offer",
@@ -83,15 +89,79 @@
           "name": "What is IOcomposer?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "IOcomposer is an Eclipse Embedded CDT–based IDE with AI assistance for embedded firmware development. It is built to support prompt-to-flash workflows and integrates with the IOsonata framework."
+            "text": "IOcomposer is a bare-metal embedded IDE with AI-powered code generation. It provides a complete firmware development environment — from project creation through compile, flash, and JTAG/SWD debug — for ARM Cortex-M and RISC-V microcontrollers from Nordic, ST, NXP, Renesas, and Microchip."
           }
         },
         {
           "@type": "Question",
-          "name": "Which MCUs and architectures are supported?",
+          "name": "Which MCUs and architectures does IOcomposer support?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "IOcomposer targets multi-vendor MCU development, including Nordic nRF52/nRF54, STM32, NXP, Renesas, and Microchip families. Architectures include ARM Cortex-M and RISC-V."
+            "text": "IOcomposer supports ARM Cortex-M and RISC-V architectures. Specific MCU families include Nordic nRF52832, nRF52840, and nRF54L15; STM32 (planned); NXP (planned); Renesas; and Microchip. Nordic is the primary supported vendor today, with BLE SoftDevice integration for nRF52 (S132/S140) and nRF54 (S145)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does IOcomposer require Zephyr or nRF Connect SDK?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. IOcomposer takes a bare-metal approach using a lightweight hardware abstraction layer and Nordic's baremetal SDK (sdk-nrf-bm). You write directly against hardware registers and a thin HAL, with SoftDevice BLE stacks integrated natively. This is a different path from RTOS-based toolchains — suited for projects where direct hardware control, minimal overhead, or a simpler build workflow is preferred."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use IOcomposer with the nRF54L15?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. IOcomposer supports the Nordic nRF54L15 with bare-metal development using the sdk-nrf-bm SDK and the S145 SoftDevice BLE stack. You can create BLE peripheral and central projects for nRF54L15 with direct hardware access and a managed build system."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is IOcomposer different from Arduino IDE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Arduino is designed for beginners with simplified APIs and no debug support. IOcomposer provides professional embedded tools — JTAG/SWD debugging with breakpoints, register and memory views, direct MCU register access, BLE SoftDevice integration, and AI-assisted code generation that reads your actual SDK headers. IOcomposer is built for makers and developers who have outgrown Arduino and need real hardware debugging and vendor SDK access."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is IOcomposer different from nRF Connect SDK with VS Code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They serve different needs. nRF Connect SDK provides a full RTOS environment with Zephyr, Device Tree, Kconfig, and CMake — powerful for complex, multi-threaded applications. IOcomposer takes a bare-metal approach with GCC and a managed build system, targeting developers who prefer direct hardware access with less infrastructure. One MCU configuration works on any board with that chip, and the AI assistant reads your local SDK files to generate code that compiles without modification. Both are valid paths — the right choice depends on your project requirements."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does IOcomposer work on custom PCBs and custom boards?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. IOcomposer targets the MCU directly rather than requiring board definitions or BSP files. If your custom board uses a supported MCU (such as nRF52840 or nRF54L15), you configure pin assignments in your firmware code and flash directly. No Device Tree overlay or board file is needed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What toolchains and debug probes does IOcomposer use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IOcomposer uses GCC ARM (arm-none-eabi-gcc) and GCC RISC-V toolchains for compilation, and OpenOCD for JTAG/SWD flashing and debugging. It supports standard debug probes including J-Link, CMSIS-DAP, and ST-Link. The entire toolchain is installed automatically by the one-command installer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the AI assistant work in IOcomposer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The AI is trained on supported vendor SDKs and reads your local SDK header files, framework sources, and project configuration before generating code. You can also add your own code libraries to the knowledge base — proprietary drivers, internal frameworks, or shared middleware — so the AI works with your codebase, not just the vendor's. It can create projects, add peripherals (UART, SPI, I2C, BLE services), fix build errors, and open files directly in the editor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I add my own code libraries to the AI knowledge base?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can add your proprietary drivers, internal frameworks, shared middleware, or any code library to IOcomposer's AI knowledge base. The AI then generates code that uses your APIs, naming conventions, and patterns — not just the vendor SDK. This works the same way vendor SDKs are integrated: your library becomes part of what the AI knows when writing and reviewing code."
           }
         },
         {
@@ -99,7 +169,23 @@
           "name": "Do you upload my project files to your servers?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Your workspace stays on your machine. IOcomposer does not store your project files on our servers, and chat sessions are discarded when you exit."
+            "text": "No. Your source code, project files, and entire codebase stay on your machine — IOcomposer does not upload or store them on our servers. The AI reads your local files directly on your workstation. Only the content of AI chat queries is sent to process your request, and chat sessions are discarded when you exit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What operating systems does IOcomposer run on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IOcomposer runs on macOS, Linux, and Windows. A one-command installer sets up the IDE, ARM and RISC-V toolchains, OpenOCD, vendor SDKs, and the AI plugin — typically in about 10-15 minutes on a fresh machine."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is IOcomposer free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — IOcomposer is in free preview right now. The IDE with full build, flash, and debug capabilities is free, and all Advanced AI features are unlocked for every account during the preview period. After launch, AI features will have a free tier (20 queries/month) and paid plans starting at $19.95/month."
           }
         },
         {
@@ -107,8 +193,54 @@
           "name": "How do I enable AI Chat?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Install the IDE, then open Preferences → IOcomposer → Account and create a free account (or sign in) to enable AI Chat."
+            "text": "Install the IDE, then open Preferences → IOcomposer → Account and create a free account (or sign in) to enable AI Chat. No payment is required for the free tier."
           }
+        },
+        {
+          "@type": "Question",
+          "name": "What is IOsonata?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IOsonata is an open-source, ISA-agnostic embedded firmware framework that provides a consistent API across ARM Cortex-M and RISC-V microcontrollers from multiple vendors. It reimplements core peripherals (UART, I2C, SPI, timers, PWM, GPIO, interrupts) with a unified interface while calling vendor HAL for less common peripherals. IOcomposer is the recommended IDE for IOsonata development."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Structured Data: HowTo (installation steps for AI citation) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "@id": "https://iocomposer.io/#howto-install",
+      "name": "How to install IOcomposer embedded IDE",
+      "description": "Install IOcomposer bare-metal embedded IDE with AI code generation on macOS, Linux, or Windows. One command sets up the IDE, GCC ARM and RISC-V toolchains, OpenOCD, vendor SDKs, and the AI plugin in approximately 15 minutes.",
+      "totalTime": "PT15M",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Run the installer",
+          "text": "Open a terminal and paste the install command for your operating system. macOS and Linux use curl to download and run a shell script. Windows uses PowerShell with administrator privileges. The installer downloads and configures the IDE, GCC ARM and RISC-V toolchains, OpenOCD debug tools, and vendor SDKs automatically.",
+          "url": "https://iocomposer.io/#install"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Launch IOcomposer and create a free account",
+          "text": "Open IOcomposer, then go to Preferences → IOcomposer → Account and click Create free account. This unlocks all AI features during the free preview period — no payment required.",
+          "url": "https://iocomposer.io/#install"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Create your first project",
+          "text": "Use the project wizard to select your target MCU (such as nRF52840 or nRF54L15), configure peripherals, and generate a buildable project. Or type a prompt in the AI chat panel — for example, 'create a BLE peripheral project for nRF54L15' — and the AI generates the project from your installed SDK files.",
+          "url": "https://iocomposer.io/#install"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Build, flash, and debug",
+          "text": "Build the project with one click, flash to your board via J-Link, CMSIS-DAP, or ST-Link probe, and launch the JTAG/SWD debugger with breakpoints, register views, and memory inspection — all from the same IDE.",
+          "url": "https://iocomposer.io/#install"
         }
       ]
     }
@@ -152,7 +284,8 @@
         .logo { font-size: 36px; font-weight: 700; margin-bottom: 16px; }
         .logo .logo-composer { color: #3b82f6; }
 
-        .tagline { font-size: 20px; color: #94a3b8; margin-bottom: 48px; }
+        .tagline { font-size: 26px; color: #fff; margin-bottom: 48px; font-weight: 600; letter-spacing: -0.3px; }
+        .tagline .tagline-highlight { color: #3b82f6; }
         h1 { font-size: 48px; margin-bottom: 24px; line-height: 1.2; }
         h1 .highlight { color: #3b82f6; }
         .description { font-size: 20px; color: #94a3b8; line-height: 1.6; margin-bottom: 48px; }
@@ -648,7 +781,7 @@
         @media (max-width: 600px) {
             h1 { font-size: 32px; }
             .logo { font-size: 28px; }
-            .tagline { font-size: 16px; }
+            .tagline { font-size: 20px; }
             .description { font-size: 16px; }
             .container { padding: 40px 20px; }
             .screenshot-section { margin: 32px 0; border-radius: 8px; }
@@ -663,7 +796,7 @@
 
 <body>
 <header>
-    <div class="beta-banner" role="banner">🚀 Preview Access — Create a free account in the IDE to enable AI Chat (Advanced features enabled during preview)</div>
+    <div class="beta-banner" role="banner">🚀 Free Preview — All Advanced AI features unlocked. Install IOcomposer and create a free account to start.</div>
 </header>
 
 <main>
@@ -673,13 +806,18 @@
             <span class="logo-io" aria-hidden="true">IO</span><span class="logo-composer" aria-hidden="true">composer</span>
         </div>
 
-        <p class="tagline">Start like Arduino, grow like a pro — without switching tools.</p>
+        <p class="tagline">Start like Arduino, <span class="tagline-highlight">grow like a pro</span> — without switching tools.</p>
 
         <h1>AI-Powered IDE for <span class="highlight">Embedded Development</span></h1>
 
         <p class="description">
-            Professional embedded firmware development with AI assistance.
-            Built on Eclipse Embedded CDT with the IOsonata framework.
+            Bare-metal firmware development with AI-powered code generation.
+            Direct hardware access. Develop on a DevKit, move to any custom board in seconds — change a few pin assignments in a C header #define and recompile.
+            No board files, no scripts, no complete rebuild.
+        </p>
+
+        <p style="color: #94a3b8; font-size: 15px; line-height: 1.6; max-width: 700px; margin: 0 auto 48px auto; text-align: center;">
+            IOcomposer supports Nordic nRF52832, nRF52840, and nRF54L15 with SoftDevice BLE, plus STM32, NXP, and RISC-V targets. The AI is trained on vendor SDKs and reads your local source code to generate firmware that compiles and runs on real hardware. All AI features are unlocked free during preview — no credit card required.
         </p>
 
         <section id="demo" aria-label="Product screenshots and demos">
@@ -775,42 +913,43 @@
             <div class="features">
                 <div class="feature">
                     <h3>🤖 AI Assistant</h3>
-                    <p>AI assistant tuned for embedded firmware, IOsonata, and vendor SDKs — built for prompt-to-flash workflows.</p>
+                    <p>AI trained on supported vendor SDKs — and your own code libraries. Add your proprietary drivers, middleware, or internal frameworks to the knowledge base, and the AI generates code that fits your codebase, not just the vendor's. Creates projects, adds peripherals, generates BLE services, fixes build errors, and opens results in the editor.</p>
                 </div>
 
                 <div class="feature">
-                    <h3>⚡ Quick Start</h3>
-                    <p>From clean machine to full debug with breakpoint at main() in ~15 minutes. One command installs Eclipse, ARM &amp; RISC-V toolchains, OpenOCD, IOsonata, Nordic SDKs, and AI plugin — all pre-configured.</p>
+                    <h3>🔒 Privacy-First</h3>
+                    <p>Your source code and project files stay on your machine — nothing is uploaded or stored on our servers. The AI reads your local codebase directly. Chat sessions are discarded when you exit.</p>
+                </div>
+
+                <div class="feature">
+                    <h3>🔧 Professional Tools</h3>
+                    <p>JTAG/SWD debug via OpenOCD with J-Link, CMSIS-DAP, or ST-Link probes. Breakpoints, register and memory inspection, variable watches, and flash programming — professional embedded workflow without juggling separate tools.</p>
                 </div>
 
                 <div class="feature">
                     <h3>🎯 Multi-Vendor MCU Support</h3>
-                    <p>ST, Renesas, NXP, Microchip, and Nordic. No Device Tree. No BSP. No board files. One MCU port runs on every board variant — your custom PCB works instantly.</p>
+                    <p>Nordic, ST, NXP, Renesas, and Microchip. No Device Tree. No BSP. No board files. Target the MCU directly — one configuration runs on every board variant, including your custom PCB. One IDE across vendors.</p>
                 </div>
 
                 <div class="feature">
                     <img src="images/nordic-logo.png" alt="Nordic Semiconductor" class="nordic-logo" loading="lazy" width="120" height="28">
                     <h3>📶 Nordic BLE Ready</h3>
-                    <p>SoftDevice support for nRF52 and nRF54. BLE stack integration without the complexity.</p>
+                    <p>SoftDevice S132/S140 for nRF52, S145 for nRF54L15. BLE peripheral, central, and mesh roles with native stack integration and automatic memory layout management.</p>
                 </div>
 
                 <div class="feature">
-                    <h3>🔧 Professional Tools</h3>
-                    <p>JTAG/SWD debug with breakpoints, register and memory inspection, flash via probe — professional embedded workflow without juggling separate tools.</p>
-                </div>
-
-                <div class="feature">
-                    <h3>🔒 Privacy-First</h3>
-                    <p>Your workspace stays on your machine — IOcomposer does not store your project files on our servers. Chat sessions are discarded when you exit.</p>
+                    <h3>⚡ Quick Start</h3>
+                    <p>From clean machine to full debug with breakpoint at main() in ~15 minutes. One command installs the IDE, GCC ARM &amp; RISC-V toolchains, OpenOCD, vendor SDKs, and AI plugin — all pre-configured. macOS, Linux, and Windows.</p>
                 </div>
             </div>
 
-            <p class="ai-footnote">* IOcomposer AI is purpose-built for embedded firmware development with IOsonata, vendor SDKs, and MCU programming — not a general-purpose chatbot.</p>
+            <p class="ai-footnote">* IOcomposer AI is trained on supported vendor SDKs and purpose-built for embedded firmware — not a general-purpose chatbot.</p>
         </section>
 
-        <section id="install" class="install-section" aria-label="Installation">
-            <h2>Install Now</h2>
-            <p class="install-note">Copy/paste in your terminal (download-then-run avoids interactive prompt issues):</p>
+        <section id="install" class="install-section" aria-label="Installation" style="border: 2px solid rgba(16, 185, 129, 0.4); background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(255,255,255,0.05) 100%);">
+            <h2>Install Now — Free Preview</h2>
+            <p class="install-note" style="color: #10b981; font-weight: 600; font-size: 16px; margin-bottom: 4px;">All Advanced AI features unlocked. No credit card.</p>
+            <p class="install-note">One command sets up everything — IDE, toolchains, debug tools, vendor SDKs, and AI plugin. ~15 minutes.</p>
 
             <div class="install-option">
                 <div class="install-label">macOS</div>
@@ -842,9 +981,35 @@
             </p>
         </section>
 
+        <section id="how-it-works" class="install-section" aria-label="How it works" style="text-align: left;">
+            <h2>How It Works</h2>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
+                IOcomposer is a complete bare-metal firmware development environment. It combines a professional code editor with managed builds, GCC ARM (arm-none-eabi-gcc) and GCC RISC-V toolchains for compilation, and OpenOCD for JTAG/SWD flashing and debugging through standard probes like J-Link, CMSIS-DAP, and ST-Link. A built-in hardware abstraction layer provides a consistent peripheral API (UART, SPI, I2C, timers, PWM, GPIO, interrupts) across ARM Cortex-M and RISC-V chips from multiple vendors.
+            </p>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
+                For Nordic BLE development, IOcomposer integrates SoftDevice stacks directly — S132 and S140 for nRF52, S145 for nRF54L15. You configure your MCU and peripherals through a project wizard or AI prompts, and the build system handles linker scripts, memory layouts, and SoftDevice placement automatically. The bare-metal approach means you write against hardware registers and a thin HAL with no RTOS overhead — ideal for resource-constrained applications, low-latency firmware, and custom board designs.
+            </p>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7;">
+                The AI assistant is trained on supported vendor SDKs and reads your locally installed SDK header files and project configuration before generating code. You can also add your own code libraries — proprietary drivers, internal frameworks, shared middleware — to the knowledge base, so the AI generates code that fits your codebase, not just the vendor's. It can create new projects, add peripheral drivers, generate BLE service implementations, diagnose build errors, and open results directly in the editor. The workflow is prompt → generate → build → flash → debug, from a single IDE.
+            </p>
+        </section>
+
+        <section id="supported-hardware" class="install-section" aria-label="Supported hardware" style="text-align: left;">
+            <h2>Supported Hardware</h2>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
+                <strong style="color: #fff;">Nordic Semiconductor (primary support):</strong> nRF52832, nRF52840, and nRF54L15. BLE connectivity via SoftDevice S132/S140 (nRF52) and S145 (nRF54L15). Uses Nordic's bare-metal SDK (sdk-nrf-bm) for direct hardware access with minimal abstraction.
+            </p>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
+                <strong style="color: #fff;">Multi-vendor MCU support:</strong> STM32 (ST), LPC/i.MX RT (NXP), RA (Renesas), SAM/PIC32 (Microchip). Vendor expansion is ongoing — Nordic is fully supported today; other vendors are at varying stages of integration.
+            </p>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7;">
+                <strong style="color: #fff;">Architectures:</strong> ARM Cortex-M (M0, M0+, M4, M33) and RISC-V. The ISA-agnostic design means the same application code compiles for both architectures when targeting equivalent peripherals. Custom boards work without board support packages — IOcomposer targets the MCU directly, so any PCB with a supported chip is ready to develop on.
+            </p>
+        </section>
+
         <section class="enable-section" aria-label="Enable AI Chat">
             <h2>Enable AI Chat</h2>
-            <p class="enable-note">A free account is required to unlock AI features (no payment needed for Free tier).</p>
+            <p class="enable-note">A free account unlocks AI features. During the free preview, all Advanced capabilities are included — no payment required.</p>
 
             <ol class="enable-steps">
                 <li>Install IOcomposer (above), then launch the IDE.</li>
@@ -857,7 +1022,7 @@
 
         <section id="pricing" class="pricing" aria-label="Pricing">
             <h2>Simple Pricing</h2>
-            <p class="pricing-note">During preview, Advanced features are enabled for all accounts. Pricing below reflects target launch plans and may change.</p>
+            <p class="pricing-note">Free preview: Advanced features are unlocked for all accounts right now. Pricing below reflects future launch plans and may change.</p>
 
             <div class="plans three-tier">
                 <div class="plan">
@@ -907,35 +1072,109 @@
             </div>
         </section>
 
+        <section id="who" class="install-section" aria-label="Who is this for" style="text-align: left;">
+            <h2>Who Is This For</h2>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
+                <strong style="color: #fff;">Makers outgrowing Arduino.</strong> You've hit the limits of the Arduino IDE — no real debugger, no register views, no vendor SDK access. IOcomposer gives you professional JTAG/SWD debugging, direct hardware control, and AI-assisted code generation, without the learning curve of setting up a full vendor toolchain from scratch.
+            </p>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
+                <strong style="color: #fff;">Engineers who need fast time to market.</strong> You're shipping firmware across board revisions and product variants. With IOcomposer, porting to a new board is a C header change — update your pin #defines and recompile. No Device Tree rewrites, no new board support packages, no full rebuild. Spend time on your application, not your toolchain.
+            </p>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
+                <strong style="color: #fff;">Nordic developers who want bare-metal BLE.</strong> You're building a BLE peripheral, sensor node, or custom board with nRF52840 or nRF54L15 and don't need a full RTOS. IOcomposer integrates SoftDevice stacks natively with direct hardware access. Ask the AI to create a BLE peripheral project — get a fully functional, SoftDevice-aware firmware you can build and flash in under two minutes.
+            </p>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
+                <strong style="color: #fff;">Teams working on proprietary firmware.</strong> Your source code stays on your machine. The AI reads local files only — nothing is uploaded. For teams with IP-sensitive projects, this means AI-assisted development without cloud exposure.
+            </p>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7;">
+                <strong style="color: #fff;">Developers targeting custom hardware.</strong> IOcomposer targets the MCU directly — no board definitions, no BSP files, no Device Tree overlays. If your custom PCB uses a supported chip, you can build and flash firmware immediately.
+            </p>
+        </section>
+
         <section id="faq" class="faq" aria-label="FAQ">
             <h2>FAQ</h2>
             <p class="note">Quick answers for evaluation and onboarding.</p>
 
             <details>
                 <summary>What is IOcomposer?</summary>
-                <p>IOcomposer is an Eclipse Embedded CDT–based IDE with AI assistance for embedded firmware development, designed for prompt-to-flash workflows and integrated with the IOsonata framework.</p>
+                <p>IOcomposer is a bare-metal embedded IDE with AI-powered code generation. It provides a complete firmware development environment — from project creation through compile, flash, and JTAG/SWD debug — for ARM Cortex-M and RISC-V microcontrollers from Nordic, ST, NXP, Renesas, and Microchip.</p>
             </details>
 
             <details>
-                <summary>Which MCUs and architectures are supported?</summary>
-                <p>IOcomposer targets multi-vendor MCU development (including Nordic nRF52/nRF54, STM32, NXP, Renesas, Microchip) across ARM Cortex-M and RISC-V.</p>
+                <summary>Which MCUs and architectures does IOcomposer support?</summary>
+                <p>IOcomposer supports ARM Cortex-M and RISC-V architectures. Specific MCU families include Nordic nRF52832, nRF52840, and nRF54L15; STM32 (planned); NXP (planned); Renesas; and Microchip. Nordic is the primary supported vendor today, with BLE SoftDevice integration for nRF52 (S132/S140) and nRF54 (S145).</p>
+            </details>
+
+            <details>
+                <summary>Does IOcomposer require Zephyr or nRF Connect SDK?</summary>
+                <p>No. IOcomposer takes a bare-metal approach using a lightweight hardware abstraction layer and Nordic's baremetal SDK (sdk-nrf-bm). You write directly against hardware registers and a thin HAL, with SoftDevice BLE stacks integrated natively. This is a different path from RTOS-based toolchains — suited for projects where direct hardware control, minimal overhead, or a simpler build workflow is preferred.</p>
+            </details>
+
+            <details>
+                <summary>Can I use IOcomposer with the nRF54L15?</summary>
+                <p>Yes. IOcomposer supports the Nordic nRF54L15 with bare-metal development using the sdk-nrf-bm SDK and the S145 SoftDevice BLE stack. You can create BLE peripheral and central projects for nRF54L15 with direct hardware access and a managed build system.</p>
+            </details>
+
+            <details>
+                <summary>How is IOcomposer different from Arduino IDE?</summary>
+                <p>Arduino is designed for beginners with simplified APIs and no debug support. IOcomposer provides professional embedded tools — JTAG/SWD debugging with breakpoints, register and memory views, direct MCU register access, BLE SoftDevice integration, and AI-assisted code generation that reads your actual SDK headers. IOcomposer is built for makers and developers who have outgrown Arduino and need real hardware debugging and vendor SDK access.</p>
+            </details>
+
+            <details>
+                <summary>How is IOcomposer different from nRF Connect SDK with VS Code?</summary>
+                <p>They serve different needs. nRF Connect SDK provides a full RTOS environment with Zephyr, Device Tree, Kconfig, and CMake — powerful for complex, multi-threaded applications. IOcomposer takes a bare-metal approach with GCC and a managed build system, targeting developers who prefer direct hardware access with less infrastructure. One MCU configuration works on any board with that chip, and the AI assistant reads your local SDK files to generate code that compiles without modification. Both are valid paths — the right choice depends on your project requirements.</p>
+            </details>
+
+            <details>
+                <summary>Does IOcomposer work on custom PCBs and custom boards?</summary>
+                <p>Yes. IOcomposer targets the MCU directly rather than requiring board definitions or BSP files. If your custom board uses a supported MCU (such as nRF52840 or nRF54L15), you configure pin assignments in your firmware code and flash directly. No Device Tree overlay or board file is needed.</p>
+            </details>
+
+            <details>
+                <summary>What toolchains and debug probes does IOcomposer use?</summary>
+                <p>IOcomposer uses GCC ARM (arm-none-eabi-gcc) and GCC RISC-V toolchains for compilation, and OpenOCD for JTAG/SWD flashing and debugging. It supports standard debug probes including J-Link, CMSIS-DAP, and ST-Link. The entire toolchain is installed automatically by the one-command installer.</p>
+            </details>
+
+            <details>
+                <summary>How does the AI assistant work?</summary>
+                <p>The AI is trained on supported vendor SDKs and reads your local SDK header files, framework sources, and project configuration before generating code. You can also add your own code libraries to the knowledge base — proprietary drivers, internal frameworks, or shared middleware — so the AI works with your codebase, not just the vendor's. It can create projects, add peripherals (UART, SPI, I2C, BLE services), fix build errors, and open files directly in the editor.</p>
+            </details>
+
+            <details>
+                <summary>Can I add my own code libraries to the AI knowledge base?</summary>
+                <p>Yes. You can add your proprietary drivers, internal frameworks, shared middleware, or any code library to IOcomposer's AI knowledge base. The AI then generates code that uses your APIs, naming conventions, and patterns — not just the vendor SDK. This works the same way vendor SDKs are integrated: your library becomes part of what the AI knows when writing and reviewing code.</p>
             </details>
 
             <details>
                 <summary>Do you upload my project files to your servers?</summary>
-                <p>No. Your workspace stays on your machine. IOcomposer does not store your project files on our servers, and chat sessions are discarded when you exit.</p>
+                <p>No. Your source code, project files, and entire codebase stay on your machine — IOcomposer does not upload or store them on our servers. The AI reads your local files directly on your workstation. Only the content of AI chat queries is sent to process your request, and chat sessions are discarded when you exit.</p>
+            </details>
+
+            <details>
+                <summary>What operating systems does IOcomposer run on?</summary>
+                <p>IOcomposer runs on macOS, Linux, and Windows. A one-command installer sets up the IDE, ARM and RISC-V toolchains, OpenOCD, vendor SDKs, and the AI plugin — typically in about 10–15 minutes on a fresh machine.</p>
+            </details>
+
+            <details>
+                <summary>Is IOcomposer free?</summary>
+                <p>Yes — IOcomposer is in free preview right now. The IDE with full build, flash, and debug capabilities is free, and all Advanced AI features are unlocked for every account during the preview period. After launch, AI features will have a free tier (20 queries/month) and paid plans starting at $19.95/month.</p>
             </details>
 
             <details>
                 <summary>How do I enable AI Chat?</summary>
-                <p>Install the IDE, then open Preferences → IOcomposer → Account and create a free account (or sign in) to enable AI Chat.</p>
+                <p>Install the IDE, then open Preferences → IOcomposer → Account and create a free account (or sign in) to enable AI Chat. No payment is required for the free tier.</p>
+            </details>
+
+            <details>
+                <summary>What is IOsonata?</summary>
+                <p><a href="https://iosonata.io" style="color: #3b82f6;">IOsonata</a> is an open-source, ISA-agnostic embedded firmware framework that provides a consistent API across ARM Cortex-M and RISC-V microcontrollers from multiple vendors. It reimplements core peripherals (UART, I2C, SPI, timers, PWM, GPIO, interrupts) with a unified interface while calling vendor HAL for less common peripherals. IOcomposer is the recommended IDE for IOsonata development.</p>
             </details>
         </section>
 
         <div class="cta">
-            <p>IOcomposer is currently in preview.<br/>Enable AI Chat: Preferences → IOcomposer → Account → Create free account / Sign in</p>
+            <p><strong style="color: #fff; font-size: 22px;">Try it free — all Advanced AI features are unlocked during preview.</strong><br/>Install IOcomposer, create a free account in Preferences → IOcomposer → Account, and start building.</p>
             <div class="download-note">
-                Join the Collective — Contact us at
+                Questions? Feedback? Reach us at
                 <a href="/cdn-cgi/l/email-protection#1d74737b725d74306e646e69337e7270">
                     <span class="__cf_email__" data-cfemail="2a43444c456a43075953595e04494547">[email&#160;protected]</span>
                 </a>
@@ -950,7 +1189,7 @@
                 <a href="/privacy">Privacy</a>
                 <a href="/legal">Legal</a>
             </nav>
-            <p>© 2026 <a href="https://www.i-syst.com" target="_blank" rel="noopener" style="color: #94a3b8; text-decoration: underline;">I-SYST Inc.</a> All rights reserved. Engineering in Boucherville, QC.</p>
+            <p>© 2026 <a href="https://www.i-syst.com" target="_blank" rel="noopener" style="color: #94a3b8; text-decoration: underline;">I-SYST Inc.</a> All rights reserved.</p>
         </footer>
     </div>
 </main>
