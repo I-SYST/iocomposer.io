@@ -153,7 +153,7 @@
           "name": "How does the AI assistant work in IOcomposer?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The AI is trained on supported vendor SDKs and reads your local SDK header files, framework sources, and project configuration before generating code. You can also add your own code libraries to the knowledge base — proprietary drivers, internal frameworks, or shared middleware — so the AI works with your codebase, not just the vendor's. It can create projects, add peripherals (UART, SPI, I2C, BLE services), fix build errors, and open files directly in the editor."
+            "text": "The AI indexes your locally installed vendor SDK and reads your project's header files, framework sources, and configuration before generating code. You can also add your own code libraries to the knowledge base — proprietary drivers, internal frameworks, or shared middleware — so the AI works with your codebase, not just the vendor's. It can create projects, add peripherals (UART, SPI, I2C, BLE services), fix build errors, and open files directly in the editor."
           }
         },
         {
@@ -169,7 +169,7 @@
           "name": "Do you upload my project files to your servers?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Your source code, project files, and entire codebase stay on your machine — IOcomposer does not upload or store them on our servers. The AI reads your local files directly on your workstation. Only the content of AI chat queries is sent to process your request, and chat sessions are discarded when you exit."
+            "text": "No. Your source code, project files, and entire codebase stay on your machine — IOcomposer does not upload or store them. The AI builds a local index of your SDK and project files; only the minimal relevant snippets required to answer your prompt are sent to the AI model. Nothing is stored server-side, and chat sessions are discarded when you exit."
           }
         },
         {
@@ -855,14 +855,26 @@
 
         <h1>AI-Powered IDE for <span class="highlight">Embedded Development</span></h1>
 
+        <p style="color: #64748b; font-size: 14px; margin-bottom: 24px; letter-spacing: 0.3px;">A complete IDE — not a plugin. One install gives you editor, GCC toolchains, OpenOCD, vendor SDKs, and AI assistant.</p>
+
         <p class="description">
             Bare-metal firmware development with AI-powered code generation.
             Direct hardware access. Develop on a DevKit, move to any custom board in seconds — change a few pin assignments in a C header #define and recompile.
             No board files, no scripts, no complete rebuild.
         </p>
 
+        <div style="max-width: 420px; margin: -24px auto 32px auto; text-align: left; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 14px 18px; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 13px; line-height: 1.6; color: #94a3b8;">
+            <span style="color: #64748b;">// board.h — that's it, that's the port</span><br>
+            <span style="color: #10b981;">#define</span> UART_TX_PIN &nbsp;&nbsp;&nbsp;6<br>
+            <span style="color: #10b981;">#define</span> UART_RX_PIN &nbsp;&nbsp;&nbsp;8<br>
+            <span style="color: #10b981;">#define</span> SPI_SCK_PIN &nbsp;&nbsp;&nbsp;25<br>
+            <span style="color: #10b981;">#define</span> SPI_MOSI_PIN &nbsp;&nbsp;24<br>
+            <span style="color: #10b981;">#define</span> SPI_MISO_PIN &nbsp;&nbsp;23<br>
+            <span style="color: #10b981;">#define</span> LED1_PIN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;13
+        </div>
+
         <p style="color: #94a3b8; font-size: 15px; line-height: 1.6; max-width: 700px; margin: 0 auto 48px auto; text-align: center;">
-            IOcomposer supports Nordic nRF52832, nRF52840, and nRF54L15 with SoftDevice BLE, plus STM32, NXP, and RISC-V targets. The AI is trained on vendor SDKs and reads your local source code to generate firmware that compiles and runs on real hardware. All AI features are unlocked free during preview — no credit card required.
+            IOcomposer supports Nordic nRF52832, nRF52840, and nRF54L15 with SoftDevice BLE today, with STM32, NXP, and RISC-V targets in progress. The AI indexes your locally installed vendor SDK and reads your source code to generate firmware that compiles against your real headers. All AI features are unlocked free during preview — no credit card required.
         </p>
 
         <section id="demo" aria-label="Product screenshots and demos">
@@ -910,7 +922,7 @@
                             <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
                             <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
                                 <source src="video/IOcomposer_WizardBLEPeriph.mp4" type="video/mp4">
-                                Video playback isn't supported in this browser.
+                                Your browser doesn't support video playback. <a href="video/IOcomposer_WizardBLEPeriph.mp4" style="color: #3b82f6;">Download the video</a> to watch.
                             </video>
                         </div>
                         <p class="video-caption">Creating a BLE Peripheral project with the IOcomposer wizard</p>
@@ -921,7 +933,7 @@
                             <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
                             <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
                                 <source src="video/IOcomposer_BuildAutoFix2.mp4" type="video/mp4">
-                                Video playback isn't supported in this browser.
+                                Your browser doesn't support video playback. <a href="video/IOcomposer_BuildAutoFix2.mp4" style="color: #3b82f6;">Download the video</a> to watch.
                             </video>
                         </div>
                         <p class="video-caption">AI-assisted build fix: resolve errors and regenerate clean project</p>
@@ -932,7 +944,7 @@
                             <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
                             <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
                                 <source src="video/IOcomposer_LaunchDebug.mp4" type="video/mp4">
-                                Video playback isn't supported in this browser.
+                                Your browser doesn't support video playback. <a href="video/IOcomposer_LaunchDebug.mp4" style="color: #3b82f6;">Download the video</a> to watch.
                             </video>
                         </div>
                         <p class="video-caption">One-click: flash + launch debugger from the chat panel</p>
@@ -943,7 +955,7 @@
                             <button class="video-full-btn js-open-video" type="button" title="Open video full size">Full size</button>
                             <video class="js-video" controls playsinline preload="metadata" poster="images/IOcomposer_AddSPI.png">
                                 <source src="video/Windows_Installation_IOComposer.mp4" type="video/mp4">
-                                Video playback isn't supported in this browser.
+                                Your browser doesn't support video playback. <a href="video/Windows_Installation_IOComposer.mp4" style="color: #3b82f6;">Download the video</a> to watch.
                             </video>
                         </div>
                         <p class="video-caption">One script full install in 10 min.</p>
@@ -958,12 +970,12 @@
             <div class="features">
                 <div class="feature">
                     <h3>🤖 AI Assistant</h3>
-                    <p>AI trained on supported vendor SDKs — and your own code libraries. Add your proprietary drivers, middleware, or internal frameworks to the knowledge base, and the AI generates code that fits your codebase, not just the vendor's. Creates projects, adds peripherals, generates BLE services, fixes build errors, and opens results in the editor.</p>
+                    <p>AI grounded on your locally installed vendor SDK — and your own code libraries. Add your proprietary drivers, middleware, or internal frameworks to the knowledge base, and the AI generates code that fits your codebase, not just the vendor's. Creates projects, adds peripherals, generates BLE services, fixes build errors, and opens results in the editor.</p>
                 </div>
 
                 <div class="feature">
                     <h3>🔒 Privacy-First</h3>
-                    <p>Your source code and project files stay on your machine — nothing is uploaded or stored on our servers. The AI reads your local codebase directly. Chat sessions are discarded when you exit.</p>
+                    <p>Your source code and project files stay on your machine — nothing is uploaded or stored on our servers. The AI builds a local index of your SDK and project; only the minimal relevant snippets needed to answer your prompt are sent, and nothing is retained.</p>
                 </div>
 
                 <div class="feature">
@@ -988,7 +1000,7 @@
                 </div>
             </div>
 
-            <p class="ai-footnote">* IOcomposer AI is trained on supported vendor SDKs and purpose-built for embedded firmware — not a general-purpose chatbot.</p>
+            <p class="ai-footnote">* IOcomposer AI is grounded on your installed vendor SDKs and purpose-built for embedded firmware — not a general-purpose chatbot.</p>
         </section>
 
         <div class="steps-flow" aria-label="Three-step workflow">
@@ -1055,17 +1067,17 @@
                 For Nordic BLE development, IOcomposer integrates SoftDevice stacks directly — S132 and S140 for nRF52, S145 for nRF54L15. You configure your MCU and peripherals through a project wizard or AI prompts, and the build system handles linker scripts, memory layouts, and SoftDevice placement automatically. The bare-metal approach means you write against hardware registers and a thin HAL with no RTOS overhead — ideal for resource-constrained applications, low-latency firmware, and custom board designs.
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7;">
-                The AI assistant is trained on supported vendor SDKs and reads your locally installed SDK header files and project configuration before generating code. You can also add your own code libraries — proprietary drivers, internal frameworks, shared middleware — to the knowledge base, so the AI generates code that fits your codebase, not just the vendor's. It can create new projects, add peripheral drivers, generate BLE service implementations, diagnose build errors, and open results directly in the editor. The workflow is prompt → generate → build → flash → debug, from a single IDE.
+                The AI assistant indexes your locally installed vendor SDK and reads your project's header files and configuration before generating code. You can also add your own code libraries — proprietary drivers, internal frameworks, shared middleware — to the knowledge base, so the AI generates code that fits your codebase, not just the vendor's. It can create new projects, add peripheral drivers, generate BLE service implementations, diagnose build errors, and open results directly in the editor. The workflow is prompt → generate → build → flash → debug, from a single IDE.
             </p>
         </section>
 
         <section id="supported-hardware" class="install-section" aria-label="Supported hardware" style="text-align: left;">
             <h2>Supported Hardware</h2>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
-                <strong style="color: #fff;">Nordic Semiconductor (primary support):</strong> nRF52832, nRF52840, and nRF54L15. BLE connectivity via SoftDevice S132/S140 (nRF52) and S145 (nRF54L15). Uses Nordic's bare-metal SDK (sdk-nrf-bm) for direct hardware access with minimal abstraction.
+                <strong style="color: #fff;">Nordic Semiconductor</strong> <span style="color: #10b981; font-size: 12px; font-weight: 600;">SUPPORTED NOW</span><br>nRF52832, nRF52840, and nRF54L15. BLE connectivity via SoftDevice S132/S140 (nRF52) and S145 (nRF54L15). Uses Nordic's bare-metal SDK (sdk-nrf-bm) for direct hardware access with minimal abstraction.
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
-                <strong style="color: #fff;">Multi-vendor MCU support:</strong> STM32 (ST), LPC/i.MX RT (NXP), RA (Renesas), SAM/PIC32 (Microchip). Vendor expansion is ongoing — Nordic is fully supported today; other vendors are at varying stages of integration.
+                <strong style="color: #fff;">Multi-vendor MCU support</strong> <span style="color: #f59e0b; font-size: 12px; font-weight: 600;">IN PROGRESS / PLANNED</span><br>STM32 (ST), LPC/i.MX RT (NXP), RA (Renesas), SAM/PIC32 (Microchip). Nordic is fully supported today; other vendors are at varying stages of integration.
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7;">
                 <strong style="color: #fff;">Architectures:</strong> ARM Cortex-M (M0, M0+, M4, M33) and RISC-V. The ISA-agnostic design means the same application code compiles for both architectures when targeting equivalent peripherals. Custom boards work without board support packages — IOcomposer targets the MCU directly, so any PCB with a supported chip is ready to develop on.
@@ -1078,7 +1090,7 @@
                 General-purpose AI coding tools like Copilot, Cursor, or ChatGPT are trained on web and application code — not vendor SDKs, register maps, or SoftDevice APIs. When you ask them to write firmware for an nRF52840, they'll generate something that looks plausible but references structs that don't exist, calls functions with wrong signatures, or ignores memory constraints entirely. You spend more time fixing the AI's output than you saved.
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
-                IOcomposer's AI is different because it reads your actual, locally installed SDK files before generating a single line. It knows what headers are in your project, what structs are defined, what functions are available. The result is code that compiles against your real SDK — not an approximation.
+                IOcomposer's AI is different because it indexes your installed vendor SDK and reads your actual, local header files before generating a single line. It knows what headers are in your project, what structs are defined, what functions are available. The result is code that compiles against your real SDK — not an approximation.
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7;">
                 Then there's everything after code generation. VS Code with Cortex-Debug requires manual launch.json configuration, OpenOCD scripts, SVD files for register views, and separate terminal workflows for flashing. IOcomposer handles build, flash, and JTAG/SWD debug as a single integrated workflow — click build, click flash, set a breakpoint, step through your code. No configuration files to maintain.
@@ -1215,7 +1227,7 @@
 
             <details>
                 <summary>How does the AI assistant work?</summary>
-                <p>The AI is trained on supported vendor SDKs and reads your local SDK header files, framework sources, and project configuration before generating code. You can also add your own code libraries to the knowledge base — proprietary drivers, internal frameworks, or shared middleware — so the AI works with your codebase, not just the vendor's. It can create projects, add peripherals (UART, SPI, I2C, BLE services), fix build errors, and open files directly in the editor.</p>
+                <p>The AI indexes your locally installed vendor SDK and reads your project's header files, framework sources, and configuration before generating code. You can also add your own code libraries to the knowledge base — proprietary drivers, internal frameworks, or shared middleware — so the AI works with your codebase, not just the vendor's. It can create projects, add peripherals (UART, SPI, I2C, BLE services), fix build errors, and open files directly in the editor.</p>
             </details>
 
             <details>
@@ -1225,7 +1237,7 @@
 
             <details>
                 <summary>Do you upload my project files to your servers?</summary>
-                <p>No. Your source code, project files, and entire codebase stay on your machine — IOcomposer does not upload or store them on our servers. The AI reads your local files directly on your workstation. Only the content of AI chat queries is sent to process your request, and chat sessions are discarded when you exit.</p>
+                <p>No. Your source code, project files, and entire codebase stay on your machine — IOcomposer does not upload or store them. The AI builds a local index of your SDK and project files; only the minimal relevant snippets required to answer your prompt are sent to the AI model. Nothing is stored server-side, and chat sessions are discarded when you exit.</p>
             </details>
 
             <details>
