@@ -105,7 +105,7 @@
           "name": "Does IOcomposer require Zephyr or nRF Connect SDK?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. IOcomposer takes a bare-metal approach using a lightweight hardware abstraction layer and Nordic's baremetal SDK (sdk-nrf-bm). You write directly against hardware registers and a thin HAL, with SoftDevice BLE stacks integrated natively. This is a different path from RTOS-based toolchains — suited for projects where direct hardware control, minimal overhead, or a simpler build workflow is preferred."
+            "text": "No. IOcomposer takes a bare-metal approach using a lightweight hardware abstraction layer and Nordic's baremetal SDK (sdk-nrf-bm). You write directly against hardware registers and a thin HAL, with SoftDevice BLE stacks integrated natively. nRF Connect SDK provides a full RTOS environment with Zephyr, Device Tree, Kconfig, and CMake — powerful for complex, multi-threaded applications. IOcomposer targets a different use case: projects where direct hardware control, minimal overhead, and fast board porting matter more than RTOS features. One MCU configuration works on any board with that chip, and the AI reads your local SDK files to generate code that compiles without modification."
           }
         },
         {
@@ -126,10 +126,10 @@
         },
         {
           "@type": "Question",
-          "name": "How is IOcomposer different from nRF Connect SDK with VS Code?",
+          "name": "Why not just use VS Code with Copilot or Cursor for embedded development?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "They serve different needs. nRF Connect SDK provides a full RTOS environment with Zephyr, Device Tree, Kconfig, and CMake — powerful for complex, multi-threaded applications. IOcomposer takes a bare-metal approach with GCC and a managed build system, targeting developers who prefer direct hardware access with less infrastructure. One MCU configuration works on any board with that chip, and the AI assistant reads your local SDK files to generate code that compiles without modification. Both are valid paths — the right choice depends on your project requirements."
+            "text": "General-purpose AI tools like Copilot and Cursor are trained on web and application code, not vendor SDKs or MCU register maps. They generate firmware that looks plausible but references structs that don't exist or calls functions with wrong signatures. IOcomposer's AI reads your actual, locally installed SDK headers before generating code — so the output compiles against your real SDK. IOcomposer also integrates build, flash, and JTAG/SWD debug into a single workflow, unlike VS Code where you manually configure launch.json, OpenOCD scripts, and SVD files."
           }
         },
         {
@@ -744,6 +744,51 @@
     object-fit: contain;               /* use "cover" if you want crop instead */
 }
 
+        /* 3-step flow */
+        .steps-flow {
+            display: flex;
+            gap: 16px;
+            margin: 48px 0;
+            text-align: center;
+        }
+
+        .step-card {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 24px 16px;
+            position: relative;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .step-card h3 { font-size: 16px; margin-bottom: 6px; color: #fff; }
+        .step-card p { font-size: 13px; color: #94a3b8; line-height: 1.5; }
+
+        .step-arrow {
+            display: flex;
+            align-items: center;
+            color: #3b82f6;
+            font-size: 24px;
+            flex: 0 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            .steps-flow { flex-direction: column; }
+            .step-arrow { justify-content: center; transform: rotate(90deg); }
+        }
+
         /* FAQ */
         .faq {
             background: rgba(255,255,255,0.05);
@@ -946,6 +991,26 @@
             <p class="ai-footnote">* IOcomposer AI is trained on supported vendor SDKs and purpose-built for embedded firmware — not a general-purpose chatbot.</p>
         </section>
 
+        <div class="steps-flow" aria-label="Three-step workflow">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Install</h3>
+                <p>One command. IDE, toolchains, debug tools, and vendor SDKs — ready in ~15 minutes.</p>
+            </div>
+            <div class="step-arrow" aria-hidden="true">→</div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Prompt</h3>
+                <p>Tell the AI what you need — "create a BLE peripheral for nRF54L15" — and get buildable code from your actual SDK.</p>
+            </div>
+            <div class="step-arrow" aria-hidden="true">→</div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Flash &amp; Debug</h3>
+                <p>Build, flash to hardware, and debug with JTAG/SWD breakpoints — all from the same window.</p>
+            </div>
+        </div>
+
         <section id="install" class="install-section" aria-label="Installation" style="border: 2px solid rgba(16, 185, 129, 0.4); background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(255,255,255,0.05) 100%);">
             <h2>Install Now — Free Preview</h2>
             <p class="install-note" style="color: #10b981; font-weight: 600; font-size: 16px; margin-bottom: 4px;">All Advanced AI features unlocked. No credit card.</p>
@@ -1004,6 +1069,19 @@
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7;">
                 <strong style="color: #fff;">Architectures:</strong> ARM Cortex-M (M0, M0+, M4, M33) and RISC-V. The ISA-agnostic design means the same application code compiles for both architectures when targeting equivalent peripherals. Custom boards work without board support packages — IOcomposer targets the MCU directly, so any PCB with a supported chip is ready to develop on.
+            </p>
+        </section>
+
+        <section id="why-not-copilot" class="install-section" aria-label="Why not VS Code and Copilot" style="text-align: left;">
+            <h2>Why Not Just Use VS Code + Copilot?</h2>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
+                General-purpose AI coding tools like Copilot, Cursor, or ChatGPT are trained on web and application code — not vendor SDKs, register maps, or SoftDevice APIs. When you ask them to write firmware for an nRF52840, they'll generate something that looks plausible but references structs that don't exist, calls functions with wrong signatures, or ignores memory constraints entirely. You spend more time fixing the AI's output than you saved.
+            </p>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
+                IOcomposer's AI is different because it reads your actual, locally installed SDK files before generating a single line. It knows what headers are in your project, what structs are defined, what functions are available. The result is code that compiles against your real SDK — not an approximation.
+            </p>
+            <p style="color: #94a3b8; font-size: 15px; line-height: 1.7;">
+                Then there's everything after code generation. VS Code with Cortex-Debug requires manual launch.json configuration, OpenOCD scripts, SVD files for register views, and separate terminal workflows for flashing. IOcomposer handles build, flash, and JTAG/SWD debug as a single integrated workflow — click build, click flash, set a breakpoint, step through your code. No configuration files to maintain.
             </p>
         </section>
 
@@ -1107,7 +1185,7 @@
 
             <details>
                 <summary>Does IOcomposer require Zephyr or nRF Connect SDK?</summary>
-                <p>No. IOcomposer takes a bare-metal approach using a lightweight hardware abstraction layer and Nordic's baremetal SDK (sdk-nrf-bm). You write directly against hardware registers and a thin HAL, with SoftDevice BLE stacks integrated natively. This is a different path from RTOS-based toolchains — suited for projects where direct hardware control, minimal overhead, or a simpler build workflow is preferred.</p>
+                <p>No. IOcomposer takes a bare-metal approach using a lightweight hardware abstraction layer and Nordic's baremetal SDK (sdk-nrf-bm). You write directly against hardware registers and a thin HAL, with SoftDevice BLE stacks integrated natively. nRF Connect SDK provides a full RTOS environment with Zephyr, Device Tree, Kconfig, and CMake — powerful for complex, multi-threaded applications. IOcomposer targets a different use case: projects where direct hardware control, minimal overhead, and fast board porting matter more than RTOS features. One MCU configuration works on any board with that chip, and the AI reads your local SDK files to generate code that compiles without modification.</p>
             </details>
 
             <details>
@@ -1121,8 +1199,8 @@
             </details>
 
             <details>
-                <summary>How is IOcomposer different from nRF Connect SDK with VS Code?</summary>
-                <p>They serve different needs. nRF Connect SDK provides a full RTOS environment with Zephyr, Device Tree, Kconfig, and CMake — powerful for complex, multi-threaded applications. IOcomposer takes a bare-metal approach with GCC and a managed build system, targeting developers who prefer direct hardware access with less infrastructure. One MCU configuration works on any board with that chip, and the AI assistant reads your local SDK files to generate code that compiles without modification. Both are valid paths — the right choice depends on your project requirements.</p>
+                <summary>Why not just use VS Code with Copilot or Cursor for embedded?</summary>
+                <p>General-purpose AI tools like Copilot and Cursor are trained on web and application code, not vendor SDKs or MCU register maps. They generate firmware that looks plausible but references structs that don't exist or calls functions with wrong signatures. IOcomposer's AI reads your actual, locally installed SDK headers before generating code — so the output compiles against your real SDK. On top of that, IOcomposer integrates build, flash, and JTAG/SWD debug into a single workflow. With VS Code + Cortex-Debug, you're manually configuring launch.json, OpenOCD scripts, and SVD files yourself.</p>
             </details>
 
             <details>
