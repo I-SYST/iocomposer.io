@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>IOcomposer — Bare-Metal Embedded IDE with AI Code Generation | Nordic nRF52, nRF54L15, ARM &amp; RISC-V</title>
-    <meta name="description" content="IOcomposer is a bare-metal embedded IDE with AI code generation for Nordic nRF52, nRF54L15, STM32, NXP, and RISC-V microcontrollers. Direct hardware access with managed builds — no RTOS required. Install to first debug in 15 minutes.">
+    <title>IOcomposer — Bare-Metal Embedded IDE for nRF52 &amp; nRF54 | AI Code Generation</title>
+    <meta name="description" content="AI-powered bare-metal embedded IDE. Today: Nordic nRF52/nRF54L15. Preview: STM32/Renesas/Microchip. In progress: NXP + RISC-V. Managed builds, flash & SWD debug.">
     <meta name="robots" content="index, follow">
     <meta name="keywords" content="embedded IDE, bare-metal IDE, AI code generation, nRF52840, nRF54L15, Nordic semiconductor IDE, ARM Cortex-M IDE, RISC-V IDE, BLE development, SoftDevice, firmware development, JTAG debug, embedded AI assistant, MCU programming, STM32 IDE, NXP IDE">
     <link rel="canonical" href="https://iocomposer.io/">
@@ -17,13 +17,13 @@
     <meta property="og:site_name" content="IOcomposer">
     <meta property="og:locale" content="en_US">
     <meta property="og:title" content="IOcomposer — Bare-Metal Embedded IDE with AI Code Generation">
-    <meta property="og:description" content="Bare-metal embedded IDE with AI code generation. Nordic nRF52/nRF54L15, STM32, NXP, ARM Cortex-M &amp; RISC-V. Direct hardware access, managed builds. Install to debug in 15 minutes.">
+    <meta property="og:description" content="AI-powered bare-metal embedded IDE. Today: Nordic nRF52/nRF54L15. Preview: STM32/Renesas/Microchip. In progress: NXP + RISC-V. Managed builds, flash & SWD debug.">
     <meta property="og:image" content="https://iocomposer.io/images/IOcomposer_AddSPI.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="IOcomposer — Bare-Metal Embedded IDE with AI Code Generation">
-    <meta name="twitter:description" content="Bare-metal embedded IDE with AI code generation. Nordic nRF52/nRF54L15, STM32, NXP, ARM Cortex-M &amp; RISC-V. Direct hardware access, managed builds. Install to debug in 15 minutes.">
+    <meta name="twitter:description" content="AI-powered bare-metal embedded IDE. Today: Nordic nRF52/nRF54L15. Preview: STM32/Renesas/Microchip. In progress: NXP + RISC-V. Managed builds, flash & SWD debug.">
     <meta name="twitter:image" content="https://iocomposer.io/images/IOcomposer_AddSPI.png">
 
     <!-- Structured Data: SoftwareApplication + Offers -->
@@ -35,7 +35,7 @@
       "name": "IOcomposer",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "macOS, Linux, Windows",
-      "description": "IOcomposer is a bare-metal embedded IDE with AI-powered code generation for professional firmware development. It supports Nordic nRF52832, nRF52840, nRF54L15, STM32, NXP, Renesas, and Microchip microcontrollers on ARM Cortex-M and RISC-V architectures. Uses GCC ARM and RISC-V toolchains with OpenOCD for JTAG/SWD debugging, and integrates Nordic SoftDevice BLE stacks natively. Bare-metal approach with direct hardware access and managed builds — no RTOS required.",
+      "description": "IOcomposer is a bare-metal embedded IDE with AI-powered code generation for professional firmware development. Supported today: Nordic nRF52832, nRF52840, and nRF54L15. Preview: STM32 (ST), Renesas RA, and Microchip SAM/PIC32 families. In progress: NXP LPC/i.MX RT and RISC-V targets. Includes managed builds, flashing, and SWD/JTAG debugging.",
       "url": "https://iocomposer.io/",
       "downloadUrl": "https://iocomposer.io/#install",
       "screenshot": "https://iocomposer.io/images/IOcomposer_AddSPI.png",
@@ -89,7 +89,7 @@
           "name": "What is IOcomposer?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "IOcomposer is a bare-metal embedded IDE with AI-powered code generation. It provides a complete firmware development environment — from project creation through compile, flash, and JTAG/SWD debug — for ARM Cortex-M and RISC-V microcontrollers from Nordic, ST, NXP, Renesas, and Microchip."
+            "text": "IOcomposer is a bare-metal embedded IDE with AI-powered code generation. It provides a complete firmware development environment — from project creation through compile, flash, and JTAG/SWD debug — for ARM Cortex-M microcontrollers. Supported today: Nordic nRF52/nRF54. In progress: STM32, NXP, Renesas, Microchip, and RISC-V targets."
           }
         },
         {
@@ -97,7 +97,7 @@
           "name": "Which MCUs and architectures does IOcomposer support?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "IOcomposer supports ARM Cortex-M and RISC-V architectures. Specific MCU families include Nordic nRF52832, nRF52840, and nRF54L15; STM32 (planned); NXP (planned); Renesas; and Microchip. Nordic is the primary supported vendor today, with BLE SoftDevice integration for nRF52 (S132/S140) and nRF54 (S145)."
+            "text": "IOcomposer targets ARM Cortex-M today, with RISC-V targets in progress. Supported MCU families today include Nordic nRF52832, nRF52840, and nRF54L15. Preview support is available for STM32 (ST), Renesas RA, and Microchip SAM/PIC32 families. NXP LPC/i.MX RT and additional RISC-V targets are in progress. Nordic is the primary supported vendor today, with BLE SoftDevice integration for nRF52 (S132/S140) and nRF54 (S145)."
           }
         },
         {
@@ -203,6 +203,30 @@
             "@type": "Answer",
             "text": "IOsonata is an open-source, ISA-agnostic embedded firmware framework that provides a consistent API across ARM Cortex-M and RISC-V microcontrollers from multiple vendors. It reimplements core peripherals (UART, I2C, SPI, timers, PWM, GPIO, interrupts) with a unified interface while calling vendor HAL for less common peripherals. IOcomposer is the recommended IDE for IOsonata development."
           }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best IDE for nRF52840 bare-metal development?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IOcomposer is purpose-built for nRF52840 bare-metal development. It integrates the Nordic bare-metal SDK (sdk-nrf-bm), SoftDevice S140 BLE stack, GCC ARM toolchain, and OpenOCD debugger in a single install. Unlike VS Code + Cortex-Debug or nRF Connect SDK with Zephyr, IOcomposer gives you a direct path from project creation to JTAG debug on nRF52840 hardware in about 15 minutes, with AI code generation grounded on your installed SDK headers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I do bare-metal BLE on nRF52 without Zephyr?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IOcomposer uses Nordic's bare-metal SDK (sdk-nrf-bm) with direct SoftDevice integration — S132 for nRF52832, S140 for nRF52840 — without requiring Zephyr, Device Tree, or Kconfig. You write directly against hardware registers and the SoftDevice API. IOcomposer's project wizard generates a fully functional BLE peripheral or central firmware you can build and flash immediately. No RTOS, no CMake, no Device Tree overlays."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "IOcomposer vs nRF Connect SDK — which should I use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "nRF Connect SDK (NCS) is Nordic's full RTOS-based environment built on Zephyr — right for complex multi-threaded applications needing Bluetooth mesh, Matter, or Thread. IOcomposer is right when you want direct hardware control, minimal firmware footprint, fast custom board porting, and no RTOS overhead. Key trade-off: NCS has broader protocol support; IOcomposer offers simpler tooling, faster board porting (change pin #defines and recompile), and AI code generation grounded on actual SDK headers."
+          }
         }
       ]
     }
@@ -244,6 +268,35 @@
         }
       ]
     }
+    </script>
+
+    <meta name="author" content="I-SYST Inc.">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+    <!-- Structured Data: WebSite + Organization -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://iocomposer.io/#website",
+        "url": "https://iocomposer.io/",
+        "name": "IOcomposer"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://iocomposer.io/#organization",
+        "name": "I-SYST Inc.",
+        "url": "https://iocomposer.io/",
+        "logo": "https://iocomposer.io/images/IOcomposer_AddSPI.png",
+        "sameAs": [
+          "https://github.com/IOsonata",
+          "https://iosonata.io",
+          "https://www.i-syst.com"
+        ]
+      }
+    ]
     </script>
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
@@ -889,19 +942,19 @@
                 <div class="carousel-track js-carousel-track">
                     <div class="carousel-item">
                         <a href="images/IOcomposer_AddSPI.png" class="js-open-image" aria-label="Open screenshot full size">
-                            <img src="images/IOcomposer_AddSPI.png" alt="IOcomposer IDE showing AI-assisted code validation for an SPI pin configuration issue" class="screenshot">
+                            <img src="images/IOcomposer_AddSPI.png" alt="IOcomposer IDE showing AI-assisted code validation for an SPI pin configuration issue" class="screenshot" loading="eager" fetchpriority="high">
                         </a>
                         <p class="screenshot-caption">AI detects a subtle SPI configuration error and suggests the fix</p>
                     </div>
                     <div class="carousel-item">
                         <a href="images/IOcomposer_Prompt_nRF54L15_SampleOpen.png" class="js-open-image" aria-label="Open screenshot full size">
-                            <img src="images/IOcomposer_Prompt_nRF54L15_SampleOpen.png" alt="IOcomposer IDE AI-assisted prompt opening in editor Nordic nRF54L15 baremetal SDK example" class="screenshot">
+                            <img src="images/IOcomposer_Prompt_nRF54L15_SampleOpen.png" alt="IOcomposer IDE AI-assisted prompt opening in editor Nordic nRF54L15 baremetal SDK example" class="screenshot" loading="lazy">
                         </a>
                         <p class="screenshot-caption">AI prompt opens Nordic nRF54L15 baremetal code sample file</p>
                     </div>
                     <div class="carousel-item">
                         <a href="images/IOcomposer_Show_Open_NordicBaremetalSDK_Example.png" class="js-open-image" aria-label="Open screenshot full size">
-                            <img src="images/IOcomposer_Show_Open_NordicBaremetalSDK_Example.png" alt="IOcomposer IDE AI-assisted code snippet & opening in editor Nordic nRF54L15 baremetal SDK example" class="screenshot">
+                            <img src="images/IOcomposer_Show_Open_NordicBaremetalSDK_Example.png" alt="IOcomposer IDE AI-assisted code snippet & opening in editor Nordic nRF54L15 baremetal SDK example" class="screenshot" loading="lazy">
                         </a>
                         <p class="screenshot-caption">AI shows Nordic nRF54L15 baremetal code sample</p>
                     </div>
@@ -975,7 +1028,7 @@
 
                 <div class="feature">
                     <h3>🔒 Privacy-First</h3>
-                    <p>Your source code and project files stay on your machine — nothing is uploaded or stored on our servers. The AI builds a local index of your SDK and project; only the minimal relevant snippets needed to answer your prompt are sent, and nothing is retained.</p>
+                    <p>Your source code and project files stay on your machine. The AI builds a local index of your SDK and project; only your chat query and the minimal relevant snippets needed to answer it are sent for processing — nothing is stored server-side, and sessions are discarded when you exit.</p>
                 </div>
 
                 <div class="feature">
@@ -985,12 +1038,12 @@
 
                 <div class="feature">
                     <h3>🎯 Multi-Vendor MCU Support</h3>
-                    <p>Nordic, ST, NXP, Renesas, and Microchip. No Device Tree. No BSP. No board files. Target the MCU directly — one configuration runs on every board variant, including your custom PCB. One IDE across vendors.</p>
+                    <p><strong>Supported now:</strong> Nordic nRF52 / nRF54. <strong>In progress:</strong> STM32, NXP, Renesas, Microchip. No Device Tree. No BSP. No board files. Target the MCU directly — one configuration runs on every board variant, including your custom PCB.</p>
                 </div>
 
                 <div class="feature">
                     <img src="images/nordic-logo.png" alt="Nordic Semiconductor" class="nordic-logo" loading="lazy" width="120" height="28">
-                    <h3>📶 Nordic BLE Ready</h3>
+                    <h3>Nordic BLE Ready</h3>
                     <p>SoftDevice S132/S140 for nRF52, S145 for nRF54L15. BLE peripheral, central, and mesh roles with native stack integration and automatic memory layout management.</p>
                 </div>
 
@@ -1077,7 +1130,9 @@
                 <strong style="color: #fff;">Nordic Semiconductor</strong> <span style="color: #10b981; font-size: 12px; font-weight: 600;">SUPPORTED NOW</span><br>nRF52832, nRF52840, and nRF54L15. BLE connectivity via SoftDevice S132/S140 (nRF52) and S145 (nRF54L15). Uses Nordic's bare-metal SDK (sdk-nrf-bm) for direct hardware access with minimal abstraction.
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
-                <strong style="color: #fff;">Multi-vendor MCU support</strong> <span style="color: #f59e0b; font-size: 12px; font-weight: 600;">IN PROGRESS / PLANNED</span><br>STM32 (ST), LPC/i.MX RT (NXP), RA (Renesas), SAM/PIC32 (Microchip). Nordic is fully supported today; other vendors are at varying stages of integration.
+                <strong style="color: #fff;">Multi-vendor MCU support</strong> <span style="color: #f59e0b; font-size: 12px; font-weight: 600;">PREVIEW</span><br>
+                STM32 (ST), RA (Renesas), SAM/PIC32 (Microchip) — preview support available.
+                <span style="color:#94a3b8;">NXP LPC/i.MX RT and RISC-V targets are in progress.</span>
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7;">
                 <strong style="color: #fff;">Architectures:</strong> ARM Cortex-M (M0, M0+, M4, M33) and RISC-V. The ISA-agnostic design means the same application code compiles for both architectures when targeting equivalent peripherals. Custom boards work without board support packages — IOcomposer targets the MCU directly, so any PCB with a supported chip is ready to develop on.
@@ -1174,7 +1229,7 @@
                 <strong style="color: #fff;">Nordic developers who want bare-metal BLE.</strong> You're building a BLE peripheral, sensor node, or custom board with nRF52840 or nRF54L15 and don't need a full RTOS. IOcomposer integrates SoftDevice stacks natively with direct hardware access. Ask the AI to create a BLE peripheral project — get a fully functional, SoftDevice-aware firmware you can build and flash in under two minutes.
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
-                <strong style="color: #fff;">Teams working on proprietary firmware.</strong> Your source code stays on your machine. The AI reads local files only — nothing is uploaded. For teams with IP-sensitive projects, this means AI-assisted development without cloud exposure.
+                <strong style="color: #fff;">Teams working on proprietary firmware.</strong> Your source code stays on your machine. Only your chat query and minimal relevant snippets are sent for processing — nothing is stored. For teams with IP-sensitive projects, this means AI-assisted development without cloud exposure.
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7;">
                 <strong style="color: #fff;">Developers targeting custom hardware.</strong> IOcomposer targets the MCU directly — no board definitions, no BSP files, no Device Tree overlays. If your custom PCB uses a supported chip, you can build and flash firmware immediately.
@@ -1187,12 +1242,12 @@
 
             <details>
                 <summary>What is IOcomposer?</summary>
-                <p>IOcomposer is a bare-metal embedded IDE with AI-powered code generation. It provides a complete firmware development environment — from project creation through compile, flash, and JTAG/SWD debug — for ARM Cortex-M and RISC-V microcontrollers from Nordic, ST, NXP, Renesas, and Microchip.</p>
+                <p>IOcomposer is a bare-metal embedded IDE with AI-powered code generation. It provides a complete firmware development environment — from project creation through compile, flash, and JTAG/SWD debug — for ARM Cortex-M microcontrollers. Supported today: Nordic nRF52/nRF54. In progress: STM32, NXP, Renesas, Microchip, and RISC-V targets.</p>
             </details>
 
             <details>
                 <summary>Which MCUs and architectures does IOcomposer support?</summary>
-                <p>IOcomposer supports ARM Cortex-M and RISC-V architectures. Specific MCU families include Nordic nRF52832, nRF52840, and nRF54L15; STM32 (planned); NXP (planned); Renesas; and Microchip. Nordic is the primary supported vendor today, with BLE SoftDevice integration for nRF52 (S132/S140) and nRF54 (S145).</p>
+                <p>IOcomposer targets ARM Cortex-M today, with RISC-V targets in progress. Supported MCU families today include Nordic nRF52832, nRF52840, and nRF54L15. Preview support is available for STM32 (ST), Renesas RA, and Microchip SAM/PIC32 families. NXP LPC/i.MX RT and additional RISC-V targets are in progress. Nordic is the primary supported vendor today, with BLE SoftDevice integration for nRF52 (S132/S140) and nRF54 (S145).</p>
             </details>
 
             <details>
@@ -1237,7 +1292,7 @@
 
             <details>
                 <summary>Do you upload my project files to your servers?</summary>
-                <p>No. Your source code, project files, and entire codebase stay on your machine — IOcomposer does not upload or store them. The AI builds a local index of your SDK and project files; only the minimal relevant snippets required to answer your prompt are sent to the AI model. Nothing is stored server-side, and chat sessions are discarded when you exit.</p>
+                <p>No. Your source code, project files, and entire codebase stay on your machine — IOcomposer does not upload or store them. The AI builds a local index of your SDK and project; only your chat query and the minimal relevant snippets needed to answer it are sent to the AI model for processing. Nothing is stored server-side, and chat sessions are discarded when you exit.</p>
             </details>
 
             <details>
@@ -1259,6 +1314,21 @@
                 <summary>What is IOsonata?</summary>
                 <p><a href="https://iosonata.io" style="color: #3b82f6;">IOsonata</a> is an open-source, ISA-agnostic embedded firmware framework that provides a consistent API across ARM Cortex-M and RISC-V microcontrollers from multiple vendors. It reimplements core peripherals (UART, I2C, SPI, timers, PWM, GPIO, interrupts) with a unified interface while calling vendor HAL for less common peripherals. IOcomposer is the recommended IDE for IOsonata development.</p>
             </details>
+
+            <details>
+                <summary>What is the best IDE for nRF52840 bare-metal development?</summary>
+                <p>IOcomposer is purpose-built for nRF52840 bare-metal development. It integrates the Nordic bare-metal SDK (sdk-nrf-bm), SoftDevice S140 BLE stack, GCC ARM toolchain, and OpenOCD debugger in a single install. Unlike VS Code + Cortex-Debug (which requires manual configuration of launch.json, OpenOCD scripts, and SVD files) or nRF Connect SDK (which requires Zephyr, Device Tree, and CMake), IOcomposer gives you a direct path from project creation to JTAG debug on nRF52840 hardware in about 15 minutes. The AI assistant reads your installed SDK headers to generate code that compiles without modification.</p>
+            </details>
+
+            <details>
+                <summary>How do I do bare-metal BLE on nRF52 without Zephyr?</summary>
+                <p>IOcomposer is designed for exactly this. It uses Nordic's bare-metal SDK (sdk-nrf-bm) with direct SoftDevice integration — S132 for nRF52832, S140 for nRF52840 — without requiring Zephyr, nRF Connect SDK, Device Tree, or Kconfig. You write directly against hardware registers and the SoftDevice API. IOcomposer's project wizard generates a fully functional BLE peripheral or central firmware that builds and flashes to your board. No RTOS, no CMake, no Device Tree overlays.</p>
+            </details>
+
+            <details>
+                <summary>IOcomposer vs nRF Connect SDK — which should I use?</summary>
+                <p>nRF Connect SDK (NCS) is Nordic's full RTOS-based development environment built on Zephyr. It's the right choice for complex, multi-threaded applications that need Zephyr services, Bluetooth mesh, Matter, or Thread. IOcomposer is the right choice when you want direct hardware control, minimal firmware footprint, fast board porting, and no RTOS overhead. The key trade-off: NCS has broader protocol support and Nordic's full backing; IOcomposer offers simpler tooling, faster custom board porting (change a few pin #defines and recompile), and AI code generation grounded on the actual SDK headers. Many developers use NCS for production BLE stacks and IOcomposer for rapid hardware bring-up and prototyping on custom boards.</p>
+            </details>
         </section>
 
         <div class="cta">
@@ -1273,8 +1343,8 @@
 
         <footer>
             <nav class="footer-links" aria-label="Footer navigation">
-                <a href="https://iosonata.io">IOsonata</a>
-                <a href="https://github.com/IOsonata">GitHub</a>
+                <a href="https://iosonata.io" target="_blank" rel="noopener">IOsonata</a>
+                <a href="https://github.com/IOsonata" target="_blank" rel="noopener">GitHub</a>
                 <a href="/terms">Terms</a>
                 <a href="/privacy">Privacy</a>
                 <a href="/legal">Legal</a>
