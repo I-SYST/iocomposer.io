@@ -24,7 +24,6 @@ $PluginId       = "com.iocomposer.embedcdt.ai"
 $PluginUrl      = $env:IOCOMPOSER_AI_PLUGIN_URL
 $OutputJar      = "$DropinsDir\com.iocomposer.embedcdt.ai.jar"
 
-# UI Plugin
 $UiPluginId     = "com.iocomposer.embedcdt.ui"
 $UiOutputJar    = "$DropinsDir\com.iocomposer.embedcdt.ui.jar"
 
@@ -135,7 +134,9 @@ function Patch-EclipseIni {
     $done = $false
     foreach ($line in $lines) {
         if (-not $done -and $line.Trim() -eq "-vmargs") {
-            $out.Add("-pluginCustomization"); $out.Add($custom); $done = $true
+            $out.Add("-pluginCustomization"); $out.Add($custom)
+            $out.Add("-vmargs")
+            $done = $true; continue
         }
         $out.Add($line)
     }
@@ -250,19 +251,21 @@ Write-Host ">>> Installing IOcomposer splash screen..." -ForegroundColor Cyan
 $SplashSrc = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "splash.bmp"
 
 if (Test-Path $SplashSrc) {
+    Write-Host "  Searching for splash targets..."
     $Installed = $false
-    # Replace every splash.bmp found inside the plugins directory tree
-    Get-ChildItem -Path "$EclipseDir\plugins" -Recurse -Filter "splash.bmp" -ErrorAction SilentlyContinue |
+    Get-ChildItem -Path $EclipseDir -Recurse -Filter "splash.bmp" -ErrorAction SilentlyContinue |
     ForEach-Object {
-        Write-Host "  Replacing: $($_.FullName)"
-        try { Copy-Item -Path $SplashSrc -Destination $_.FullName -Force; $Installed = $true } catch {}
+        Write-Host "  Found: $($_.FullName)"
+        try {
+            Copy-Item -Path $SplashSrc -Destination $_.FullName -Force
+            Write-Host "  [OK] Replaced: $($_.Directory.Name)/splash.bmp" -ForegroundColor Green
+            $Installed = $true
+        } catch { Write-Host "  [WARN] Could not replace: $($_.FullName)" -ForegroundColor Yellow }
     }
-    # Also replace root
-    try { Copy-Item -Path $SplashSrc -Destination "$EclipseDir\splash.bmp" -Force; $Installed = $true } catch {}
-    if ($Installed) {
-        Write-Host "  [OK] Splash installed." -ForegroundColor Green
-    } else {
-        Write-Host "  [WARN] No splash target found." -ForegroundColor Yellow
+    if (-not $Installed) {
+        Write-Host "  [WARN] No splash.bmp found — trying fallback..." -ForegroundColor Yellow
+        try { Copy-Item -Path $SplashSrc -Destination "$EclipseDir\splash.bmp" -Force
+              Write-Host "  Copied to eclipse root." } catch {}
     }
 } else {
     Write-Host "  [WARN] splash.bmp not found next to installer - skipping." -ForegroundColor Yellow

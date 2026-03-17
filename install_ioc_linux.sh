@@ -27,7 +27,6 @@ PLUGIN_ID="com.iocomposer.embedcdt.ai"
 PLUGIN_URL="${IOCOMPOSER_AI_PLUGIN_URL:-}"
 OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ai.jar"
 
-# UI Plugin
 UI_PLUGIN_ID="com.iocomposer.embedcdt.ui"
 UI_OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ui.jar"
 
@@ -127,14 +126,18 @@ patch_eclipse_ini() {
   echo "  Written: $custom"
   if grep -q "iocomposer_customization.ini" "$ini" 2>/dev/null; then
     echo "  eclipse.ini already patched."
-    return 0
-  fi
-  if grep -q "^-vmargs" "$ini"; then
-    awk -v p="$custom" '/^-vmargs/{print "-pluginCustomization"; print p}{print}' "$ini" > "$ini.tmp" && mv "$ini.tmp" "$ini"
   else
-    printf '\n-pluginCustomization\n%s\n' "$custom" >> "$ini"
+    awk -v p="$custom" '
+      /^-vmargs$/ {
+        print "-pluginCustomization"
+        print p
+        print "-vmargs"
+        next
+      }
+      { print }
+    ' "$ini" > "$ini.tmp" && mv "$ini.tmp" "$ini"
+    echo "  Patched: $ini"
   fi
-  echo "  Patched: $ini"
 }
 
 
@@ -269,15 +272,21 @@ echo ">>> Installing IOcomposer splash screen..."
 SPLASH_SRC="$(dirname "$0")/splash.bmp"
 
 if [ -f "$SPLASH_SRC" ]; then
+  echo "  Searching for splash targets..."
   INSTALLED=0
-  # Replace every splash.bmp found inside the plugins directory tree
   while IFS= read -r SPLASH_FILE; do
-    echo "  Replacing: $SPLASH_FILE"
-    cp "$SPLASH_SRC" "$SPLASH_FILE" && INSTALLED=1
-  done < <(find "$ECLIPSE_DIR/plugins" -name "splash.bmp" 2>/dev/null)
-  # Also replace root
-  cp "$SPLASH_SRC" "$ECLIPSE_DIR/splash.bmp" 2>/dev/null && INSTALLED=1
-  [ "$INSTALLED" = "1" ] && echo "  [OK] Splash installed." || echo "  [WARN] No splash target found."
+    echo "  Found: $SPLASH_FILE"
+    cp "$SPLASH_SRC" "$SPLASH_FILE" && {
+      echo "  [OK] Replaced: $(basename "$(dirname "$SPLASH_FILE")")/splash.bmp"
+      INSTALLED=1
+    }
+  done < <(find "$ECLIPSE_DIR" -name "splash.bmp" 2>/dev/null)
+  if [ "$INSTALLED" = "1" ]; then
+    echo "  [OK] Splash installation complete."
+  else
+    echo "  [WARN] No splash.bmp found — trying fallback..."
+    cp "$SPLASH_SRC" "$ECLIPSE_DIR/splash.bmp" 2>/dev/null && echo "  Copied to eclipse root."
+  fi
 else
   echo "  [WARN] splash.bmp not found next to installer — skipping."
 fi

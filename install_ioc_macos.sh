@@ -27,7 +27,6 @@ PLUGIN_ID="com.iocomposer.embedcdt.ai"
 PLUGIN_URL="${IOCOMPOSER_AI_PLUGIN_URL:-}"
 OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ai.jar"
 
-# UI Plugin
 UI_PLUGIN_ID="com.iocomposer.embedcdt.ui"
 UI_OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ui.jar"
 
@@ -124,30 +123,24 @@ discover_latest_plugin_url() {
 patch_eclipse_ini() {
   local ini="$ECLIPSE_APP/Contents/Eclipse/eclipse.ini"
   local custom="$DROPINS_DIR/iocomposer_customization.ini"
-  printf '# IOcomposer preference customization
-org.eclipse.ui/showIntro=false
-org.eclipse.ui/defaultPerspectiveId=com.iocomposer.embedcdt.ui.perspective
-org.eclipse.epp.package.embedcpp/showNewsOnStartup=false
-org.eclipse.epp.package.embedcpp.ui/showNewsOnStartup=false
-org.eclipse.epp.package.cpp/showNewsOnStartup=false
-org.eclipse.epp.package.common/showNewsOnStartup=false
-org.eclipse.epp.mpc.ui/showNewsOnStartup=false
-' | sudo tee "$custom" >/dev/null
+  printf '# IOcomposer preference customization\norg.eclipse.ui/showIntro=false\norg.eclipse.ui/defaultPerspectiveId=com.iocomposer.embedcdt.ui.perspective\norg.eclipse.epp.package.embedcpp/showNewsOnStartup=false\norg.eclipse.epp.package.embedcpp.ui/showNewsOnStartup=false\norg.eclipse.epp.package.cpp/showNewsOnStartup=false\norg.eclipse.epp.package.common/showNewsOnStartup=false\norg.eclipse.epp.mpc.ui/showNewsOnStartup=false\n' | sudo tee "$custom" >/dev/null
   echo "  Written: $custom"
   if grep -q "iocomposer_customization.ini" "$ini" 2>/dev/null; then
     echo "  eclipse.ini already patched."
-    return 0
-  fi
-  if grep -q "^-vmargs" "$ini"; then
-    awk -v p="$custom" '/^-vmargs/{print "-pluginCustomization"; print p}{print}' "$ini" | sudo tee "$ini.tmp" >/dev/null
-    sudo mv "$ini.tmp" "$ini"
   else
-    printf '
--pluginCustomization
-%s
-' "$custom" | sudo tee -a "$ini" >/dev/null
+    awk -v p="$custom" '
+      /^-vmargs$/ {
+        print "-pluginCustomization"
+        print p
+        print "-vmargs"
+        print "-Dswt.autoScale=false"
+        next
+      }
+      { print }
+    ' "$ini" | sudo tee "$ini.tmp" >/dev/null
+    sudo mv "$ini.tmp" "$ini"
+    echo "  Patched: $ini"
   fi
-  echo "  Patched: $ini"
 }
 
 
@@ -277,15 +270,26 @@ echo ">>> Installing IOcomposer splash screen..."
 SPLASH_SRC="$(dirname "$0")/splash.bmp"
 
 if [[ -f "$SPLASH_SRC" ]]; then
+  echo "  Searching for splash targets in Eclipse bundle..."
   INSTALLED=0
-  # Replace every splash.bmp found inside the plugins directory tree
+
+  # Search entire Eclipse.app for any splash.bmp (catches all plugin layouts)
   while IFS= read -r SPLASH_FILE; do
-    echo "  Replacing: $SPLASH_FILE"
-    sudo cp "$SPLASH_SRC" "$SPLASH_FILE" && INSTALLED=1
-  done < <(find "$ECLIPSE_APP/Contents/Eclipse/plugins" -name "splash.bmp" 2>/dev/null)
-  # Also replace root
-  sudo cp "$SPLASH_SRC" "$ECLIPSE_APP/Contents/Eclipse/splash.bmp" 2>/dev/null && INSTALLED=1
-  [[ "$INSTALLED" == "1" ]] && echo "  [OK] Splash installed." || echo "  [WARN] No splash target found."
+    echo "  Found: $SPLASH_FILE"
+    sudo cp "$SPLASH_SRC" "$SPLASH_FILE" && {
+      echo "  [OK] Replaced: $(basename "$(dirname "$SPLASH_FILE")")/splash.bmp"
+      INSTALLED=1
+    }
+  done < <(find "$ECLIPSE_APP" -name "splash.bmp" 2>/dev/null)
+
+  if [[ "$INSTALLED" == "1" ]]; then
+    echo "  [OK] Splash installation complete."
+  else
+    echo "  [WARN] No splash.bmp found in $ECLIPSE_APP — trying known fallback paths..."
+    for DST in       "$ECLIPSE_APP/Contents/Eclipse/splash.bmp"       "$ECLIPSE_APP/Contents/MacOS/splash.bmp"; do
+      sudo cp "$SPLASH_SRC" "$DST" 2>/dev/null && echo "  Copied to: $DST"
+    done
+  fi
 else
   echo "  [WARN] splash.bmp not found next to installer — skipping."
 fi
