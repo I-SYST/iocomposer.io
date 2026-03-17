@@ -143,6 +143,41 @@ patch_eclipse_ini() {
   fi
 }
 
+install_splash() {
+  local src="$1"
+  local eclipse_dir="$2"
+
+  echo "  Searching for existing splash.bmp files..."
+  local found=0
+  while IFS= read -r dst; do
+    echo "  Replacing: $dst"
+    sudo cp "$src" "$dst" && found=1
+  done < <(find "$eclipse_dir" -name "splash.bmp" 2>/dev/null)
+
+  # On M1/arm64, splash.bmp may not exist yet — write to all known locations
+  echo "  Writing to all known splash locations (ensures M1/arm64 coverage)..."
+  local targets=(
+    "$eclipse_dir/splash.bmp"
+    "$eclipse_dir/Contents/Eclipse/splash.bmp"
+  )
+  # Also write into any org.eclipse.epp.package.* plugin directory
+  while IFS= read -r plugindir; do
+    targets+=("$plugindir/splash.bmp")
+  done < <(find "$eclipse_dir" -maxdepth 6 -type d \
+    -name "org.eclipse.epp.package.*" 2>/dev/null)
+
+  for dst in "${targets[@]}"; do
+    sudo mkdir -p "$(dirname "$dst")" 2>/dev/null
+    sudo cp "$src" "$dst" 2>/dev/null && {
+      echo "  [OK] Written: $dst"
+      found=1
+    }
+  done
+
+  [[ "$found" == "1" ]] && echo "  [OK] Splash installation complete." \
+    || echo "  [WARN] Could not write splash to any location."
+}
+
 
 # ---------------------------------------------------------
 # DOWNLOAD AND RUN MAIN INSTALLER
@@ -270,26 +305,7 @@ echo ">>> Installing IOcomposer splash screen..."
 SPLASH_SRC="$(dirname "$0")/splash.bmp"
 
 if [[ -f "$SPLASH_SRC" ]]; then
-  echo "  Searching for splash targets in Eclipse bundle..."
-  INSTALLED=0
-
-  # Search entire Eclipse.app for any splash.bmp (catches all plugin layouts)
-  while IFS= read -r SPLASH_FILE; do
-    echo "  Found: $SPLASH_FILE"
-    sudo cp "$SPLASH_SRC" "$SPLASH_FILE" && {
-      echo "  [OK] Replaced: $(basename "$(dirname "$SPLASH_FILE")")/splash.bmp"
-      INSTALLED=1
-    }
-  done < <(find "$ECLIPSE_APP" -name "splash.bmp" 2>/dev/null)
-
-  if [[ "$INSTALLED" == "1" ]]; then
-    echo "  [OK] Splash installation complete."
-  else
-    echo "  [WARN] No splash.bmp found in $ECLIPSE_APP — trying known fallback paths..."
-    for DST in       "$ECLIPSE_APP/Contents/Eclipse/splash.bmp"       "$ECLIPSE_APP/Contents/MacOS/splash.bmp"; do
-      sudo cp "$SPLASH_SRC" "$DST" 2>/dev/null && echo "  Copied to: $DST"
-    done
-  fi
+  install_splash "$SPLASH_SRC" "$ECLIPSE_APP"
 else
   echo "  [WARN] splash.bmp not found next to installer — skipping."
 fi
