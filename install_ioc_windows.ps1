@@ -24,6 +24,10 @@ $PluginId       = "com.iocomposer.embedcdt.ai"
 $PluginUrl      = $env:IOCOMPOSER_AI_PLUGIN_URL
 $OutputJar      = "$DropinsDir\com.iocomposer.embedcdt.ai.jar"
 
+# UI Plugin
+$UiPluginId     = "com.iocomposer.embedcdt.ui"
+$UiOutputJar    = "$DropinsDir\com.iocomposer.embedcdt.ui.jar"
+
 $InstallerUrl = "https://raw.githubusercontent.com/IOsonata/IOsonata/master/Installer/install_iocdevtools_win.ps1"
 
 # SDK root (where IOsonata/external live). Default matches the main installer.
@@ -69,6 +73,7 @@ function Get-VersionKey {
 }
 
 function Discover-LatestPluginUrl {
+    param([string]$Id = $PluginId)
     $api = "https://api.github.com/repos/$PluginRepo/contents/$PluginDirPath`?ref=$PluginBranch"
     
     try {
@@ -88,7 +93,7 @@ function Discover-LatestPluginUrl {
         if (-not $name) { continue }
         
         # Match pattern: com.iocomposer.embedcdt.ai_*.jar
-        if ($name -notmatch "^$([regex]::Escape($PluginId))_(.+)\.jar$") { continue }
+        if ($name -notmatch "^$([regex]::Escape($Id))_(.+)\.jar$") { continue }
         
         $ver = $Matches[1]
         
@@ -107,6 +112,38 @@ function Discover-LatestPluginUrl {
     
     return "https://github.com/$PluginRepo/raw/$PluginBranch/$PluginDirPath/$bestFile"
 }
+function Patch-EclipseIni {
+    $ini    = "$EclipseDir\eclipse.ini"
+    $custom = "$DropinsDir\iocomposer_customization.ini"
+    $content = @(
+        "# IOcomposer preference customization",
+        "org.eclipse.ui/showIntro=false",
+        "org.eclipse.ui/defaultPerspectiveId=com.iocomposer.embedcdt.ui.perspective",
+        "org.eclipse.epp.package.embedcpp/showNewsOnStartup=false",
+        "org.eclipse.epp.package.embedcpp.ui/showNewsOnStartup=false",
+        "org.eclipse.epp.package.cpp/showNewsOnStartup=false",
+        "org.eclipse.epp.package.common/showNewsOnStartup=false",
+        "org.eclipse.epp.mpc.ui/showNewsOnStartup=false"
+    )
+    Set-Content -Path $custom -Value $content -Encoding UTF8
+    Write-Host "  Written: $custom"
+    if (-not (Test-Path $ini)) { Write-Host "  [WARN] eclipse.ini not found."; return }
+    $raw = Get-Content $ini -Raw
+    if ($raw -match "iocomposer_customization.ini") { Write-Host "  eclipse.ini already patched."; return }
+    $lines = Get-Content $ini
+    $out = [System.Collections.Generic.List[string]]::new()
+    $done = $false
+    foreach ($line in $lines) {
+        if (-not $done -and $line.Trim() -eq "-vmargs") {
+            $out.Add("-pluginCustomization"); $out.Add($custom); $done = $true
+        }
+        $out.Add($line)
+    }
+    if (-not $done) { $out.Add("-pluginCustomization"); $out.Add($custom) }
+    Set-Content -Path $ini -Value $out -Encoding UTF8
+    Write-Host "  Patched: $ini"
+}
+
 
 # ---------------------------------------------------------
 # DOWNLOAD AND RUN MAIN INSTALLER
@@ -176,6 +213,59 @@ if (Test-Path $EclipseDir) {
 } else {
     Write-Host "  [ERROR] Eclipse directory ($EclipseDir) not found. The main installation may have failed." -ForegroundColor Red
     exit 1
+}
+
+# ---------------------------------------------------------
+# POST-INSTALL: UI PLUGIN
+# ---------------------------------------------------------
+Write-Host ""
+Write-Host ">>> Post-Install: Adding UI Plugin ($UiPluginId)..." -ForegroundColor Cyan
+
+if (Test-Path $EclipseDir) {
+    if (-not (Test-Path $DropinsDir)) { New-Item -ItemType Directory -Path $DropinsDir -Force | Out-Null }
+    $UiUrl = Discover-LatestPluginUrl -Id $UiPluginId
+    if ($UiUrl) {
+        Write-Host "  Latest UI plugin URL: $UiUrl"
+        try {
+            Invoke-WebRequest -Uri $UiUrl -OutFile $UiOutputJar -ErrorAction Stop
+            Write-Host "  [OK] UI Plugin installed: $UiOutputJar" -ForegroundColor Green
+        } catch {
+            Write-Host "  [WARN] Failed to download UI plugin." -ForegroundColor Yellow
+        }
+    } else {
+        Write-Host "  [WARN] Failed to discover UI plugin JAR." -ForegroundColor Yellow
+    }
+    Write-Host ">>> Patching eclipse.ini for IOcomposer preferences..." -ForegroundColor Cyan
+    Patch-EclipseIni
+} else {
+    Write-Host "  [ERROR] Eclipse directory not found." -ForegroundColor Red
+    exit 1
+}
+
+# ---------------------------------------------------------
+# POST-INSTALL: SPLASH SCREEN
+# ---------------------------------------------------------
+Write-Host ""
+Write-Host ">>> Installing IOcomposer splash screen..." -ForegroundColor Cyan
+$SplashSrc = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "splash.bmp"
+
+if (Test-Path $SplashSrc) {
+    $Installed = $false
+    # Replace every splash.bmp found inside the plugins directory tree
+    Get-ChildItem -Path "$EclipseDir\plugins" -Recurse -Filter "splash.bmp" -ErrorAction SilentlyContinue |
+    ForEach-Object {
+        Write-Host "  Replacing: $($_.FullName)"
+        try { Copy-Item -Path $SplashSrc -Destination $_.FullName -Force; $Installed = $true } catch {}
+    }
+    # Also replace root
+    try { Copy-Item -Path $SplashSrc -Destination "$EclipseDir\splash.bmp" -Force; $Installed = $true } catch {}
+    if ($Installed) {
+        Write-Host "  [OK] Splash installed." -ForegroundColor Green
+    } else {
+        Write-Host "  [WARN] No splash target found." -ForegroundColor Yellow
+    }
+} else {
+    Write-Host "  [WARN] splash.bmp not found next to installer - skipping." -ForegroundColor Yellow
 }
 
 # ---------------------------------------------------------

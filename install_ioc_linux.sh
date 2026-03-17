@@ -27,6 +27,10 @@ PLUGIN_ID="com.iocomposer.embedcdt.ai"
 PLUGIN_URL="${IOCOMPOSER_AI_PLUGIN_URL:-}"
 OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ai.jar"
 
+# UI Plugin
+UI_PLUGIN_ID="com.iocomposer.embedcdt.ui"
+UI_OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ui.jar"
+
 INSTALLER_URL="https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/master/Installer/install_iocdevtools_linux.sh"
 
 # SDK root (where IOsonata/external live). Default matches the main installer.
@@ -78,6 +82,7 @@ version_key() {
 }
 
 discover_latest_plugin_url() {
+  local plugin_id="${1:-$PLUGIN_ID}"
   local api="https://api.github.com/repos/${PLUGIN_REPO}/contents/${PLUGIN_DIR_PATH}?ref=${PLUGIN_REPO_BRANCH}"
   local json=""
 
@@ -93,9 +98,9 @@ discover_latest_plugin_url() {
   local f=""
   while IFS= read -r f; do
     [ -n "$f" ] || continue
-    [[ "$f" == ${PLUGIN_ID}_*.jar ]] || continue
+    [[ "$f" == ${plugin_id}_*.jar ]] || continue
 
-    local ver="${f#${PLUGIN_ID}_}"
+    local ver="${f#${plugin_id}_}"
     ver="${ver%.jar}"
 
     # Accept numeric dotted versions like 0.0.22
@@ -115,6 +120,23 @@ discover_latest_plugin_url() {
   [ -n "$best_file" ] || return 1
   echo "https://github.com/${PLUGIN_REPO}/raw/${PLUGIN_REPO_BRANCH}/${PLUGIN_DIR_PATH}/${best_file}"
 }
+patch_eclipse_ini() {
+  local ini="$ECLIPSE_DIR/eclipse.ini"
+  local custom="$DROPINS_DIR/iocomposer_customization.ini"
+  printf '# IOcomposer preference customization\norg.eclipse.ui/showIntro=false\norg.eclipse.ui/defaultPerspectiveId=com.iocomposer.embedcdt.ui.perspective\norg.eclipse.epp.package.embedcpp/showNewsOnStartup=false\norg.eclipse.epp.package.embedcpp.ui/showNewsOnStartup=false\norg.eclipse.epp.package.cpp/showNewsOnStartup=false\norg.eclipse.epp.package.common/showNewsOnStartup=false\norg.eclipse.epp.mpc.ui/showNewsOnStartup=false\n' > "$custom"
+  echo "  Written: $custom"
+  if grep -q "iocomposer_customization.ini" "$ini" 2>/dev/null; then
+    echo "  eclipse.ini already patched."
+    return 0
+  fi
+  if grep -q "^-vmargs" "$ini"; then
+    awk -v p="$custom" '/^-vmargs/{print "-pluginCustomization"; print p}{print}' "$ini" > "$ini.tmp" && mv "$ini.tmp" "$ini"
+  else
+    printf '\n-pluginCustomization\n%s\n' "$custom" >> "$ini"
+  fi
+  echo "  Patched: $ini"
+}
+
 
 # ---------------------------------------------------------
 # DOWNLOAD AND RUN MAIN INSTALLER
@@ -208,6 +230,56 @@ if [ -d "$ECLIPSE_DIR" ]; then
 else
     echo "  [ERROR] Eclipse directory ($ECLIPSE_DIR) not found. The main installation may have failed."
     exit 1
+fi
+
+# ---------------------------------------------------------
+# POST-INSTALL: UI PLUGIN
+# ---------------------------------------------------------
+echo ""
+echo ">>> Post-Install: Adding UI Plugin ($UI_PLUGIN_ID)..."
+
+if [ -d "$ECLIPSE_DIR" ]; then
+  [ -d "$DROPINS_DIR" ] || mkdir -p "$DROPINS_DIR"
+  if UI_URL="$(discover_latest_plugin_url "$UI_PLUGIN_ID")"; then
+    echo "  Latest UI plugin URL: $UI_URL"
+    TMP=$(mktemp)
+    if curl -fL "$UI_URL" -o "$TMP"; then
+      mv "$TMP" "$UI_OUTPUT_JAR"
+      chmod 644 "$UI_OUTPUT_JAR"
+      echo "  [OK] UI Plugin installed: $UI_OUTPUT_JAR"
+    else
+      echo "  [WARN] Failed to download UI plugin."
+      rm -f "$TMP"
+    fi
+  else
+    echo "  [WARN] Failed to discover UI plugin JAR."
+  fi
+  echo ">>> Patching eclipse.ini for IOcomposer preferences..."
+  patch_eclipse_ini
+else
+  echo "  [ERROR] Eclipse directory not found."
+  exit 1
+fi
+
+# ---------------------------------------------------------
+# POST-INSTALL: SPLASH SCREEN
+# ---------------------------------------------------------
+echo ""
+echo ">>> Installing IOcomposer splash screen..."
+SPLASH_SRC="$(dirname "$0")/splash.bmp"
+
+if [ -f "$SPLASH_SRC" ]; then
+  INSTALLED=0
+  # Replace every splash.bmp found inside the plugins directory tree
+  while IFS= read -r SPLASH_FILE; do
+    echo "  Replacing: $SPLASH_FILE"
+    cp "$SPLASH_SRC" "$SPLASH_FILE" && INSTALLED=1
+  done < <(find "$ECLIPSE_DIR/plugins" -name "splash.bmp" 2>/dev/null)
+  # Also replace root
+  cp "$SPLASH_SRC" "$ECLIPSE_DIR/splash.bmp" 2>/dev/null && INSTALLED=1
+  [ "$INSTALLED" = "1" ] && echo "  [OK] Splash installed." || echo "  [WARN] No splash target found."
+else
+  echo "  [WARN] splash.bmp not found next to installer — skipping."
 fi
 
 # ---------------------------------------------------------
