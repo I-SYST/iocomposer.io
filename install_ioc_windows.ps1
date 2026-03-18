@@ -145,6 +145,36 @@ function Patch-EclipseIni {
     Write-Host "  Patched: $ini"
 }
 
+function Install-Splash {
+    param([string]$Src, [string]$EclDir)
+    $installed = $false
+    Write-Host "  Searching for existing splash.bmp files..."
+    Get-ChildItem -Path $EclDir -Recurse -Filter "splash.bmp" -ErrorAction SilentlyContinue |
+    ForEach-Object {
+        Write-Host "  Found: $($_.FullName)"
+        try {
+            Copy-Item -Path $Src -Destination $_.FullName -Force
+            Write-Host "  [OK] Replaced: $($_.FullName)" -ForegroundColor Green
+            $installed = $true
+        } catch { Write-Host "  [WARN] Could not replace: $($_.FullName)" -ForegroundColor Yellow }
+    }
+    Write-Host "  Writing to all known splash locations..."
+    $targets = @("$EclDir\splash.bmp")
+    Get-ChildItem -Path $EclDir -Recurse -Directory -Filter "org.eclipse.epp.package.*" -ErrorAction SilentlyContinue |
+    ForEach-Object { $targets += "$($_.FullName)\splash.bmp" }
+    foreach ($dst in $targets) {
+        $dir = Split-Path $dst -Parent
+        if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
+        try {
+            Copy-Item -Path $Src -Destination $dst -Force
+            Write-Host "  [OK] Written: $dst" -ForegroundColor Green
+            $installed = $true
+        } catch {}
+    }
+    if ($installed) { Write-Host "  [OK] Splash installation complete." -ForegroundColor Green }
+    else            { Write-Host "  [WARN] Could not write splash to any location." -ForegroundColor Yellow }
+}
+
 
 # ---------------------------------------------------------
 # DOWNLOAD AND RUN MAIN INSTALLER
@@ -248,27 +278,25 @@ if (Test-Path $EclipseDir) {
 # ---------------------------------------------------------
 Write-Host ""
 Write-Host ">>> Installing IOcomposer splash screen..." -ForegroundColor Cyan
-$SplashSrc = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "splash.bmp"
 
-if (Test-Path $SplashSrc) {
-    Write-Host "  Searching for splash targets..."
-    $Installed = $false
-    Get-ChildItem -Path $EclipseDir -Recurse -Filter "splash.bmp" -ErrorAction SilentlyContinue |
-    ForEach-Object {
-        Write-Host "  Found: $($_.FullName)"
-        try {
-            Copy-Item -Path $SplashSrc -Destination $_.FullName -Force
-            Write-Host "  [OK] Replaced: $($_.Directory.Name)/splash.bmp" -ForegroundColor Green
-            $Installed = $true
-        } catch { Write-Host "  [WARN] Could not replace: $($_.FullName)" -ForegroundColor Yellow }
+$SplashUrl = "https://github.com/$PluginRepo/raw/$PluginBranch/$PluginDirPath/splash.bmp"
+$SplashTmp = [System.IO.Path]::GetTempFileName() + ".bmp"
+Write-Host "  Downloading: $SplashUrl"
+try {
+    Invoke-WebRequest -Uri $SplashUrl -OutFile $SplashTmp -ErrorAction Stop
+    $size = (Get-Item $SplashTmp).Length
+    Write-Host "  [OK] splash.bmp downloaded ($size bytes)" -ForegroundColor Green
+    Install-Splash -Src $SplashTmp -EclDir $EclipseDir
+    Remove-Item $SplashTmp -Force -ErrorAction SilentlyContinue
+} catch {
+    Write-Host "  [WARN] Download failed: $_" -ForegroundColor Yellow
+    $SplashLocal = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "splash.bmp"
+    if (Test-Path $SplashLocal) {
+        Write-Host "  Falling back to local splash.bmp"
+        Install-Splash -Src $SplashLocal -EclDir $EclipseDir
+    } else {
+        Write-Host "  [WARN] No splash.bmp available — skipping." -ForegroundColor Yellow
     }
-    if (-not $Installed) {
-        Write-Host "  [WARN] No splash.bmp found — trying fallback..." -ForegroundColor Yellow
-        try { Copy-Item -Path $SplashSrc -Destination "$EclipseDir\splash.bmp" -Force
-              Write-Host "  Copied to eclipse root." } catch {}
-    }
-} else {
-    Write-Host "  [WARN] splash.bmp not found next to installer - skipping." -ForegroundColor Yellow
 }
 
 # ---------------------------------------------------------

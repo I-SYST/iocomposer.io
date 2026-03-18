@@ -146,21 +146,16 @@ patch_eclipse_ini() {
 install_splash() {
   local src="$1"
   local eclipse_dir="$2"
+  local found=0
 
   echo "  Searching for existing splash.bmp files..."
-  local found=0
   while IFS= read -r dst; do
-    echo "  Replacing: $dst"
-    sudo cp "$src" "$dst" && found=1
+    echo "  Found: $dst"
+    sudo cp "$src" "$dst" && { echo "  [OK] Replaced: $dst"; found=1; }
   done < <(find "$eclipse_dir" -name "splash.bmp" 2>/dev/null)
 
-  # On M1/arm64, splash.bmp may not exist yet — write to all known locations
-  echo "  Writing to all known splash locations (ensures M1/arm64 coverage)..."
-  local targets=(
-    "$eclipse_dir/splash.bmp"
-    "$eclipse_dir/Contents/Eclipse/splash.bmp"
-  )
-  # Also write into any org.eclipse.epp.package.* plugin directory
+  echo "  Writing to all known splash locations..."
+  local targets=("$eclipse_dir/Contents/Eclipse/splash.bmp")
   while IFS= read -r plugindir; do
     targets+=("$plugindir/splash.bmp")
   done < <(find "$eclipse_dir" -maxdepth 6 -type d \
@@ -168,13 +163,11 @@ install_splash() {
 
   for dst in "${targets[@]}"; do
     sudo mkdir -p "$(dirname "$dst")" 2>/dev/null
-    sudo cp "$src" "$dst" 2>/dev/null && {
-      echo "  [OK] Written: $dst"
-      found=1
-    }
+    sudo cp "$src" "$dst" 2>/dev/null && { echo "  [OK] Written: $dst"; found=1; }
   done
 
-  [[ "$found" == "1" ]] && echo "  [OK] Splash installation complete." \
+  [[ "$found" == "1" ]] \
+    && echo "  [OK] Splash installation complete." \
     || echo "  [WARN] Could not write splash to any location."
 }
 
@@ -302,12 +295,25 @@ fi
 # ---------------------------------------------------------
 echo ""
 echo ">>> Installing IOcomposer splash screen..."
-SPLASH_SRC="$(dirname "$0")/splash.bmp"
 
-if [[ -f "$SPLASH_SRC" ]]; then
-  install_splash "$SPLASH_SRC" "$ECLIPSE_APP"
+# Download splash.bmp from GitHub (same repo as plugins)
+SPLASH_URL="https://github.com/${PLUGIN_REPO}/raw/${PLUGIN_REPO_BRANCH}/${PLUGIN_DIR_PATH}/splash.bmp"
+SPLASH_TMP=$(mktemp /tmp/iocomposer_splash_XXXXXX.bmp)
+echo "  Downloading: $SPLASH_URL"
+
+if curl -fL "$SPLASH_URL" -o "$SPLASH_TMP" 2>/dev/null; then
+  echo "  [OK] splash.bmp downloaded ($(wc -c < "$SPLASH_TMP") bytes)"
+  install_splash "$SPLASH_TMP" "$ECLIPSE_APP"
+  rm -f "$SPLASH_TMP"
 else
-  echo "  [WARN] splash.bmp not found next to installer — skipping."
+  # Fallback: use local splash.bmp if present next to script
+  SPLASH_LOCAL="$(dirname "$0")/splash.bmp"
+  if [[ -f "$SPLASH_LOCAL" ]]; then
+    echo "  [WARN] Download failed — using local splash.bmp"
+    install_splash "$SPLASH_LOCAL" "$ECLIPSE_APP"
+  else
+    echo "  [WARN] Could not obtain splash.bmp — skipping."
+  fi
 fi
 
 # ---------------------------------------------------------
