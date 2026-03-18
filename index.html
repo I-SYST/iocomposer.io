@@ -14,10 +14,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>IOcomposer — Bare-Metal Embedded IDE for Nordic nRF52 & nRF54 | Build, Flash, Debug</title>
-    <meta name="description" content="Build bare-metal firmware for Nordic nRF52832, nRF52840, and nRF54L15 in one IDE. Generate code from real local SDK headers, then build, flash, and debug in minutes.">
+    <title>IOcomposer — Embedded C/C++ IDE for MCU Firmware Development | Build, Flash, Debug</title>
+    <meta name="description" content="Create managed MCU firmware projects, generate code from real local SDK headers, and build, flash, and debug in one IDE. Current preview workflows include Nordic nRF52 and nRF54L15.">
     <meta name="robots" content="index, follow">
-    <meta name="keywords" content="embedded IDE, bare-metal IDE, Nordic IDE, nRF52832, nRF52840, nRF54L15, BLE development, SoftDevice, firmware development, JTAG debug, embedded AI assistant, MCU programming">
+    <meta name="keywords" content="embedded IDE, embedded C++, MCU firmware IDE, firmware development, build flash debug, JTAG debug, embedded AI assistant, microcontroller IDE, nRF52, nRF54L15, STM32, Renesas, Microchip">
     <link rel="canonical" href="https://iocomposer.io/">
     <meta name="theme-color" content="#16213e">
 
@@ -25,13 +25,13 @@
     <meta property="og:url" content="https://iocomposer.io/">
     <meta property="og:site_name" content="IOcomposer">
     <meta property="og:locale" content="en_US">
-    <meta property="og:title" content="IOcomposer — Bare-Metal Embedded IDE for Nordic nRF52 & nRF54">
-    <meta property="og:description" content="From blank workspace to breakpoint at main() in minutes. Generate code from real local SDK headers, then build, flash, and debug in one IDE.">
+    <meta property="og:title" content="IOcomposer — Embedded C/C++ IDE for MCU Firmware Development">
+    <meta property="og:description" content="Create managed MCU firmware projects, generate code from real local SDK headers, and build, flash, and debug in one IDE.">
     <meta property="og:image" content="https://iocomposer.io/images/IOcomposer_AddSPI.png">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="IOcomposer — Bare-Metal Embedded IDE for Nordic nRF52 & nRF54">
-    <meta name="twitter:description" content="From blank workspace to breakpoint at main() in minutes. Generate code from real local SDK headers, then build, flash, and debug in one IDE.">
+    <meta name="twitter:title" content="IOcomposer — Embedded C/C++ IDE for MCU Firmware Development">
+    <meta name="twitter:description" content="Create managed MCU firmware projects, generate code from real local SDK headers, and build, flash, and debug in one IDE.">
     <meta name="twitter:image" content="https://iocomposer.io/images/IOcomposer_AddSPI.png">
 
     <script type="application/ld+json">
@@ -42,7 +42,7 @@
       "name": "IOcomposer",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "macOS, Linux, Windows",
-      "description": "IOcomposer is a bare-metal embedded IDE for Nordic nRF52832, nRF52840, and nRF54L15. It provides deterministic managed project creation, AI grounded on local SDK headers, and integrated build, flash, and SWD/JTAG debug workflows.",
+      "description": "IOcomposer is an embedded C/C++ IDE for MCU firmware development. It provides deterministic managed project creation, AI grounded on local SDK headers, and integrated build, flash, and SWD/JTAG debug workflows.",
       "url": "https://iocomposer.io/",
       "downloadUrl": "https://iocomposer.io/#install",
       "screenshot": "https://iocomposer.io/images/IOcomposer_AddSPI.png",
@@ -77,7 +77,7 @@
           "name": "What is IOcomposer?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "IOcomposer is a bare-metal embedded IDE for Nordic nRF52832, nRF52840, and nRF54L15. It combines deterministic managed project creation, AI grounded on your local SDK headers, and integrated build, flash, and debug workflows in one install."
+            "text": "IOcomposer is an embedded C/C++ IDE for MCU firmware development. It combines deterministic managed project creation, AI grounded on your local SDK headers, and integrated build, flash, and debug workflows in one environment."
           }
         },
         {
@@ -85,7 +85,7 @@
           "name": "Which targets work today?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "IOcomposer supports Nordic nRF52832, nRF52840, and nRF54L15 today, including SoftDevice-based BLE workflows. STM32, Renesas, and Microchip preview support is in progress."
+            "text": "Current supported workflows highlight Nordic nRF52832, nRF52840, and nRF54L15, including SoftDevice-based BLE workflows. Preview support for STM32, Renesas, and Microchip is in progress."
           }
         },
         {
@@ -93,7 +93,7 @@
           "name": "Does IOcomposer require Zephyr or nRF Connect SDK?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. IOcomposer targets bare-metal workflows and uses Nordic's bare-metal SDK path with direct hardware access and SoftDevice integration."
+            "text": "No. IOcomposer is built for bare-metal workflows and can work directly with vendor SDK paths rather than requiring a Zephyr-based setup."
           }
         },
         {
@@ -129,14 +129,14 @@
       "@context": "https://schema.org",
       "@type": "HowTo",
       "@id": "https://iocomposer.io/#howto-install",
-      "name": "How to install IOcomposer for Nordic bare-metal development",
-      "description": "Install IOcomposer on macOS, Linux, or Windows to create Nordic nRF52 and nRF54 bare-metal projects with integrated build, flash, and debug workflows.",
+      "name": "How to install IOcomposer for embedded firmware development",
+      "description": "Install IOcomposer on macOS, Linux, or Windows to create managed MCU firmware projects with integrated build, flash, and debug workflows.",
       "totalTime": "PT15M",
       "step": [
         {
           "@type": "HowToStep",
           "name": "Run the installer",
-          "text": "Open a terminal and run the install command for your operating system. The installer sets up the IDE, GCC ARM toolchain, OpenOCD, the Nordic SDK path, and the AI plugin.",
+          "text": "Open a terminal and run the install command for your operating system. The installer sets up the IDE, GCC ARM toolchain, OpenOCD, vendor SDK paths, and the AI plugin.",
           "url": "https://iocomposer.io/#install"
         },
         {
@@ -148,7 +148,7 @@
         {
           "@type": "HowToStep",
           "name": "Create your first project",
-          "text": "Use the project wizard or type a prompt such as 'create a BLE peripheral project for nRF54L15' to generate a managed project grounded on your installed SDK files.",
+          "text": "Use the project wizard or type a prompt such as 'create a BLE peripheral project for nRF54L15' to generate a managed project grounded on your installed SDK files and local headers.",
           "url": "https://iocomposer.io/#demo"
         },
         {
@@ -943,7 +943,7 @@
 
 <body>
 <header>
-    <div class="beta-banner" role="banner">🚀 Free Preview for Nordic nRF52 / nRF54L15 — watch the 3-minute demo or install now.</div>
+    <div class="beta-banner" role="banner">🚀 Free Preview — watch the 3-minute demo or install now.</div>
 </header>
 
 <main>
@@ -953,15 +953,15 @@
             <span class="logo-io" aria-hidden="true">IO</span><span class="logo-composer" aria-hidden="true">composer</span>
         </div>
 
-        <p class="tagline">Start like Arduino, <span class="tagline-highlight">grow like a pro</span> — without switching tools.</p>
+        <p class="tagline">Start simple, <span class="tagline-highlight">grow like a pro</span> — without switching tools.</p>
 
-        <div class="eyebrow">Nordic bare-metal embedded IDE</div>
+        <div class="eyebrow">Embedded C/C++ IDE for MCU firmware</div>
         <h1>From blank workspace to <span class="highlight">breakpoint at <code style="font-size: 0.9em; color: inherit;">main()</code></span> in minutes.</h1>
 
         <p style="color: #64748b; font-size: 14px; margin-bottom: 18px; letter-spacing: 0.3px;">A complete IDE — not a plugin pile. One install gives you editor, GCC toolchain, OpenOCD, SDK path, and AI assistant.</p>
 
         <p class="hero-summary">
-            Build bare-metal firmware for <strong style="color: #fff;">nRF52832</strong>, <strong style="color: #fff;">nRF52840</strong>, and <strong style="color: #fff;">nRF54L15</strong> in one IDE. Generate code from your real local SDK headers, then build, flash, and debug without stitching together plugins, scripts, and probe configs.
+            Create managed MCU firmware projects in one IDE. Generate code from your real local SDK headers, then build, flash, and debug without stitching together plugins, scripts, and probe configs. Current preview workflows highlight <strong style="color: #fff;">nRF52832</strong>, <strong style="color: #fff;">nRF52840</strong>, and <strong style="color: #fff;">nRF54L15</strong>.
         </p>
 
         <div class="hero-actions" aria-label="Primary calls to action">
@@ -990,7 +990,7 @@
         </div>
 
         <p class="description">
-            Deterministic project creation, grounded AI, and a direct build → flash → debug path. Start on a Nordic DevKit, then move to your custom board by updating a few pin assignments in <code style="font-size: 0.95em; color: #fff;">board.h</code> and rebuilding.
+            Deterministic project creation, grounded AI, and a direct build → flash → debug path. Start on a supported DevKit, then move to your custom board by updating a few pin assignments in <code style="font-size: 0.95em; color: #fff;">board.h</code> and rebuilding.
         </p>
 
         <div style="max-width: 420px; margin: -24px auto 24px auto; text-align: left; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 14px 18px; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 13px; line-height: 1.6; color: #94a3b8;">
@@ -1004,14 +1004,14 @@
         </div>
 
         <p style="color: #94a3b8; font-size: 15px; line-height: 1.6; max-width: 720px; margin: 0 auto 42px auto; text-align: center;">
-            Supported today: Nordic nRF52832, nRF52840, and nRF54L15 with SoftDevice BLE workflows. Preview support for STM32, Renesas, and Microchip can live lower on the page — but the homepage stays focused on what works now.
+            Supported preview workflows today include Nordic nRF52832, nRF52840, and nRF54L15 with SoftDevice BLE. Preview support for STM32, Renesas, and Microchip is in progress.
         </p>
 
         <div class="steps-flow" aria-label="Three-step workflow">
             <div class="step-card">
                 <div class="step-number">1</div>
                 <h3>Prompt or use the wizard</h3>
-                <p>Create a managed Nordic project for a real MCU target, with the right template and build settings from the start.</p>
+                <p>Create a managed project for a real MCU target, with the right template and build settings from the start.</p>
             </div>
             <div class="step-arrow" aria-hidden="true">→</div>
             <div class="step-card">
@@ -1123,7 +1123,7 @@
             <div class="features">
                 <div class="feature">
                     <h3>Deterministic project creation</h3>
-                    <p>Create a real managed project for nRF52832, nRF52840, or nRF54L15 instead of assembling editor plugins, build scripts, linker files, and debug configs by hand.</p>
+                    <p>Create a real managed project for supported MCU targets instead of assembling editor plugins, build scripts, linker files, and debug configs by hand.</p>
                 </div>
 
                 <div class="feature">
@@ -1149,7 +1149,7 @@
         <section id="install" class="install-section" aria-label="Installation" style="border: 2px solid rgba(16, 185, 129, 0.4); background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(255,255,255,0.05) 100%);">
             <p class="section-kicker">Free preview</p>
             <h2>Install IOcomposer</h2>
-            <p class="install-note" style="color: #10b981; font-weight: 600; font-size: 16px; margin-bottom: 4px;">No credit card. Nordic workflow available now.</p>
+            <p class="install-note" style="color: #10b981; font-weight: 600; font-size: 16px; margin-bottom: 4px;">No credit card. Free preview available now.</p>
             <p class="install-note">One command sets up the IDE, GCC ARM toolchain, OpenOCD, SDK path, and AI plugin. Typical setup time: about 15 minutes.</p>
 
             <div class="install-option">
@@ -1189,7 +1189,7 @@
                 IOcomposer works best when judged on one complete embedded outcome: create a correct project, generate code against the local SDK, build it, flash hardware, and debug it from the same IDE.
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
-                The IDE is built around deterministic managed project creation rather than a loose pile of editor extensions. That means the project wizard, target settings, and build configuration are aligned from the start. For Nordic workflows, the homepage focuses on what is real today: nRF52832, nRF52840, and nRF54L15 with SoftDevice-aware bring-up.
+                The IDE is built around deterministic managed project creation rather than a loose pile of editor extensions. That means the project wizard, target settings, and build configuration are aligned from the start. In the current preview, the strongest demonstrated workflows today are nRF52832, nRF52840, and nRF54L15 with SoftDevice-aware bring-up.
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
                 The AI layer is grounded on your installed SDK headers and your current project context before it proposes code. Instead of treating IOcomposer like a generic AI code editor, evaluate whether it reduces the common embedded setup tax: wrong API guesses, broken launch configs, missing linker details, and slow board bring-up.
@@ -1201,15 +1201,15 @@
 
         <section id="supported-hardware" class="install-section" aria-label="Supported hardware" style="text-align: left;">
             <p class="section-kicker">Supported today</p>
-            <h2>Nordic first</h2>
+            <h2>Current supported workflows</h2>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
-                <strong style="color: #fff;">Primary supported targets:</strong> nRF52832, nRF52840, and nRF54L15. BLE workflows use SoftDevice S132/S140 on nRF52 and S145 on nRF54L15. This is the wedge the homepage should convert.
+                <strong style="color: #fff;">Current highlighted targets:</strong> nRF52832, nRF52840, and nRF54L15. BLE workflows use SoftDevice S132/S140 on nRF52 and S145 on nRF54L15.
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
-                <strong style="color: #fff;">Custom boards:</strong> IOcomposer targets the MCU directly, so moving from a Nordic DevKit to your own PCB is a bounded firmware configuration task instead of a full board-package exercise.
+                <strong style="color: #fff;">Custom boards:</strong> IOcomposer targets the MCU directly, so moving from a supported DevKit to your own PCB is a bounded firmware configuration task instead of a full board-package exercise.
             </p>
             <p style="color: #94a3b8; font-size: 15px; line-height: 1.7;">
-                <strong style="color: #fff;">Preview roadmap:</strong> STM32, Renesas, and Microchip preview support is in progress. Keep that below the fold so the homepage stays anchored to what works now.
+                <strong style="color: #fff;">Preview roadmap:</strong> STM32, Renesas, and Microchip preview support is in progress.
             </p>
         </section>
 
@@ -1237,8 +1237,8 @@
                     <p>You want a real debugger, vendor SDK access, and a more professional path forward without jumping straight into a fragmented toolchain stack.</p>
                 </div>
                 <div class="audience-card">
-                    <h3>Nordic bare-metal developers</h3>
-                    <p>You need to bring up nRF52 or nRF54 firmware quickly, especially BLE projects, and you care about direct hardware control and repeatable setup.</p>
+                    <h3>Bare-metal firmware developers</h3>
+                    <p>You need to bring up firmware quickly, especially current nRF52 or nRF54 preview workflows, and you care about direct hardware control and repeatable setup.</p>
                 </div>
                 <div class="audience-card">
                     <h3>Custom board teams</h3>
@@ -1249,16 +1249,16 @@
 
         <section id="faq" class="faq" aria-label="FAQ">
             <h2>FAQ</h2>
-            <p class="note">Keep the homepage focused on the first evaluation path. Detailed comparisons can live on separate pages.</p>
+            <p class="note">Need more detail? Product comparisons and deeper technical notes can live on separate pages.</p>
 
             <details>
                 <summary>What is IOcomposer?</summary>
-                <p>IOcomposer is an embedded C/C++ IDE for MCU firmware development, combining managed project creation, grounded AI assistance, and integrated build, flash, and debug workflows in one environment.</p>
+                <p>IOcomposer is an embedded C/C++ IDE for MCU firmware development. It combines deterministic managed project creation, AI grounded on your local SDK headers, and integrated build, flash, and debug workflows in one environment.</p>
             </details>
 
             <details>
                 <summary>Which targets work today?</summary>
-                <p>Today the core supported wedge is Nordic: nRF52832, nRF52840, and nRF54L15. Preview support for STM32, Renesas, and Microchip is in progress, but the landing page should convert on Nordic certainty first.</p>
+                <p>Current supported workflows highlight Nordic nRF52832, nRF52840, and nRF54L15. Preview support for STM32, Renesas, and Microchip is in progress.</p>
             </details>
 
             <details>
@@ -1283,7 +1283,7 @@
         </section>
 
         <div class="cta">
-            <p><strong style="color: #fff; font-size: 22px;">Start with the demo, then install the preview.</strong><br/>The fastest way to evaluate IOcomposer is to watch one complete workflow, then run the installer and create your first Nordic project.</p>
+            <p><strong style="color: #fff; font-size: 22px;">Start with the demo, then install the preview.</strong><br/>The fastest way to evaluate IOcomposer is to watch one complete workflow, then run the installer and create your first project.</p>
             <div class="hero-actions" style="margin-bottom: 18px;">
                 <a class="cta-btn cta-btn-primary" href="#demo">Watch demo</a>
                 <a class="cta-btn cta-btn-secondary" href="#install">Install preview</a>
