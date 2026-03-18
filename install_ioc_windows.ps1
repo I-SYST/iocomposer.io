@@ -279,7 +279,7 @@ if (Test-Path $EclipseDir) {
 Write-Host ""
 Write-Host ">>> Installing IOcomposer splash screen..." -ForegroundColor Cyan
 
-$SplashUrl = "https://github.com/$PluginRepo/raw/$PluginBranch/$PluginDirPath/splash.bmp"
+$SplashUrl = "https://raw.githubusercontent.com/$PluginRepo/$PluginBranch/$PluginDirPath/splash.bmp"
 $SplashTmp = [System.IO.Path]::GetTempFileName() + ".bmp"
 Write-Host "  Downloading: $SplashUrl"
 try {

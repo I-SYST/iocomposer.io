@@ -297,11 +297,11 @@ echo ""
 echo ">>> Installing IOcomposer splash screen..."
 
 # Download splash.bmp from GitHub (same repo as plugins)
-SPLASH_URL="https://github.com/${PLUGIN_REPO}/raw/${PLUGIN_REPO_BRANCH}/${PLUGIN_DIR_PATH}/splash.bmp"
+SPLASH_URL="https://raw.githubusercontent.com/${PLUGIN_REPO}/${PLUGIN_REPO_BRANCH}/${PLUGIN_DIR_PATH}/splash.bmp"
 SPLASH_TMP=$(mktemp /tmp/iocomposer_splash_XXXXXX.bmp)
 echo "  Downloading: $SPLASH_URL"
 
-if curl -fL "$SPLASH_URL" -o "$SPLASH_TMP" 2>/dev/null; then
+if curl -fL "$SPLASH_URL" -o "$SPLASH_TMP"; then
   echo "  [OK] splash.bmp downloaded ($(wc -c < "$SPLASH_TMP") bytes)"
   install_splash "$SPLASH_TMP" "$ECLIPSE_APP"
   rm -f "$SPLASH_TMP"
