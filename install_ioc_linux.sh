@@ -16,6 +16,7 @@ echo ""
 # CONFIGURATION
 # ---------------------------------------------------------
 ECLIPSE_DIR="$HOME/eclipse"
+IOCOMPOSER_DIR="$HOME/iocomposer"
 DROPINS_DIR="$ECLIPSE_DIR/dropins"
 
 # AI Plugin Discovery
@@ -119,6 +120,75 @@ discover_latest_plugin_url() {
   [ -n "$best_file" ] || return 1
   echo "https://github.com/${PLUGIN_REPO}/raw/${PLUGIN_REPO_BRANCH}/${PLUGIN_DIR_PATH}/${best_file}"
 }
+rename_eclipse_linux() {
+  local src="$ECLIPSE_DIR"
+  local dst="$IOCOMPOSER_DIR"
+
+  if [ -d "$src" ]; then
+    [ -d "$dst" ] && rm -rf "$dst"
+    echo "  Renaming $src to $dst..."
+    mv "$src" "$dst"
+    echo "  [OK] Renamed to $dst"
+    ECLIPSE_DIR="$dst"
+    DROPINS_DIR="$ECLIPSE_DIR/dropins"
+  elif [ -d "$dst" ]; then
+    echo "  iocomposer dir already exists."
+    ECLIPSE_DIR="$dst"
+    DROPINS_DIR="$ECLIPSE_DIR/dropins"
+  else
+    echo "  [WARN] Eclipse directory not found."
+    return 0
+  fi
+
+  # Add -name IOcomposer to eclipse.ini
+  local ini="$ECLIPSE_DIR/eclipse.ini"
+  if [ -f "$ini" ] && ! grep -q "^-name$" "$ini"; then
+    awk '/^-vmargs$/ { print "-name"; print "IOcomposer" } { print }' \
+      "$ini" > "$ini.new" && mv "$ini.new" "$ini"
+    echo "  [OK] eclipse.ini: added -name IOcomposer"
+  fi
+
+  # Patch .desktop file if it exists
+  for desktop in \
+    "$HOME/.local/share/applications/iocomposer.desktop" \
+    "$HOME/.local/share/applications/eclipse.desktop"; do
+    if [ -f "$desktop" ]; then
+      sed -i 's|^Name=.*|Name=IOcomposer|' "$desktop"
+      sed -i 's|^Exec=.*eclipse.*|Exec='"$ECLIPSE_DIR"'/eclipse|' "$desktop"
+      echo "  [OK] Patched: $desktop"
+    fi
+  done
+}
+
+rename_eclipse() {
+  local eclipse_dir="$1"
+  local ini="$eclipse_dir/eclipse.ini"
+
+  # Add -name IOcomposer before -vmargs
+  if ! grep -q "^-name$" "$ini" 2>/dev/null; then
+    awk '/^-vmargs$/ { print "-name"; print "IOcomposer" } { print }' \
+      "$ini" > "$ini.tmp" && mv "$ini.tmp" "$ini"
+    echo "  [OK] eclipse.ini: added -name IOcomposer"
+  else
+    echo "  eclipse.ini -name already set."
+  fi
+
+  # Patch eclipse.desktop if it exists (updates Dash/taskbar name)
+  local desktop=""
+  for desktop in \
+    "$HOME/.local/share/applications/eclipse.desktop" \
+    "/usr/share/applications/eclipse.desktop" \
+    "$eclipse_dir/eclipse.desktop"; do
+    if [[ -f "$desktop" ]]; then
+      sed -i 's/^Name=.*/Name=IOcomposer/' "$desktop"
+      sed -i 's/^GenericName=.*/GenericName=IOcomposer IDE/' "$desktop"
+      echo "  [OK] Patched desktop file: $desktop"
+    fi
+  done
+
+  echo "  [OK] Rename complete."
+}
+
 patch_eclipse_ini() {
   local ini="$ECLIPSE_DIR/eclipse.ini"
   local custom="$DROPINS_DIR/iocomposer_customization.ini"
@@ -315,6 +385,27 @@ else
     echo "  [WARN] Could not obtain splash.bmp — skipping."
   fi
 fi
+
+# ---------------------------------------------------------
+# POST-INSTALL: RENAME TO IOCOMPOSER
+# ---------------------------------------------------------
+echo ""
+echo ">>> Renaming Eclipse to IOcomposer..."
+if [ -d "$ECLIPSE_DIR" ]; then
+  rename_eclipse "$ECLIPSE_DIR"
+else
+  echo "  [WARN] Eclipse directory not found — skipping rename."
+fi
+
+# ---------------------------------------------------------
+# POST-INSTALL: RENAME TO IOCOMPOSER
+# ---------------------------------------------------------
+echo ""
+echo ">>> Renaming Eclipse to IOcomposer..."
+rename_eclipse_linux || true
+OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ai.jar"
+UI_OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ui.jar"
+echo "  Target: $ECLIPSE_DIR"
 
 # ---------------------------------------------------------
 # POST-INSTALL: Build External SDK Index (RAG)
