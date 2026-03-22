@@ -214,10 +214,7 @@ install_splash() {
   local src="$1"
   local eclipse_dir="$2"
   local found=0
-
-  echo "  Searching for existing splash.bmp files..."
   while IFS= read -r dst; do
-    echo "  Found: $dst"
     cp "$src" "$dst" && { echo "  [OK] Replaced: $dst"; found=1; }
   done < <(find "$eclipse_dir" -name "splash.bmp" 2>/dev/null)
 
@@ -405,7 +402,6 @@ echo ">>> Renaming Eclipse to IOcomposer..."
 rename_eclipse_linux || true
 OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ai.jar"
 UI_OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ui.jar"
-echo "  Target: $ECLIPSE_DIR"
 
 # ---------------------------------------------------------
 # POST-INSTALL: Build External SDK Index (RAG)

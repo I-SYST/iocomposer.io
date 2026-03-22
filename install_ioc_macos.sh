@@ -128,19 +128,15 @@ rename_eclipse_app() {
   local dst="$IOCOMPOSER_APP"
 
   if [[ -d "$src" ]]; then
-    # Remove old IOcomposer.app if present (reinstall case)
-    if [[ -d "$dst" ]]; then
-      echo "  Removing old IOcomposer.app..."
-      sudo rm -rf "$dst"
-    fi
+    [[ -d "$dst" ]] && { echo "  Removing old IOcomposer.app..."; sudo rm -rf "$dst"; }
     echo "  Renaming Eclipse.app to IOcomposer.app..."
     sudo mv "$src" "$dst"
     sudo chown -R "$(stat -f "%u:%g" /Applications)" "$dst" 2>/dev/null || true
     echo "  [OK] Renamed."
   elif [[ -d "$dst" ]]; then
-    echo "  IOcomposer.app already exists (no Eclipse.app to rename)."
+    echo "  IOcomposer.app already exists."
   else
-    echo "  [WARN] Neither Eclipse.app nor IOcomposer.app found."
+    echo "  [WARN] Eclipse.app not found."
     return 0
   fi
 
@@ -155,15 +151,10 @@ rename_eclipse_app() {
 
   local ini
   ini="$(find "$dst/Contents" -name "eclipse.ini" 2>/dev/null | head -1)"
-  if [[ -n "$ini" ]]; then
-    if ! grep -q "^-name$" "$ini"; then
-      sudo cp "$ini" "$ini.bak"
-      printf '%s\n' '-name' 'IOcomposer' | sudo tee /tmp/iocomposer_name_patch.txt >/dev/null
-      sudo awk 'BEGIN{name=1} /^-vmargs$/ && name { while((getline line < "/tmp/iocomposer_name_patch.txt") > 0) print line; name=0 } { print }' \
-        "$ini" | sudo tee "$ini.new" >/dev/null && sudo mv "$ini.new" "$ini"
-      rm -f /tmp/iocomposer_name_patch.txt
-      echo "  [OK] eclipse.ini: added -name IOcomposer"
-    fi
+  if [[ -n "$ini" ]] && ! grep -q "^-name$" "$ini"; then
+    sudo awk '/^-vmargs$/ { print "-name"; print "IOcomposer" } { print }' \
+      "$ini" | sudo tee "$ini.new" >/dev/null && sudo mv "$ini.new" "$ini"
+    echo "  [OK] eclipse.ini: added -name IOcomposer"
   fi
 
   sudo touch "$dst" 2>/dev/null || true
@@ -174,37 +165,26 @@ patch_eclipse_ini() {
   local ini
   ini="$(find "$ECLIPSE_APP/Contents" -name "eclipse.ini" 2>/dev/null | head -1)"
   if [[ -z "$ini" ]]; then echo "  [WARN] eclipse.ini not found."; return 1; fi
-  echo "  Found: $ini"
   local custom="$DROPINS_DIR/iocomposer_customization.ini"
   printf '# IOcomposer preference customization\norg.eclipse.ui/showIntro=false\norg.eclipse.ui/defaultPerspectiveId=com.iocomposer.embedcdt.ui.perspective\norg.eclipse.epp.package.embedcpp/showNewsOnStartup=false\norg.eclipse.epp.package.embedcpp.ui/showNewsOnStartup=false\norg.eclipse.epp.package.cpp/showNewsOnStartup=false\norg.eclipse.epp.package.common/showNewsOnStartup=false\norg.eclipse.epp.mpc.ui/showNewsOnStartup=false\n' | sudo tee "$custom" >/dev/null
   echo "  Written: $custom"
   if grep -q "iocomposer_customization.ini" "$ini" 2>/dev/null; then
     echo "  eclipse.ini already patched."
   else
-    sudo cp "$ini" "$ini.bak"
-    printf '%s\n' '-pluginCustomization' "$custom" '-vmargs' '-Dswt.autoScale=false' | sudo tee /tmp/iocomposer_ini_patch.txt >/dev/null
-    sudo awk 'BEGIN{done=1} /^-vmargs$/ && done { while((getline line < "/tmp/iocomposer_ini_patch.txt") > 0) print line; done=0; next } { print }' \
-      "$ini" | sudo tee "$ini.new" >/dev/null && sudo mv "$ini.new" "$ini"
-    rm -f /tmp/iocomposer_ini_patch.txt
-    echo "  Patched: $ini"
+    sudo awk -v p="$custom" '
+      /^-vmargs$/ { print "-pluginCustomization"; print p; print "-vmargs"; print "-Dswt.autoScale=false"; next }
+      { print }
+    ' "$ini" | sudo tee "$ini.new" >/dev/null && sudo mv "$ini.new" "$ini"
+    echo "  [OK] Patched: $ini"
   fi
 }
 
 install_splash() {
   local src="$1" eclipse_dir="$2" found=0
-  echo "  Searching for splash.bmp targets..."
   while IFS= read -r dst; do
-    echo "  Found: $dst"
-    sudo cp "$src" "$dst" && { echo "  [OK] Replaced: $dst"; found=1; }
+    [[ "$dst" == */features/* ]] && continue
+    sudo cp "$src" "$dst" && { echo "  [OK] Replaced: $(basename $(dirname $dst))/splash.bmp"; found=1; }
   done < <(find "$eclipse_dir" -name "splash.bmp" 2>/dev/null)
-  local targets=("$eclipse_dir/Contents/Eclipse/splash.bmp")
-  while IFS= read -r plugindir; do
-    targets+=("$plugindir/splash.bmp")
-  done < <(find "$eclipse_dir" -maxdepth 6 -type d -name "org.eclipse.epp.package.*" 2>/dev/null)
-  for dst in "${targets[@]}"; do
-    sudo mkdir -p "$(dirname "$dst")" 2>/dev/null
-    sudo cp "$src" "$dst" 2>/dev/null && { echo "  [OK] Written: $dst"; found=1; }
-  done
   [[ "$found" == "1" ]] && echo "  [OK] Splash done." || echo "  [WARN] No splash targets found."
 }
 
@@ -236,13 +216,10 @@ install_splash() {
   local eclipse_dir="$2"
   local found=0
 
-  echo "  Searching for existing splash.bmp files..."
   while IFS= read -r dst; do
-    echo "  Found: $dst"
     sudo cp "$src" "$dst" && { echo "  [OK] Replaced: $dst"; found=1; }
   done < <(find "$eclipse_dir" -name "splash.bmp" 2>/dev/null)
 
-  echo "  Writing to all known splash locations..."
   local targets=("$eclipse_dir/Contents/Eclipse/splash.bmp")
   while IFS= read -r plugindir; do
     targets+=("$plugindir/splash.bmp")
@@ -318,23 +295,16 @@ if [[ -d "$ECLIPSE_APP" ]]; then
 
   # Discover latest plugin URL if not overridden
   if [[ -z "$PLUGIN_URL" ]]; then
-    echo "  Discovering latest AI plugin from GitHub..."
-    if ! PLUGIN_URL="$(discover_latest_plugin_url)"; then
+      if ! PLUGIN_URL="$(discover_latest_plugin_url)"; then
       echo "  [ERROR] Failed to discover latest plugin JAR for: $PLUGIN_ID"
       echo "          You can override by setting IOCOMPOSER_AI_PLUGIN_URL to a direct JAR URL."
       exit 1
     fi
-    echo "  Latest plugin URL: $PLUGIN_URL"
-  else
-    echo "  Using overridden plugin URL: $PLUGIN_URL"
   fi
 
   # Download to a temporary location first
   TMP_JAR=$(mktemp)
-  echo "  Downloading from $PLUGIN_URL..."
-
-  if curl -fL "$PLUGIN_URL" -o "$TMP_JAR"; then
-    echo "  Installing to $DROPINS_DIR..."
+  if curl -fsSL "$PLUGIN_URL" -o "$TMP_JAR"; then
     sudo mv "$TMP_JAR" "$OUTPUT_JAR"
     sudo chmod 644 "$OUTPUT_JAR"
     echo "  [OK] AI Plugin installed successfully: $OUTPUT_JAR"
@@ -358,9 +328,8 @@ echo ">>> Post-Install: Adding UI Plugin ($UI_PLUGIN_ID)..."
 if [[ -d "$ECLIPSE_APP" ]]; then
   [[ -d "$DROPINS_DIR" ]] || sudo mkdir -p "$DROPINS_DIR"
   if UI_URL="$(discover_latest_plugin_url "$UI_PLUGIN_ID")"; then
-    echo "  Latest UI plugin URL: $UI_URL"
-    TMP=$(mktemp)
-    if curl -fL "$UI_URL" -o "$TMP"; then
+      TMP=$(mktemp)
+    if curl -fsSL "$UI_URL" -o "$TMP"; then
       sudo mv "$TMP" "$UI_OUTPUT_JAR"
       sudo chmod 644 "$UI_OUTPUT_JAR"
       echo "  [OK] UI Plugin installed: $UI_OUTPUT_JAR"
@@ -387,10 +356,8 @@ echo ">>> Installing IOcomposer splash screen..."
 # Download splash.bmp from GitHub (same repo as plugins)
 SPLASH_URL="https://github.com/${PLUGIN_REPO}/raw/${PLUGIN_REPO_BRANCH}/${PLUGIN_DIR_PATH}/splash.bmp"
 SPLASH_TMP=$(mktemp /tmp/iocomposer_splash_XXXXXX.bmp)
-echo "  Downloading: $SPLASH_URL"
 
-if curl -fL "$SPLASH_URL" -o "$SPLASH_TMP" 2>/dev/null; then
-  echo "  [OK] splash.bmp downloaded ($(wc -c < "$SPLASH_TMP") bytes)"
+if curl -fsSL "$SPLASH_URL" -o "$SPLASH_TMP"; then
   install_splash "$SPLASH_TMP" "$ECLIPSE_APP"
   rm -f "$SPLASH_TMP"
 else
@@ -416,7 +383,6 @@ if [[ -d "$IOCOMPOSER_APP" ]]; then
   OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ai.jar"
   UI_OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ui.jar"
 fi
-echo "  Target: $ECLIPSE_APP"
 
 # ---------------------------------------------------------
 # POST-INSTALL: UI PLUGIN
@@ -426,9 +392,8 @@ echo ">>> Post-Install: Adding UI Plugin ($UI_PLUGIN_ID)..."
 if [[ -d "$ECLIPSE_APP" ]]; then
   [[ -d "$DROPINS_DIR" ]] || sudo mkdir -p "$DROPINS_DIR"
   if UI_URL="$(discover_latest_plugin_url "$UI_PLUGIN_ID")"; then
-    echo "  Latest UI plugin URL: $UI_URL"
-    TMP=$(mktemp)
-    if curl -fL "$UI_URL" -o "$TMP"; then
+      TMP=$(mktemp)
+    if curl -fsSL "$UI_URL" -o "$TMP"; then
       sudo mv "$TMP" "$UI_OUTPUT_JAR"
       sudo chmod 644 "$UI_OUTPUT_JAR"
       echo "  [OK] UI Plugin installed: $UI_OUTPUT_JAR"
@@ -451,14 +416,12 @@ echo ""
 echo ">>> Installing IOcomposer splash screen..."
 SPLASH_URL="https://raw.githubusercontent.com/${PLUGIN_REPO}/${PLUGIN_REPO_BRANCH}/${PLUGIN_DIR_PATH}/splash.bmp"
 SPLASH_TMP=$(mktemp /tmp/iocomposer_splash_XXXXXX.bmp)
-echo "  Downloading: $SPLASH_URL"
-if curl -fL "$SPLASH_URL" -o "$SPLASH_TMP"; then
-  echo "  [OK] Downloaded ($(wc -c < "$SPLASH_TMP") bytes)"
+if curl -fsSL "$SPLASH_URL" -o "$SPLASH_TMP"; then
   install_splash "$SPLASH_TMP" "$ECLIPSE_APP"
   rm -f "$SPLASH_TMP"
 else
-  SPLASH_LOCAL="$(dirname "$0")/splash.bmp"
-  [[ -f "$SPLASH_LOCAL" ]] && install_splash "$SPLASH_LOCAL" "$ECLIPSE_APP"     || echo "  [WARN] No splash.bmp available."
+  echo "  [WARN] Could not download splash.bmp."
+  rm -f "$SPLASH_TMP"
 fi
 
 # ---------------------------------------------------------
