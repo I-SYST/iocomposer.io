@@ -88,7 +88,7 @@
           "name": "Does IOcomposer require Zephyr or nRF Connect SDK?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. IOcomposer is built for bare-metal workflows and can work directly with vendor SDK paths rather than requiring a Zephyr-based setup."
+            "text": "No. IOcomposer uses the Nordic bare-metal SDK with direct hardware access and SoftDevice integration — not the nRF Connect SDK, which requires Zephyr. You get full control without the Zephyr stack."
           }
         },
         {
@@ -1211,6 +1211,10 @@
 <p>You need to bring up firmware quickly, especially current nRF52 or nRF54 preview workflows, and you care about direct hardware control and repeatable setup.</p>
 </div>
 <div class="audience-card">
+<h3>RTOS firmware developers</h3>
+<p>You're building with FreeRTOS, RTX, or a similar RTOS and need AI that understands your task model and peripheral constraints — not generic C suggestions detached from your actual SDK.</p>
+</div>
+<div class="audience-card">
 <h3>Custom board teams</h3>
 <p>You need a shorter path from DevKit prototype to your own PCB, with bounded porting work and less board-support churn.</p>
 </div>
@@ -1229,7 +1233,7 @@
 </details>
 <details>
 <summary>Does IOcomposer require Zephyr or nRF Connect SDK?</summary>
-<p>No. IOcomposer is built for a bare-metal workflow with direct hardware access and SoftDevice integration, rather than a Zephyr-based setup.</p>
+<p>No. IOcomposer uses the Nordic bare-metal SDK with direct hardware access and SoftDevice integration — not the nRF Connect SDK, which requires Zephyr. You get full control without the Zephyr stack.</p>
 </details>
 <details>
 <summary>Does the AI use my real SDK headers?</summary>
@@ -1252,7 +1256,7 @@
 </div>
 <div class="download-note">
                 Questions or feedback? Reach us at
-                <a href="mailto:info@i-syst.com">info@i-syst.com</a>
+                <a href="/cdn-cgi/l/email-protection#f891969e97b891d58b818b8cd69b9795"><span class="__cf_email__" data-cfemail="61080f070e21084c121812154f020e0c">[email&#160;protected]</span></a>
 </div>
 </div>
 <footer>
@@ -1281,7 +1285,7 @@
 </div>
 </div>
 </div>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function copyCommand(id) {
     const codeEl = document.getElementById(id);
     if (!codeEl) return;
@@ -1477,16 +1481,4 @@ function copyCommand(id) {
         window.addEventListener('mouseup', () => {
             isDown = false;
             track.style.cursor = '';
-        });
-
-        window.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            const dx = e.pageX - startX;
-            track.scrollLeft = startLeft - dx;
-        });
-    });
-
-})();
-</script>
-</body>
-</html>
+     
