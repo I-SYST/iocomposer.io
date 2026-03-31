@@ -113,6 +113,8 @@ function Discover-LatestPluginUrl {
     return "https://github.com/$PluginRepo/raw/$PluginBranch/$PluginDirPath/$bestFile"
 }
 function Rename-EclipseToIOcomposer {
+    # Moves Eclipse dir to iocomposer dir, updates script-level path variables,
+    # patches eclipse.ini for -name IOcomposer, and renames Start Menu shortcuts.
     $src = $EclipseDir
     $dst = $IocomposerDir
 
@@ -124,51 +126,19 @@ function Rename-EclipseToIOcomposer {
         Write-Host "  Renaming $src to $dst..."
         Move-Item -Path $src -Destination $dst
         Write-Host "  [OK] Renamed." -ForegroundColor Green
-        $script:EclipseDir  = $dst
-        $script:DropinsDir  = "$dst\dropins"
+        $script:EclipseDir = $dst
+        $script:DropinsDir = "$dst\dropins"
     } elseif (Test-Path $dst) {
         Write-Host "  IOcomposer directory already exists."
-        $script:EclipseDir  = $dst
-        $script:DropinsDir  = "$dst\dropins"
+        $script:EclipseDir = $dst
+        $script:DropinsDir = "$dst\dropins"
     } else {
         Write-Host "  [WARN] Eclipse directory not found." -ForegroundColor Yellow
         return
     }
 
-    # Add -name IOcomposer to eclipse.ini
-    $ini = "$($script:EclipseDir)\eclipse.ini"
-    if (Test-Path $ini) {
-        $lines = Get-Content $ini
-        if (-not ($lines -contains "-name")) {
-            $out = [System.Collections.Generic.List[string]]::new()
-            $done = $false
-            foreach ($line in $lines) {
-                if (-not $done -and $line.Trim() -eq "-vmargs") {
-                    $out.Add("-name"); $out.Add("IOcomposer")
-                    $done = $true
-                }
-                $out.Add($line)
-            }
-            Set-Content -Path $ini -Value $out -Encoding UTF8
-            Write-Host "  [OK] eclipse.ini: added -name IOcomposer" -ForegroundColor Green
-        }
-    }
-
-    # Rename Start Menu shortcut
-    $shortcuts = Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu" `
-        -Recurse -Filter "*.lnk" -ErrorAction SilentlyContinue |
-        Where-Object { $_.Name -match "(?i)eclipse" }
-    foreach ($lnk in $shortcuts) {
-        $newPath = $lnk.FullName -replace "(?i)eclipse","IOcomposer"
-        try { Rename-Item $lnk.FullName (Split-Path $newPath -Leaf) -ErrorAction SilentlyContinue } catch {}
-    }
-}
-
-function Rename-EclipseToIOcomposer {
-    param([string]$EclDir)
-
     # Add -name IOcomposer to eclipse.ini before -vmargs
-    $ini = "$EclDir\eclipse.ini"
+    $ini = "$($script:EclipseDir)\eclipse.ini"
     if (Test-Path $ini) {
         $lines = Get-Content $ini
         if (-not ($lines -contains "-name")) {
@@ -190,8 +160,7 @@ function Rename-EclipseToIOcomposer {
         Write-Host "  [WARN] eclipse.ini not found." -ForegroundColor Yellow
     }
 
-    # Patch eclipse.exe manifest app title via resource hacking is not feasible without tools.
-    # Instead patch any .desktop-equivalent: the Windows shortcut if found.
+    # Patch Start Menu shortcuts: update description and rename .lnk file
     $shortcuts = Get-ChildItem -Path "$env:APPDATA\Microsoft\Windows\Start Menu" `
         -Recurse -Filter "*.lnk" -ErrorAction SilentlyContinue |
         Where-Object { $_.Name -match "(?i)eclipse" }
@@ -201,8 +170,7 @@ function Rename-EclipseToIOcomposer {
             $sc = $shell.CreateShortcut($lnk.FullName)
             $sc.Description = "IOcomposer IDE"
             $sc.Save()
-            # Rename the .lnk file itself
-            $newName = $lnk.FullName -replace "(?i)eclipse","IOcomposer"
+            $newName = $lnk.FullName -replace "(?i)eclipse", "IOcomposer"
             if ($newName -ne $lnk.FullName) {
                 Rename-Item -Path $lnk.FullName -NewName (Split-Path $newName -Leaf) -ErrorAction SilentlyContinue
             }
@@ -401,17 +369,6 @@ try {
     } else {
         Write-Host "  [WARN] No splash.bmp available — skipping." -ForegroundColor Yellow
     }
-}
-
-# ---------------------------------------------------------
-# POST-INSTALL: RENAME TO IOCOMPOSER
-# ---------------------------------------------------------
-Write-Host ""
-Write-Host ">>> Renaming Eclipse to IOcomposer..." -ForegroundColor Cyan
-if (Test-Path $EclipseDir) {
-    Rename-EclipseToIOcomposer -EclDir $EclipseDir
-} else {
-    Write-Host "  [WARN] Eclipse directory not found — skipping rename." -ForegroundColor Yellow
 }
 
 # ---------------------------------------------------------

@@ -160,35 +160,6 @@ rename_eclipse_linux() {
   done
 }
 
-rename_eclipse() {
-  local eclipse_dir="$1"
-  local ini="$eclipse_dir/eclipse.ini"
-
-  # Add -name IOcomposer before -vmargs
-  if ! grep -q "^-name$" "$ini" 2>/dev/null; then
-    awk '/^-vmargs$/ { print "-name"; print "IOcomposer" } { print }' \
-      "$ini" > "$ini.tmp" && mv "$ini.tmp" "$ini"
-    echo "  [OK] eclipse.ini: added -name IOcomposer"
-  else
-    echo "  eclipse.ini -name already set."
-  fi
-
-  # Patch eclipse.desktop if it exists (updates Dash/taskbar name)
-  local desktop=""
-  for desktop in \
-    "$HOME/.local/share/applications/eclipse.desktop" \
-    "/usr/share/applications/eclipse.desktop" \
-    "$eclipse_dir/eclipse.desktop"; do
-    if [[ -f "$desktop" ]]; then
-      sed -i 's/^Name=.*/Name=IOcomposer/' "$desktop"
-      sed -i 's/^GenericName=.*/GenericName=IOcomposer IDE/' "$desktop"
-      echo "  [OK] Patched desktop file: $desktop"
-    fi
-  done
-
-  echo "  [OK] Rename complete."
-}
-
 patch_eclipse_ini() {
   local ini="$ECLIPSE_DIR/eclipse.ini"
   local custom="$DROPINS_DIR/iocomposer_customization.ini"
@@ -381,17 +352,6 @@ else
   else
     echo "  [WARN] Could not obtain splash.bmp — skipping."
   fi
-fi
-
-# ---------------------------------------------------------
-# POST-INSTALL: RENAME TO IOCOMPOSER
-# ---------------------------------------------------------
-echo ""
-echo ">>> Renaming Eclipse to IOcomposer..."
-if [ -d "$ECLIPSE_DIR" ]; then
-  rename_eclipse "$ECLIPSE_DIR"
-else
-  echo "  [WARN] Eclipse directory not found — skipping rename."
 fi
 
 # ---------------------------------------------------------

@@ -161,34 +161,6 @@ rename_eclipse_app() {
 }
 
 patch_eclipse_ini() {
-  sudo rm -f "$ECLIPSE_APP/Contents/eclipse.ini.tmp" "$ECLIPSE_APP/Contents/Eclipse/eclipse.ini.tmp" 2>/dev/null || true
-  local ini
-  ini="$(find "$ECLIPSE_APP/Contents" -name "eclipse.ini" 2>/dev/null | head -1)"
-  if [[ -z "$ini" ]]; then echo "  [WARN] eclipse.ini not found."; return 1; fi
-  local custom="$DROPINS_DIR/iocomposer_customization.ini"
-  printf '# IOcomposer preference customization\norg.eclipse.ui/showIntro=false\norg.eclipse.ui/defaultPerspectiveId=com.iocomposer.embedcdt.ui.perspective\norg.eclipse.epp.package.embedcpp/showNewsOnStartup=false\norg.eclipse.epp.package.embedcpp.ui/showNewsOnStartup=false\norg.eclipse.epp.package.cpp/showNewsOnStartup=false\norg.eclipse.epp.package.common/showNewsOnStartup=false\norg.eclipse.epp.mpc.ui/showNewsOnStartup=false\n' | sudo tee "$custom" >/dev/null
-  echo "  Written: $custom"
-  if grep -q "iocomposer_customization.ini" "$ini" 2>/dev/null; then
-    echo "  eclipse.ini already patched."
-  else
-    sudo awk -v p="$custom" '
-      /^-vmargs$/ { print "-pluginCustomization"; print p; print "-vmargs"; print "-Dswt.autoScale=false"; next }
-      { print }
-    ' "$ini" | sudo tee "$ini.new" >/dev/null && sudo mv "$ini.new" "$ini"
-    echo "  [OK] Patched: $ini"
-  fi
-}
-
-install_splash() {
-  local src="$1" eclipse_dir="$2" found=0
-  while IFS= read -r dst; do
-    [[ "$dst" == */features/* ]] && continue
-    sudo cp "$src" "$dst" && { echo "  [OK] Replaced: $(basename $(dirname $dst))/splash.bmp"; found=1; }
-  done < <(find "$eclipse_dir" -name "splash.bmp" 2>/dev/null)
-  [[ "$found" == "1" ]] && echo "  [OK] Splash done." || echo "  [WARN] No splash targets found."
-}
-
-patch_eclipse_ini() {
   local ini="$ECLIPSE_APP/Contents/Eclipse/eclipse.ini"
   local custom="$DROPINS_DIR/iocomposer_customization.ini"
   printf '# IOcomposer preference customization\norg.eclipse.ui/showIntro=false\norg.eclipse.ui/defaultPerspectiveId=com.iocomposer.embedcdt.ui.perspective\norg.eclipse.epp.package.embedcpp/showNewsOnStartup=false\norg.eclipse.epp.package.embedcpp.ui/showNewsOnStartup=false\norg.eclipse.epp.package.cpp/showNewsOnStartup=false\norg.eclipse.epp.package.common/showNewsOnStartup=false\norg.eclipse.epp.mpc.ui/showNewsOnStartup=false\n' | sudo tee "$custom" >/dev/null
@@ -320,58 +292,6 @@ else
 fi
 
 # ---------------------------------------------------------
-# POST-INSTALL: UI PLUGIN
-# ---------------------------------------------------------
-echo ""
-echo ">>> Post-Install: Adding UI Plugin ($UI_PLUGIN_ID)..."
-
-if [[ -d "$ECLIPSE_APP" ]]; then
-  [[ -d "$DROPINS_DIR" ]] || sudo mkdir -p "$DROPINS_DIR"
-  if UI_URL="$(discover_latest_plugin_url "$UI_PLUGIN_ID")"; then
-      TMP=$(mktemp)
-    if curl -fsSL "$UI_URL" -o "$TMP"; then
-      sudo mv "$TMP" "$UI_OUTPUT_JAR"
-      sudo chmod 644 "$UI_OUTPUT_JAR"
-      echo "  [OK] UI Plugin installed: $UI_OUTPUT_JAR"
-    else
-      echo "  [WARN] Failed to download UI plugin."
-      rm -f "$TMP"
-    fi
-  else
-    echo "  [WARN] Failed to discover UI plugin JAR."
-  fi
-  echo ">>> Patching eclipse.ini for IOcomposer preferences..."
-  patch_eclipse_ini
-else
-  echo "  [ERROR] Eclipse app not found."
-  exit 1
-fi
-
-# ---------------------------------------------------------
-# POST-INSTALL: SPLASH SCREEN
-# ---------------------------------------------------------
-echo ""
-echo ">>> Installing IOcomposer splash screen..."
-
-# Download splash.bmp from GitHub (same repo as plugins)
-SPLASH_URL="https://github.com/${PLUGIN_REPO}/raw/${PLUGIN_REPO_BRANCH}/${PLUGIN_DIR_PATH}/splash.bmp"
-SPLASH_TMP=$(mktemp /tmp/iocomposer_splash_XXXXXX.bmp)
-
-if curl -fsSL "$SPLASH_URL" -o "$SPLASH_TMP"; then
-  install_splash "$SPLASH_TMP" "$ECLIPSE_APP"
-  rm -f "$SPLASH_TMP"
-else
-  # Fallback: use local splash.bmp if present next to script
-  SPLASH_LOCAL="$(dirname "$0")/splash.bmp"
-  if [[ -f "$SPLASH_LOCAL" ]]; then
-    echo "  [WARN] Download failed — using local splash.bmp"
-    install_splash "$SPLASH_LOCAL" "$ECLIPSE_APP"
-  else
-    echo "  [WARN] Could not obtain splash.bmp — skipping."
-  fi
-fi
-
-# ---------------------------------------------------------
 # POST-INSTALL: RENAME TO IOCOMPOSER
 # ---------------------------------------------------------
 echo ""
@@ -447,6 +367,25 @@ if [[ -f "$INDEX_SCRIPT" ]]; then
 else
   echo "  [WARN] Index script not found at: $INDEX_SCRIPT"
   echo "         Skipping external SDK index build."
+fi
+
+echo ""
+echo ">>> Signing IOcomposer.app..."
+# codesign MUST run last — any file written into the bundle after signing
+# (plugins, splash, eclipse.ini) invalidates the signature and causes Gatekeeper
+# to block the app on reboot.
+if [[ -d "$IOCOMPOSER_APP" ]]; then
+  echo "  Removing quarantine attributes..."
+  sudo xattr -cr "$IOCOMPOSER_APP" 2>/dev/null || true
+  echo "  Applying ad-hoc codesign..."
+  if sudo codesign --force --deep --sign - "$IOCOMPOSER_APP"; then
+    echo "  [OK] Ad-hoc signature applied."
+  else
+    echo "  [WARN] codesign failed — app may be blocked after reboot."
+    echo "         Run manually: sudo codesign --force --deep --sign - \"$IOCOMPOSER_APP\""
+  fi
+else
+  echo "  [WARN] IOcomposer.app not found — skipping codesign."
 fi
 
 echo ""
