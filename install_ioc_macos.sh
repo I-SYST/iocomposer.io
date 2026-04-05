@@ -162,16 +162,18 @@ rename_eclipse_app() {
 
 patch_eclipse_ini() {
   local ini="$ECLIPSE_APP/Contents/Eclipse/eclipse.ini"
-  local custom="$DROPINS_DIR/iocomposer_customization.ini"
-  printf '# IOcomposer preference customization\norg.eclipse.ui/showIntro=false\norg.eclipse.ui/defaultPerspectiveId=com.iocomposer.embedcdt.ui.perspective\norg.eclipse.epp.package.embedcpp/showNewsOnStartup=false\norg.eclipse.epp.package.embedcpp.ui/showNewsOnStartup=false\norg.eclipse.epp.package.cpp/showNewsOnStartup=false\norg.eclipse.epp.package.common/showNewsOnStartup=false\norg.eclipse.epp.mpc.ui/showNewsOnStartup=false\n' | sudo tee "$custom" >/dev/null
-  echo "  Written: $custom"
-  if grep -q "iocomposer_customization.ini" "$ini" 2>/dev/null; then
-    echo "  eclipse.ini already patched."
-  else
-    awk -v p="$custom" '
+  local custom="$ECLIPSE_APP/Contents/Eclipse/plugin_customization.ini"
+
+  # Append UI properties directly to the existing customization file
+  printf '\n# IOcomposer UI preference customization\norg.eclipse.ui/showIntro=false\norg.eclipse.ui/defaultPerspectiveId=com.iocomposer.embedcdt.ui.perspective\norg.eclipse.epp.package.embedcpp/showNewsOnStartup=false\norg.eclipse.epp.package.embedcpp.ui/showNewsOnStartup=false\norg.eclipse.epp.package.cpp/showNewsOnStartup=false\norg.eclipse.epp.package.common/showNewsOnStartup=false\norg.eclipse.epp.mpc.ui/showNewsOnStartup=false\n' | sudo tee -a "$custom" >/dev/null
+  echo "  [OK] Appended UI settings to: $custom"
+
+  # Ensure -pluginCustomization exists (using relative path)
+  if ! grep -q "^-pluginCustomization" "$ini" 2>/dev/null; then
+    awk '
       /^-vmargs$/ {
         print "-pluginCustomization"
-        print p
+        print "plugin_customization.ini"
         print "-vmargs"
         print "-Dswt.autoScale=false"
         next
@@ -179,7 +181,47 @@ patch_eclipse_ini() {
       { print }
     ' "$ini" | sudo tee "$ini.tmp" >/dev/null
     sudo mv "$ini.tmp" "$ini"
-    echo "  Patched: $ini"
+    echo "  [OK] Patched $ini with relative pluginCustomization."
+  else
+    # Make sure autoScale is there
+    if ! grep -q "^-Dswt.autoScale=false" "$ini"; then
+       sudo sed -i.bak '/^-vmargs$/a\
+-Dswt.autoScale=false\
+' "$ini"
+    fi
+    echo "  [OK] eclipse.ini already has pluginCustomization."
+  fi
+}
+
+sync_user_prefs() {
+  echo "  Syncing MCU Toolchain Preferences for renamed IOcomposer profile..."
+  
+  # Initialize the app under its new name to generate the correct ~/.eclipse hash folder
+  "$ECLIPSE_APP/Contents/MacOS/eclipse" -nosplash -initialize 2>/dev/null || true
+  
+  local instance_cfg=$(python3 -c '
+import os, sys
+base = os.path.expanduser("~/.eclipse")
+cands = []
+if os.path.isdir(base):
+  for root, dirs, _ in os.walk(base):
+    if "configuration" in dirs:
+      p = os.path.join(root, "configuration")
+      try: cands.append((os.path.getmtime(p), p))
+      except: pass
+if cands:
+  cands.sort(reverse=True)
+  print(cands[0][1])
+')
+  
+  if [[ -n "$instance_cfg" ]]; then
+    mkdir -p "$instance_cfg/.settings"
+    # Copy all seeded MCU settings from the installation directory to the new user directory
+    sudo cp -a "$ECLIPSE_APP/Contents/Eclipse/configuration/.settings/"* "$instance_cfg/.settings/" 2>/dev/null || true
+    sudo chown -R "$USER" "$instance_cfg/.settings" 2>/dev/null || true
+    echo "  [OK] MCU settings successfully synced to new profile: $instance_cfg"
+  else
+    echo "  [WARN] Could not locate new ~/.eclipse profile."
   fi
 }
 
@@ -302,6 +344,9 @@ if [[ -d "$IOCOMPOSER_APP" ]]; then
   DROPINS_DIR="$ECLIPSE_APP/Contents/Eclipse/dropins"
   OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ai.jar"
   UI_OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ui.jar"
+  
+  # Trigger the RENAME FIX for MCU settings here
+  sync_user_prefs
 fi
 
 # ---------------------------------------------------------
