@@ -344,6 +344,25 @@ else
   rm -f "$SPLASH_TMP"
 fi
 
+echo ""
+echo ">>> Signing IOcomposer.app..."
+# codesign MUST run last — any file written into the bundle after signing
+# (plugins, splash, eclipse.ini) invalidates the signature and causes Gatekeeper
+# to block the app on reboot.
+if [[ -d "$IOCOMPOSER_APP" ]]; then
+  echo "  Removing quarantine attributes..."
+  sudo xattr -cr "$IOCOMPOSER_APP" 2>/dev/null || true
+  echo "  Applying ad-hoc codesign..."
+  if sudo codesign --force --deep --sign - "$IOCOMPOSER_APP"; then
+    echo "  [OK] Ad-hoc signature applied."
+  else
+    echo "  [WARN] codesign failed — app may be blocked after reboot."
+    echo "         Run manually: sudo codesign --force --deep --sign - \"$IOCOMPOSER_APP\""
+  fi
+else
+  echo "  [WARN] IOcomposer.app not found — skipping codesign."
+fi
+
 # ---------------------------------------------------------
 # POST-INSTALL: Build External SDK Index (RAG)
 # ---------------------------------------------------------
@@ -367,25 +386,6 @@ if [[ -f "$INDEX_SCRIPT" ]]; then
 else
   echo "  [WARN] Index script not found at: $INDEX_SCRIPT"
   echo "         Skipping external SDK index build."
-fi
-
-echo ""
-echo ">>> Signing IOcomposer.app..."
-# codesign MUST run last — any file written into the bundle after signing
-# (plugins, splash, eclipse.ini) invalidates the signature and causes Gatekeeper
-# to block the app on reboot.
-if [[ -d "$IOCOMPOSER_APP" ]]; then
-  echo "  Removing quarantine attributes..."
-  sudo xattr -cr "$IOCOMPOSER_APP" 2>/dev/null || true
-  echo "  Applying ad-hoc codesign..."
-  if sudo codesign --force --deep --sign - "$IOCOMPOSER_APP"; then
-    echo "  [OK] Ad-hoc signature applied."
-  else
-    echo "  [WARN] codesign failed — app may be blocked after reboot."
-    echo "         Run manually: sudo codesign --force --deep --sign - \"$IOCOMPOSER_APP\""
-  fi
-else
-  echo "  [WARN] IOcomposer.app not found — skipping codesign."
 fi
 
 echo ""
