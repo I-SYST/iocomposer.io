@@ -33,7 +33,7 @@ UI_OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ui.jar"
 UI_PLUGIN_ID="com.iocomposer.embedcdt.ui"
 UI_OUTPUT_JAR="$DROPINS_DIR/com.iocomposer.embedcdt.ui.jar"
 
-INSTALLER_URL="https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/master/Installer/install_iocdevtools_macos.sh"
+INSTALLER_URL="https://raw.githubusercontent.com/IOsonata/IOsonata/refs/heads/main/Installer/install_iocdevtools_macos.sh"
 
 # SDK root (where IOsonata/external live). Default matches the main installer.
 SDK_ROOT="$HOME/IOcomposer"
