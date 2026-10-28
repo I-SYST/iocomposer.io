@@ -1,11 +1,6 @@
 # IOcomposer website launcher for Windows.
 # Installation, plugins, branding, preferences and builds are managed
 # exclusively by IOsonata/IOsonata/Installer.
-param(
-    [Parameter(ValueFromRemainingArguments = $true)]
-    [string[]]$InstallerArgs
-)
-
 $ErrorActionPreference = 'Stop'
 $installerRef = $env:IOSONATA_INSTALLER_REF
 if (-not $installerRef) { $installerRef = 'main' }
@@ -16,7 +11,7 @@ try {
     Write-Host "Downloading IOcomposer Windows installer from IOsonata ($installerRef)..."
     Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile $stage
     # Run as a script, not Invoke-Expression; preserve arguments and the exit status.
-    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $stage @InstallerArgs
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $stage @args
     $status = $LASTEXITCODE
     if ($null -eq $status) { $status = 1 }
     exit $status
