@@ -16,4 +16,13 @@ if ! curl -fsSL "$URL" -o "$STAGE"; then
 fi
 
 # Keep the caller's stdin available for the MCU selection prompt.
-bash "$STAGE" "$@"
+if [[ -t 0 ]]; then
+  bash "$STAGE" "$@"
+elif [[ -r /dev/tty ]]; then
+  bash "$STAGE" "$@" </dev/tty
+else
+  case "${1:-}" in
+    --help|--version) bash "$STAGE" "$@" ;;
+    *) echo "Interactive installation requires a terminal. Download this launcher and run it directly." >&2; exit 1 ;;
+  esac
+fi
