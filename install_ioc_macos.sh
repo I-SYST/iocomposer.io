@@ -21,6 +21,8 @@ if [[ -t 0 ]]; then
 elif [[ -r /dev/tty ]]; then
   bash "$STAGE" "$@" </dev/tty
 else
-  echo "Interactive installation requires a terminal. Download this launcher and run it directly." >&2
-  exit 1
+  case "${1:-}" in
+    --help|--version) bash "$STAGE" "$@" ;;
+    *) echo "Interactive installation requires a terminal. Download this launcher and run it directly." >&2; exit 1 ;;
+  esac
 fi
