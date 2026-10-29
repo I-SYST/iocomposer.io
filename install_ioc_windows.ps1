@@ -11,8 +11,23 @@ try {
     Write-Host "Downloading IOcomposer Windows installer from IOsonata ($installerRef)..."
     Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile $stage
     # Run as a script, not Invoke-Expression; preserve arguments and the exit status.
-    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $stage @args
-    $status = $LASTEXITCODE
+    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = [Security.Principal.WindowsPrincipal]::new($identity)
+    $isAdmin = $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+    if ($isAdmin) {
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $stage @args
+        $status = $LASTEXITCODE
+    } else {
+        # Preserve every argument when crossing the UAC elevation boundary.
+        $payload = @{ script = $stage; arguments = @($args) } | ConvertTo-Json -Compress -Depth 4
+        $encodedPayload = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($payload))
+        $command = '$json = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String("' + $encodedPayload + '")); $data = $json | ConvertFrom-Json; $installerArgs = @($data.arguments); & $data.script @installerArgs; if ($null -ne $LASTEXITCODE) { exit $LASTEXITCODE }'
+        $encodedCommand = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($command))
+        $process = Start-Process -FilePath powershell.exe -Verb RunAs -Wait -PassThru -ArgumentList @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-EncodedCommand', $encodedCommand)
+        $status = $process.ExitCode
+    }
+
     if ($null -eq $status) { $status = 1 }
     exit $status
 } catch {
