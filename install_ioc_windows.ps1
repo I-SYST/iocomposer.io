@@ -15,7 +15,9 @@ try {
     $principal = [Security.Principal.WindowsPrincipal]::new($identity)
     $isAdmin = $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 
-    if ($isAdmin) {
+    # Help and version only print information; no elevation is needed.
+    $informational = @($args | Where-Object { $_ -in @('-Help', '-Version') }).Count -gt 0
+    if ($isAdmin -or $informational) {
         & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $stage @args
         $status = $LASTEXITCODE
     } else {
