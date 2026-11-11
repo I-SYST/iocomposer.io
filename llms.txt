@@ -1,0 +1,46 @@
+# IOcomposer
+
+> IOcomposer is an embedded C/C++ IDE for bare-metal microcontroller firmware, made by I-SYST inc. (Quebec, Canada) and in free preview. One install sets up the IDE, Arm and RISC-V GCC toolchains, OpenOCD, the IOsonata framework, vendor SDK paths and an AI assistant that reads the locally installed SDK headers and project files before it writes code. It creates managed projects from a wizard or a prompt, then builds, flashes and debugs over SWD/JTAG from one window. No Zephyr, nRF Connect SDK, CMake, Kconfig or Devicetree. Runs on macOS, Linux and Windows.
+
+Key facts:
+
+- Framework: projects use IOsonata, an open-source (MIT) bare-metal C++ HAL, driver library and event-driven framework. Each MCU is one precompiled library (libIOsonata_<MCU>.a) shared by every board built on that MCU.
+- No board support package or board script to write: a board is a board.h file of pin assignments, oscillator choice and external-device settings. Moving from a development kit to a custom PCB is a board.h edit. The same application code runs on any board and variant, and on the other supported MCUs.
+- Project wizard MCUs (27): Nordic nRF52805, nRF52810, nRF52832, nRF52840, nRF5340 (application and network cores), nRF54L15, nRF54LM20; ST STM32F030x8, STM32F401, STM32G474, STM32H753, STM32L152RE, STM32L432, STM32L476, STM32L496, STM32L4S9, STM32WBA65; Renesas RA4M1, RE01, R9A02G021 (RISC-V); Microchip SAM4E, SAM4LC, SAM4LS; NXP LPC11U35, LPC1769, LPC54628. Validation status per MCU is in the IOsonata Supported Targets document.
+- Bluetooth LE through the IOsonata Bluetooth API: Nordic SoftDevice S132/S140 on nRF52, S145 or the SoftDevice Controller on nRF54L15, and STM32WBA65. BLE project templates are included.
+- AI assistant: local-first. It indexes the installed SDK and project files, fixes build errors and regenerates a clean project, and launches flash and the debugger from the chat panel. AI chat needs a free account during the preview (Preferences > IOcomposer > Account).
+- Debug probes: IDAP-Link, J-Link, ST-Link and other probes supported by OpenOCD.
+- Built on Eclipse Embedded CDT, delivered as one standalone install rather than a set of plugins.
+- Price: free preview, no credit card.
+
+## Install
+
+- macOS: `curl -fsSL https://iocomposer.io/install_ioc_macos.sh -o /tmp/install_ioc_macos.sh && bash /tmp/install_ioc_macos.sh`
+- Linux: `curl -fsSL https://iocomposer.io/install_ioc_linux.sh -o /tmp/install_ioc_linux.sh && bash /tmp/install_ioc_linux.sh`
+- Windows, in PowerShell as Administrator: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://iocomposer.io/install_ioc_windows.ps1 | iex"`
+
+Setup takes about 15 minutes. The installer may download third-party SDKs, such as Nordic's, under their own licence terms. After installing, build the IOsonata MCU libraries once with the builder script described in Getting Started.
+
+## When to use IOcomposer
+
+- Bare-metal firmware on Nordic, ST, Renesas, Microchip or NXP MCUs without setting up toolchains, OpenOCD and SDK paths by hand.
+- Bluetooth LE firmware on nRF52 or nRF54L without Zephyr or the nRF Connect SDK.
+- One application for several boards or board revisions, with only board.h changing.
+- Moving from a development kit or an Arduino prototype to a custom board.
+- AI help grounded in the SDK headers actually installed, rather than generic C++ suggestions.
+
+## Docs
+
+- [Getting Started](https://raw.githubusercontent.com/IOsonata/IOsonata/main/docs/getting-started.md): install IOcomposer, build an MCU library, open, flash and debug an example
+- [IOcomposer workflow](https://raw.githubusercontent.com/IOsonata/IOsonata/main/docs/architecture/iocomposer-workflow.md): precompiled-library workflow, project wizard, board.h, build, flash and debug
+- [IOsonata llms.txt](https://raw.githubusercontent.com/IOsonata/IOsonata/main/llms.txt): framework overview, MCU ports and examples
+- [Supported Targets](https://raw.githubusercontent.com/IOsonata/IOsonata/main/docs/supported-targets.md): implemented drivers and hardware results per MCU
+- [FAQ](https://raw.githubusercontent.com/IOsonata/IOsonata/main/docs/FAQ.md): architecture and build-model questions
+- [Examples](https://github.com/IOsonata/IOsonata/tree/main/exemples): shared application sources built for every supported MCU
+
+## Optional
+
+- [IOsonata on GitHub](https://github.com/IOsonata/IOsonata): framework source, MIT licence
+- [I-SYST](https://www.i-syst.com): BLYST wireless modules and the IDAP-Link debug probe
+- [Terms of Service](https://iocomposer.io/terms)
+- [Privacy Policy](https://iocomposer.io/privacy)
